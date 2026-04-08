@@ -1,0 +1,27 @@
+# Python junk
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.venv/
+venv/
+env/
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Local Gemini/Agent junk
+.gemini/
+.agent/
+.agents/
+brain/
+
+# IDE junk
+.vscode/
+.idea/
+
+# OS junk
+.DS_Store
+Thumbs.db
+
+# NOTE: .env and output/ are NOT ignored because the user explicitly requested to push them.

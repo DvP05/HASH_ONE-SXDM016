@@ -1,99 +1,126 @@
 {
   "findings": [
     {
-      "column": "customer_id",
+      "column": "latitude",
       "analysis_type": "univariate",
       "stats": {
-        "count": 10000,
+        "count": 36,
         "missing": 0,
         "missing_pct": 0.0,
-        "unique": 10000,
-        "dtype": "str",
-        "top_values": {
-          "CUST-03313": 1,
-          "CUST-09079": 1,
-          "CUST-05618": 1,
-          "CUST-01148": 1,
-          "CUST-08768": 1,
-          "CUST-01924": 1,
-          "CUST-02179": 1,
-          "CUST-09022": 1,
-          "CUST-06136": 1,
-          "CUST-06324": 1
-        }
+        "unique": 36,
+        "dtype": "float64",
+        "mean": 2.8817,
+        "std": 26.166,
+        "min": -23.64,
+        "max": 39.37,
+        "median": -12.04
       },
-      "skewness": null,
-      "kurtosis": null,
-      "distribution_type": "categorical",
+      "skewness": 0.6566,
+      "kurtosis": -1.5267,
+      "distribution_type": "moderately_skewed",
       "commentary": "",
       "visualization_path": "",
       "data": null
     },
     {
-      "column": "signup_date",
+      "column": "longitude",
       "analysis_type": "univariate",
       "stats": {
-        "count": 10000,
+        "count": 36,
         "missing": 0,
         "missing_pct": 0.0,
-        "unique": 1818,
-        "dtype": "str",
-        "top_values": {
-          "2023-04-01": 14,
-          "2025-01-16": 14,
-          "2025-01-29": 14,
-          "2021-07-10": 13,
-          "2024-05-01": 13,
-          "2024-07-04": 13,
-          "2025-10-29": 13,
-          "2021-08-22": 13,
-          "2021-10-09": 13,
-          "2025-01-23": 12
-        }
+        "unique": 36,
+        "dtype": "float64",
+        "mean": 47.1367,
+        "std": 120.7675,
+        "min": -121.67,
+        "max": 134.11,
+        "median": 130.175
       },
-      "skewness": null,
-      "kurtosis": null,
-      "distribution_type": "categorical",
+      "skewness": -0.7378,
+      "kurtosis": -1.5441,
+      "distribution_type": "moderately_skewed",
       "commentary": "",
       "visualization_path": "",
       "data": null
     },
     {
-      "column": "tenure_days",
+      "column": "brightness",
       "analysis_type": "univariate",
       "stats": {
-        "count": 10000,
+        "count": 36,
         "missing": 0,
         "missing_pct": 0.0,
-        "unique": 1855,
-        "dtype": "int64",
-        "mean": 904.8984,
-        "std": 524.0406,
-        "min": 1.0,
-        "max": 1905.0,
-        "median": 897.0
+        "unique": 36,
+        "dtype": "float64",
+        "mean": 327.25,
+        "std": 15.3099,
+        "min": 302.8,
+        "max": 351.9,
+        "median": 326.5
       },
-      "skewness": 0.0312,
-      "kurtosis": -1.1901,
+      "skewness": 0.0482,
+      "kurtosis": -1.2771,
       "distribution_type": "approximately_normal",
       "commentary": "",
       "visualization_path": "",
       "data": null
     },
     {
-      "column": "plan_type",
+      "column": "scan",
       "analysis_type": "univariate",
       "stats": {
-        "count": 10000,
+        "count": 36,
         "missing": 0,
         "missing_pct": 0.0,
-        "unique": 4,
+        "unique": 6,
+        "dtype": "float64",
+        "mean": 0.4867,
+        "std": 0.0733,
+        "min": 0.37,
+        "max": 0.58,
+        "median": 0.5
+      },
+      "skewness": -0.3709,
+      "kurtosis": -1.1785,
+      "distribution_type": "approximately_normal",
+      "commentary": "",
+      "visualization_path": "",
+      "data": null
+    },
+    {
+      "column": "track",
+      "analysis_type": "univariate",
+      "stats": {
+        "count": 36,
+        "missing": 0,
+        "missing_pct": 0.0,
+        "unique": 6,
+        "dtype": "float64",
+        "mean": 0.3967,
+        "std": 0.0456,
+        "min": 0.33,
+        "max": 0.46,
+        "median": 0.395
+      },
+      "skewness": -0.0238,
+      "kurtosis": -1.3334,
+      "distribution_type": "approximately_normal",
+      "commentary": "",
+      "visualization_path": "",
+      "data": null
+    },
+    {
+      "column": "acq_date",
+      "analysis_type": "univariate",
+      "stats": {
+        "count": 36,
+        "missing": 0,
+        "missing_pct": 0.0,
+        "unique": 1,
         "dtype": "str",
         "top_values": {
-          "Basic": 3388,
-          "Standard": 3008,
-          "Premium": 2560,
-          "Enterprise": 1044
+          "2026-04-05": 36
         }
       },
       "skewness": null,
@@ -104,150 +131,60 @@
       "data": null
     },
     {
-      "column": "monthly_charges",
+      "column": "acq_time",
       "analysis_type": "univariate",
       "stats": {
-        "count": 10000,
+        "count": 36,
         "missing": 0,
         "missing_pct": 0.0,
-        "unique": 6634,
-        "dtype": "float64",
-        "mean": 73.5422,
-        "std": 51.1294,
-        "min": 9.99,
-        "max": 280.16999999999996,
-        "median": 59.945
-      },
-      "skewness": 1.3593,
-      "kurtosis": 1.2942,
-      "distribution_type": "right_skewed",
-      "commentary": "",
-      "visualization_path": "",
-      "data": null
-    },
-    {
-      "column": "total_charges",
-      "analysis_type": "univariate",
-      "stats": {
-        "count": 10000,
-        "missing": 0,
-        "missing_pct": 0.0,
-        "unique": 9577,
-        "dtype": "float64",
-        "mean": 2202.9249,
-        "std": 2121.7994,
-        "min": 0.0,
-        "max": 9844.085,
-        "median": 1528.15
-      },
-      "skewness": 1.7063,
-      "kurtosis": 2.9921,
-      "distribution_type": "right_skewed",
-      "commentary": "",
-      "visualization_path": "",
-      "data": null
-    },
-    {
-      "column": "num_support_tickets",
-      "analysis_type": "univariate",
-      "stats": {
-        "count": 10000,
-        "missing": 0,
-        "missing_pct": 0.0,
-        "unique": 14,
+        "unique": 21,
         "dtype": "int64",
-        "mean": 2.7843,
-        "std": 1.9524,
-        "min": 0.0,
-        "max": 13.0,
-        "median": 2.0
+        "mean": 53.5,
+        "std": 5.7892,
+        "min": 45.0,
+        "max": 65.0,
+        "median": 52.5
       },
-      "skewness": 0.9098,
-      "kurtosis": 0.9152,
-      "distribution_type": "moderately_skewed",
+      "skewness": 0.3705,
+      "kurtosis": -1.0625,
+      "distribution_type": "approximately_normal",
       "commentary": "",
       "visualization_path": "",
       "data": null
     },
     {
-      "column": "avg_response_time_hrs",
+      "column": "satellite",
       "analysis_type": "univariate",
       "stats": {
-        "count": 10000,
+        "count": 36,
         "missing": 0,
         "missing_pct": 0.0,
-        "unique": 507,
-        "dtype": "float64",
-        "mean": 11.7734,
-        "std": 11.0855,
-        "min": 0.5,
-        "max": 54.8,
-        "median": 8.5
+        "unique": 1,
+        "dtype": "str",
+        "top_values": {
+          "N": 36
+        }
       },
-      "skewness": 1.5911,
-      "kurtosis": 2.5862,
-      "distribution_type": "right_skewed",
+      "skewness": null,
+      "kurtosis": null,
+      "distribution_type": "categorical",
       "commentary": "",
       "visualization_path": "",
       "data": null
     },
     {
-      "column": "login_frequency",
+      "column": "confidence",
       "analysis_type": "univariate",
       "stats": {
-        "count": 10000,
-        "missing": 0,
-        "missing_pct": 0.0,
-        "unique": 351,
-        "dtype": "float64",
-        "mean": 9.7174,
-        "std": 7.7901,
-        "min": 0.2,
-        "max": 35.599999999999994,
-        "median": 7.3
-      },
-      "skewness": 1.6585,
-      "kurtosis": 2.5138,
-      "distribution_type": "right_skewed",
-      "commentary": "",
-      "visualization_path": "",
-      "data": null
-    },
-    {
-      "column": "feature_usage_score",
-      "analysis_type": "univariate",
-      "stats": {
-        "count": 10000,
-        "missing": 0,
-        "missing_pct": 0.0,
-        "unique": 755,
-        "dtype": "float64",
-        "mean": 28.5434,
-        "std": 15.6159,
-        "min": 0.2,
-        "max": 88.7,
-        "median": 26.8
-      },
-      "skewness": 0.5752,
-      "kurtosis": -0.1122,
-      "distribution_type": "moderately_skewed",
-      "commentary": "",
-      "visualization_path": "",
-      "data": null
-    },
-    {
-      "column": "contract_type",
-      "analysis_type": "univariate",
-      "stats": {
-        "count": 10000,
+        "count": 36,
         "missing": 0,
         "missing_pct": 0.0,
         "unique": 3,
         "dtype": "str",
         "top_values": {
-          "Month-to-month": 4998,
-          "One year": 3005,
-          "Two year": 1997
+          "h": 18,
+          "n": 12,
+          "l": 6
         }
       },
       "skewness": null,
@@ -258,19 +195,16 @@
       "data": null
     },
     {
-      "column": "payment_method",
+      "column": "version",
       "analysis_type": "univariate",
       "stats": {
-        "count": 10000,
+        "count": 36,
         "missing": 0,
         "missing_pct": 0.0,
-        "unique": 4,
+        "unique": 1,
         "dtype": "str",
         "top_values": {
-          "Credit card": 3487,
-          "Bank transfer": 2528,
-          "Electronic check": 2446,
-          "Mailed check": 1539
+          "2.0NRT": 36
         }
       },
       "skewness": null,
@@ -281,158 +215,61 @@
       "data": null
     },
     {
-      "column": "region",
+      "column": "bright_t31",
       "analysis_type": "univariate",
       "stats": {
-        "count": 9988,
-        "missing": 12,
-        "missing_pct": 0.0012,
-        "unique": 11,
-        "dtype": "str",
-        "top_values": {
-          "North America": 3454,
-          "Europe": 2523,
-          "Asia Pacific": 2046,
-          "Latin America": 1150,
-          "Middle East": 788,
-          "US/Canada": 5,
-          "APAC": 5,
-          "EMEA": 5,
-          "N. America": 4,
-          "Asia": 4
-        }
-      },
-      "skewness": null,
-      "kurtosis": null,
-      "distribution_type": "categorical",
-      "commentary": "",
-      "visualization_path": "",
-      "data": null
-    },
-    {
-      "column": "age",
-      "analysis_type": "univariate",
-      "stats": {
-        "count": 10000,
+        "count": 36,
         "missing": 0,
         "missing_pct": 0.0,
-        "unique": 65,
+        "unique": 34,
         "dtype": "float64",
-        "mean": 41.5323,
-        "std": 11.5338,
-        "min": 18.0,
-        "max": 85.0,
-        "median": 41.0
+        "mean": 297.0167,
+        "std": 5.2416,
+        "min": 287.3,
+        "max": 303.8,
+        "median": 298.65
       },
-      "skewness": 0.0974,
-      "kurtosis": -0.3053,
-      "distribution_type": "approximately_normal",
-      "commentary": "",
-      "visualization_path": "",
-      "data": null
-    },
-    {
-      "column": "gender",
-      "analysis_type": "univariate",
-      "stats": {
-        "count": 10000,
-        "missing": 0,
-        "missing_pct": 0.0,
-        "unique": 4,
-        "dtype": "str",
-        "top_values": {
-          "Male": 4485,
-          "Female": 4161,
-          "Non-binary": 842,
-          "Prefer not to say": 512
-        }
-      },
-      "skewness": null,
-      "kurtosis": null,
-      "distribution_type": "categorical",
-      "commentary": "",
-      "visualization_path": "",
-      "data": null
-    },
-    {
-      "column": "num_products",
-      "analysis_type": "univariate",
-      "stats": {
-        "count": 10000,
-        "missing": 0,
-        "missing_pct": 0.0,
-        "unique": 5,
-        "dtype": "int64",
-        "mean": 2.3251,
-        "std": 1.1854,
-        "min": 1.0,
-        "max": 5.0,
-        "median": 2.0
-      },
-      "skewness": 0.5404,
-      "kurtosis": -0.7269,
+      "skewness": -0.5742,
+      "kurtosis": -1.0754,
       "distribution_type": "moderately_skewed",
       "commentary": "",
       "visualization_path": "",
       "data": null
     },
     {
-      "column": "has_partner",
+      "column": "frp",
       "analysis_type": "univariate",
       "stats": {
-        "count": 10000,
+        "count": 36,
         "missing": 0,
         "missing_pct": 0.0,
-        "unique": 2,
-        "dtype": "int64",
-        "mean": 0.4834,
-        "std": 0.4997,
-        "min": 0.0,
-        "max": 1.0,
-        "median": 0.0
+        "unique": 34,
+        "dtype": "float64",
+        "mean": 21.0,
+        "std": 10.5886,
+        "min": 5.2,
+        "max": 38.6,
+        "median": 20.25
       },
-      "skewness": 0.0664,
-      "kurtosis": -1.996,
+      "skewness": 0.1498,
+      "kurtosis": -1.3764,
       "distribution_type": "approximately_normal",
       "commentary": "",
       "visualization_path": "",
       "data": null
     },
     {
-      "column": "has_dependents",
+      "column": "daynight",
       "analysis_type": "univariate",
       "stats": {
-        "count": 10000,
+        "count": 36,
         "missing": 0,
         "missing_pct": 0.0,
         "unique": 2,
-        "dtype": "int64",
-        "mean": 0.3041,
-        "std": 0.46,
-        "min": 0.0,
-        "max": 1.0,
-        "median": 0.0
-      },
-      "skewness": 0.8518,
-      "kurtosis": -1.2747,
-      "distribution_type": "moderately_skewed",
-      "commentary": "",
-      "visualization_path": "",
-      "data": null
-    },
-    {
-      "column": "online_security",
-      "analysis_type": "univariate",
-      "stats": {
-        "count": 9800,
-        "missing": 200,
-        "missing_pct": 0.02,
-        "unique": 3,
         "dtype": "str",
         "top_values": {
-          "No": 4890,
-          "Yes": 3403,
-          "No internet": 1507
+          "D": 24,
+          "N": 12
         }
       },
       "skewness": null,
@@ -443,253 +280,43 @@
       "data": null
     },
     {
-      "column": "tech_support",
+      "column": "type",
       "analysis_type": "univariate",
       "stats": {
-        "count": 9800,
-        "missing": 200,
-        "missing_pct": 0.02,
-        "unique": 3,
-        "dtype": "str",
-        "top_values": {
-          "No": 5384,
-          "Yes": 2930,
-          "No internet": 1486
-        }
-      },
-      "skewness": null,
-      "kurtosis": null,
-      "distribution_type": "categorical",
-      "commentary": "",
-      "visualization_path": "",
-      "data": null
-    },
-    {
-      "column": "churned_30d",
-      "analysis_type": "univariate",
-      "stats": {
-        "count": 10000,
+        "count": 36,
         "missing": 0,
         "missing_pct": 0.0,
-        "unique": 2,
+        "unique": 1,
         "dtype": "int64",
-        "mean": 0.3864,
-        "std": 0.4869,
+        "mean": 0.0,
+        "std": 0.0,
         "min": 0.0,
-        "max": 1.0,
+        "max": 0.0,
         "median": 0.0
       },
-      "skewness": 0.4667,
-      "kurtosis": -1.7826,
+      "skewness": 0.0,
+      "kurtosis": 0.0,
       "distribution_type": "approximately_normal",
       "commentary": "",
       "visualization_path": "",
       "data": null
     },
     {
-      "column": "tenure_days",
-      "analysis_type": "bivariate",
+      "column": "data_source",
+      "analysis_type": "univariate",
       "stats": {
-        "column": "tenure_days",
-        "target": "churned_30d",
-        "correlation": -0.1514,
-        "abs_correlation": 0.1514
-      },
-      "skewness": null,
-      "kurtosis": null,
-      "distribution_type": "",
-      "commentary": "",
-      "visualization_path": "",
-      "data": null
-    },
-    {
-      "column": "plan_type",
-      "analysis_type": "bivariate_cat_num",
-      "stats": {
-        "column": "plan_type",
-        "target": "churned_30d",
-        "group_means": {
-          "Basic": 0.353,
-          "Enterprise": 0.4722,
-          "Premium": 0.4473,
-          "Standard": 0.3424
+        "count": 36,
+        "missing": 0,
+        "missing_pct": 0.0,
+        "unique": 1,
+        "dtype": "str",
+        "top_values": {
+          "firms_fallback": 36
         }
       },
       "skewness": null,
       "kurtosis": null,
-      "distribution_type": "",
-      "commentary": "",
-      "visualization_path": "",
-      "data": null
-    },
-    {
-      "column": "num_support_tickets",
-      "analysis_type": "bivariate",
-      "stats": {
-        "column": "num_support_tickets",
-        "target": "churned_30d",
-        "correlation": 0.5294,
-        "abs_correlation": 0.5294
-      },
-      "skewness": null,
-      "kurtosis": null,
-      "distribution_type": "",
-      "commentary": "",
-      "visualization_path": "",
-      "data": null
-    },
-    {
-      "column": "login_frequency",
-      "analysis_type": "bivariate",
-      "stats": {
-        "column": "login_frequency",
-        "target": "churned_30d",
-        "correlation": -0.1249,
-        "abs_correlation": 0.1249
-      },
-      "skewness": null,
-      "kurtosis": null,
-      "distribution_type": "",
-      "commentary": "",
-      "visualization_path": "",
-      "data": null
-    },
-    {
-      "column": "feature_usage_score",
-      "analysis_type": "bivariate",
-      "stats": {
-        "column": "feature_usage_score",
-        "target": "churned_30d",
-        "correlation": -0.1155,
-        "abs_correlation": 0.1155
-      },
-      "skewness": null,
-      "kurtosis": null,
-      "distribution_type": "",
-      "commentary": "",
-      "visualization_path": "",
-      "data": null
-    },
-    {
-      "column": "contract_type",
-      "analysis_type": "bivariate_cat_num",
-      "stats": {
-        "column": "contract_type",
-        "target": "churned_30d",
-        "group_means": {
-          "Month-to-month": 0.5262,
-          "One year": 0.3188,
-          "Two year": 0.1382
-        }
-      },
-      "skewness": null,
-      "kurtosis": null,
-      "distribution_type": "",
-      "commentary": "",
-      "visualization_path": "",
-      "data": null
-    },
-    {
-      "column": "payment_method",
-      "analysis_type": "bivariate_cat_num",
-      "stats": {
-        "column": "payment_method",
-        "target": "churned_30d",
-        "group_means": {
-          "Bank transfer": 0.3734,
-          "Credit card": 0.3688,
-          "Electronic check": 0.4268,
-          "Mailed check": 0.3834
-        }
-      },
-      "skewness": null,
-      "kurtosis": null,
-      "distribution_type": "",
-      "commentary": "",
-      "visualization_path": "",
-      "data": null
-    },
-    {
-      "column": "region",
-      "analysis_type": "bivariate_cat_num",
-      "stats": {
-        "column": "region",
-        "target": "churned_30d",
-        "group_means": {
-          "APAC": 0.6,
-          "Asia": 0.75,
-          "Asia Pacific": 0.3827,
-          "EMEA": 0.4,
-          "EU": 0.5,
-          "Europe": 0.3833,
-          "Latin America": 0.3861,
-          "Middle East": 0.382,
-          "N. America": 0.0,
-          "North America": 0.3909,
-          "US/Canada": 0.4
-        }
-      },
-      "skewness": null,
-      "kurtosis": null,
-      "distribution_type": "",
-      "commentary": "",
-      "visualization_path": "",
-      "data": null
-    },
-    {
-      "column": "gender",
-      "analysis_type": "bivariate_cat_num",
-      "stats": {
-        "column": "gender",
-        "target": "churned_30d",
-        "group_means": {
-          "Female": 0.3913,
-          "Male": 0.3833,
-          "Non-binary": 0.3753,
-          "Prefer not to say": 0.3926
-        }
-      },
-      "skewness": null,
-      "kurtosis": null,
-      "distribution_type": "",
-      "commentary": "",
-      "visualization_path": "",
-      "data": null
-    },
-    {
-      "column": "online_security",
-      "analysis_type": "bivariate_cat_num",
-      "stats": {
-        "column": "online_security",
-        "target": "churned_30d",
-        "group_means": {
-          "No": 0.4157,
-          "No internet": 0.357,
-          "Yes": 0.3535
-        }
-      },
-      "skewness": null,
-      "kurtosis": null,
-      "distribution_type": "",
-      "commentary": "",
-      "visualization_path": "",
-      "data": null
-    },
-    {
-      "column": "tech_support",
-      "analysis_type": "bivariate_cat_num",
-      "stats": {
-        "column": "tech_support",
-        "target": "churned_30d",
-        "group_means": {
-          "No": 0.4088,
-          "No internet": 0.358,
-          "Yes": 0.3563
-        }
-      },
-      "skewness": null,
-      "kurtosis": null,
-      "distribution_type": "",
+      "distribution_type": "categorical",
       "commentary": "",
       "visualization_path": "",
       "data": null
@@ -700,64 +327,146 @@
       "stats": {
         "high_correlations": [
           {
-            "col_a": "monthly_charges",
-            "col_b": "total_charges",
-            "correlation": 0.6868
+            "col_a": "brightness",
+            "col_b": "frp",
+            "correlation": 0.9963
           },
           {
-            "col_a": "tenure_days",
-            "col_b": "total_charges",
-            "correlation": 0.5914
+            "col_a": "latitude",
+            "col_b": "longitude",
+            "correlation": -0.9897
           },
           {
-            "col_a": "num_support_tickets",
-            "col_b": "churned_30d",
-            "correlation": 0.5294
+            "col_a": "scan",
+            "col_b": "bright_t31",
+            "correlation": 0.9805
+          },
+          {
+            "col_a": "brightness",
+            "col_b": "scan",
+            "correlation": 0.9737
+          },
+          {
+            "col_a": "brightness",
+            "col_b": "bright_t31",
+            "correlation": 0.9614
+          },
+          {
+            "col_a": "scan",
+            "col_b": "frp",
+            "correlation": 0.9592
+          },
+          {
+            "col_a": "brightness",
+            "col_b": "track",
+            "correlation": 0.9538
+          },
+          {
+            "col_a": "scan",
+            "col_b": "track",
+            "correlation": 0.9505
+          },
+          {
+            "col_a": "bright_t31",
+            "col_b": "frp",
+            "correlation": 0.9498
+          },
+          {
+            "col_a": "track",
+            "col_b": "frp",
+            "correlation": 0.9436
+          },
+          {
+            "col_a": "track",
+            "col_b": "bright_t31",
+            "correlation": 0.9346
+          },
+          {
+            "col_a": "latitude",
+            "col_b": "bright_t31",
+            "correlation": -0.9092
+          },
+          {
+            "col_a": "latitude",
+            "col_b": "scan",
+            "correlation": -0.9078
+          },
+          {
+            "col_a": "longitude",
+            "col_b": "bright_t31",
+            "correlation": 0.9053
+          },
+          {
+            "col_a": "longitude",
+            "col_b": "scan",
+            "correlation": 0.8971
+          },
+          {
+            "col_a": "latitude",
+            "col_b": "track",
+            "correlation": -0.8669
+          },
+          {
+            "col_a": "latitude",
+            "col_b": "brightness",
+            "correlation": -0.834
+          },
+          {
+            "col_a": "latitude",
+            "col_b": "frp",
+            "correlation": -0.8189
+          },
+          {
+            "col_a": "longitude",
+            "col_b": "track",
+            "correlation": 0.8155
+          },
+          {
+            "col_a": "longitude",
+            "col_b": "brightness",
+            "correlation": 0.8105
           }
         ]
       },
       "skewness": null,
       "kurtosis": null,
       "distribution_type": "",
-      "commentary": "Found 3 high-correlation pairs (|r| > 0.5)",
+      "commentary": "Found 21 high-correlation pairs (|r| > 0.5)",
       "visualization_path": "",
       "data": null
     }
   ],
-  "narrative": "The dataset shows typical patterns for the domain with some notable correlations.",
+  "narrative": "Dataset contains 36 rows and 15 columns. Average missing rate is 0.0%.",
   "hypotheses": [],
   "recommended_features": [
-    "tenure_days",
-    "num_support_tickets",
-    "login_frequency",
-    "feature_usage_score",
-    "monthly_charges",
-    "total_charges",
-    "avg_response_time_hrs",
-    "age",
-    "num_products",
-    "has_partner",
-    "has_dependents",
-    "plan_type",
-    "contract_type",
-    "payment_method",
-    "region",
-    "gender",
-    "online_security",
-    "tech_support"
+    "latitude",
+    "longitude",
+    "brightness",
+    "scan",
+    "track",
+    "acq_time",
+    "bright_t31",
+    "frp",
+    "type",
+    "acq_date",
+    "satellite",
+    "version",
+    "daynight",
+    "data_source"
   ],
   "correlation_matrix_path": "output\\charts\\correlation_matrix.png",
   "data_traits": {
-    "n_rows": 10000,
-    "n_columns": 21,
-    "n_numeric": 12,
-    "n_categorical": 9,
-    "avg_missing_pct": 0.002,
+    "n_rows": 36,
+    "n_columns": 15,
+    "n_numeric": 9,
+    "n_categorical": 6,
+    "avg_missing_pct": 0.0,
     "has_duplicates": false,
-    "task_type": "binary_classification",
+    "task_type": "classification",
     "class_balance": {
-      "0": 0.6136,
-      "1": 0.3864
+      "h": 0.5,
+      "n": 0.3333,
+      "l": 0.1667
     }
   }
 }
