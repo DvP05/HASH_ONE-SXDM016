@@ -1,19 +1,21 @@
-# Model Card: xgboost
+# Model Card: logistic_regression
 
-**Type**: xgboost
+**Type**: logistic
 **Task**: classification
 
 ## Intended Use
 
-Predict the confidence of active fires based on NASA FIRMS telemetry data.
-Focus on identifying high-confidence active fire vectors for emergency dispatch.
+Predict and classify natural disasters (wildfires, floods, droughts) and their
+impact on crops using global satellite telemetry data from NASA FIRMS, EONET,
+and POWER APIs, combined with historical disaster training data from Kaggle.
+Focus on identifying high-risk zones for emergency dispatch and agricultural protection.
 
 
 ## Performance
 
-- CV Score: 1.0000 ± 0.0000
-- ROC-AUC: 1.0000
-- Accuracy: 100.0%
+- CV Score: 0.9401 ± 0.0077
+- ROC-AUC: 0.9430
+- Accuracy: 90.0%
 
 ## Limitations
 
@@ -23,10 +25,7 @@ Model trained on historical data; may not generalize to distribution shifts.
 
 ```json
 {
-  "n_estimators": 100,
-  "max_depth": 6,
-  "learning_rate": 0.1,
-  "random_state": 42,
-  "eval_metric": "logloss"
+  "max_iter": 1000,
+  "random_state": 42
 }
 ```

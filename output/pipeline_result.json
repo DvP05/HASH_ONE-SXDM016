@@ -1,65 +1,65 @@
 {
-  "completed_at": "2026-04-08T18:00:21.117436+00:00",
-  "total_duration_seconds": 112.71,
+  "completed_at": "2026-04-08T21:09:57.917270+00:00",
+  "total_duration_seconds": 237.2,
   "total_llm_calls": 0,
   "total_tokens": 0,
   "stages": {
     "data_collection": {
       "status": "success",
       "quality_gate_passed": true,
-      "output_summary": "{'rows': 36, 'columns': 28, 'column_names': ['latitude', 'longitude', 'brightness', 'scan', 'track', 'acq_date', 'acq_time', 'satellite', 'confidence', 'version', 'bright_t31', 'frp', 'daynight', 'typ",
+      "output_summary": "{'rows': 9048, 'columns': 38, 'column_names': ['latitude', 'longitude', 'brightness', 'scan', 'track', 'acq_date', 'acq_time', 'satellite', 'confidence', 'version', 'bright_t31', 'frp', 'daynight', 't",
       "trace": {
-        "duration_seconds": 28.3,
+        "duration_seconds": 48.63,
         "llm_calls": 1,
-        "reasoning_steps_count": 10
+        "reasoning_steps_count": 16
       }
     },
     "data_cleaning": {
       "status": "success",
-      "quality_gate_passed": true,
-      "output_summary": "log=[CleaningLogEntry(operation='cap_outliers_iqr', reasoning='Cap extreme outliers using IQR method.', rows_affected=0, reversible=True)] profile_before=DataProfile(shape=(36, 28), dtypes={'latitude'",
+      "quality_gate_passed": false,
+      "output_summary": "log=[CleaningLogEntry(operation='fill_numeric_missing', reasoning='Fill missing numeric values with column median.', rows_affected=0, reversible=True), CleaningLogEntry(operation='cap_outliers_iqr', r",
       "trace": {
-        "duration_seconds": 9.15,
+        "duration_seconds": 9.27,
         "llm_calls": 1,
-        "reasoning_steps_count": 9
+        "reasoning_steps_count": 11
       }
     },
     "eda": {
       "status": "success",
       "quality_gate_passed": true,
-      "output_summary": "findings=[Finding(column='latitude', analysis_type='univariate', stats={'count': 36, 'missing': 0, 'missing_pct': 0.0, 'unique': 36, 'dtype': 'float64', 'mean': 2.8817, 'std': 26.166, 'min': -23.64, '",
+      "output_summary": "findings=[Finding(column='latitude', analysis_type='univariate', stats={'count': 9048, 'missing': 0, 'missing_pct': 0.0, 'unique': 8967, 'dtype': 'float64', 'mean': 12.7645, 'std': 21.1574, 'min': -38",
       "trace": {
-        "duration_seconds": 18.13,
+        "duration_seconds": 18.26,
         "llm_calls": 2,
-        "reasoning_steps_count": 32
+        "reasoning_steps_count": 38
       }
     },
     "feature_engineering": {
       "status": "success",
       "quality_gate_passed": true,
-      "output_summary": "feature_names=['track', 'latitude', 'latitude_x_longitude', 'drought_severity_index', 'elevation_proxy', 'acq_time', 'days_since_rain', 'flood_risk_score', 'soil_moisture', 'wind_speed', 'relative_hum",
+      "output_summary": "feature_names=['frp_x_severity', 'frp', 'brightness', 'crop_yield_loss_pct', 'acq_date', 'month', 'precipitation', 'soil_moisture', 'humidity', 'temperature', 'wind_speed', 'track', 'drought_severity_",
       "trace": {
-        "duration_seconds": 1.96,
+        "duration_seconds": 0.86,
         "llm_calls": 0,
-        "reasoning_steps_count": 13
+        "reasoning_steps_count": 24
       }
     },
     "modeling": {
       "status": "success",
       "quality_gate_passed": true,
-      "output_summary": "model_name='xgboost' evaluation=ModelEvaluation(task_type='classification', accuracy=1.0, roc_auc=1.0, f1_score=1.0, precision=1.0, recall=1.0, confusion_matrix=[[18, 0, 0], [0, 6, 0], [0, 0, 12]], rm",
+      "output_summary": "model_name='logistic_regression' evaluation=ModelEvaluation(task_type='classification', accuracy=0.9, roc_auc=0.943, f1_score=0.8974, precision=0.897, recall=0.9, confusion_matrix=[[745, 0, 142], [0, ",
       "trace": {
-        "duration_seconds": 27.83,
+        "duration_seconds": 123.66,
         "llm_calls": 1,
-        "reasoning_steps_count": 23
+        "reasoning_steps_count": 21
       }
     },
     "insight_generation": {
       "status": "success",
       "quality_gate_passed": true,
-      "output_summary": "executive_summary='Analysis of Predict the confidence of active fires based on NASA FIRMS telemetry data.\\nFocus on identifying high-confidence active fire vectors for emergency dispatch.\\n is complet",
+      "output_summary": "executive_summary='Analysis of Predict and classify natural disasters (wildfires, floods, droughts) and their\\nimpact on crops using global satellite telemetry data from NASA FIRMS, EONET,\\nand POWER ",
       "trace": {
-        "duration_seconds": 27.33,
+        "duration_seconds": 27.25,
         "llm_calls": 3,
         "reasoning_steps_count": 12
       }

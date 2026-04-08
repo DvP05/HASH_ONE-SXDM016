@@ -38,3 +38,9 @@ tmp_test_*.py
 
 # Log files
 *.log
+
+# Data and Cache
+data/kaggle/
+data/live_cache/
+output/charts/*.png
+output/charts/*.html

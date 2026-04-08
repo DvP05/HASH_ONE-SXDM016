@@ -4,20 +4,20 @@
       "column": "latitude",
       "analysis_type": "univariate",
       "stats": {
-        "count": 36,
+        "count": 9048,
         "missing": 0,
         "missing_pct": 0.0,
-        "unique": 36,
+        "unique": 8967,
         "dtype": "float64",
-        "mean": 2.8817,
-        "std": 26.166,
-        "min": -23.64,
-        "max": 39.37,
-        "median": -12.04
+        "mean": 12.7645,
+        "std": 21.1574,
+        "min": -38.6118,
+        "max": 44.8019,
+        "median": 16.70105
       },
-      "skewness": 0.6566,
-      "kurtosis": -1.5267,
-      "distribution_type": "moderately_skewed",
+      "skewness": -0.4741,
+      "kurtosis": -0.8324,
+      "distribution_type": "approximately_normal",
       "commentary": "",
       "visualization_path": "",
       "data": null
@@ -26,19 +26,19 @@
       "column": "longitude",
       "analysis_type": "univariate",
       "stats": {
-        "count": 36,
+        "count": 9048,
         "missing": 0,
         "missing_pct": 0.0,
-        "unique": 36,
+        "unique": 8998,
         "dtype": "float64",
-        "mean": 47.1367,
-        "std": 120.7675,
-        "min": -121.67,
-        "max": 134.11,
-        "median": 130.175
+        "mean": 33.1544,
+        "std": 78.2873,
+        "min": -126.2029,
+        "max": 157.4218,
+        "median": 48.35435
       },
-      "skewness": -0.7378,
-      "kurtosis": -1.5441,
+      "skewness": -0.5936,
+      "kurtosis": -0.6835,
       "distribution_type": "moderately_skewed",
       "commentary": "",
       "visualization_path": "",
@@ -48,20 +48,20 @@
       "column": "brightness",
       "analysis_type": "univariate",
       "stats": {
-        "count": 36,
+        "count": 9048,
         "missing": 0,
         "missing_pct": 0.0,
-        "unique": 36,
+        "unique": 8969,
         "dtype": "float64",
-        "mean": 327.25,
-        "std": 15.3099,
-        "min": 302.8,
-        "max": 351.9,
-        "median": 326.5
+        "mean": 311.0642,
+        "std": 17.335,
+        "min": 273.7434991400999,
+        "max": 372.74004176964496,
+        "median": 306.8705763664127
       },
-      "skewness": 0.0482,
-      "kurtosis": -1.2771,
-      "distribution_type": "approximately_normal",
+      "skewness": 1.2992,
+      "kurtosis": 1.7356,
+      "distribution_type": "right_skewed",
       "commentary": "",
       "visualization_path": "",
       "data": null
@@ -70,20 +70,20 @@
       "column": "scan",
       "analysis_type": "univariate",
       "stats": {
-        "count": 36,
+        "count": 9048,
         "missing": 0,
         "missing_pct": 0.0,
-        "unique": 6,
+        "unique": 13,
         "dtype": "float64",
-        "mean": 0.4867,
-        "std": 0.0733,
+        "mean": 0.485,
+        "std": 0.0038,
         "min": 0.37,
-        "max": 0.58,
-        "median": 0.5
+        "max": 0.56,
+        "median": 0.485
       },
-      "skewness": -0.3709,
-      "kurtosis": -1.1785,
-      "distribution_type": "approximately_normal",
+      "skewness": -11.9231,
+      "kurtosis": 526.9791,
+      "distribution_type": "left_skewed",
       "commentary": "",
       "visualization_path": "",
       "data": null
@@ -92,20 +92,20 @@
       "column": "track",
       "analysis_type": "univariate",
       "stats": {
-        "count": 36,
+        "count": 9048,
         "missing": 0,
         "missing_pct": 0.0,
-        "unique": 6,
+        "unique": 11,
         "dtype": "float64",
-        "mean": 0.3967,
-        "std": 0.0456,
+        "mean": 0.395,
+        "std": 0.0024,
         "min": 0.33,
-        "max": 0.46,
+        "max": 0.45,
         "median": 0.395
       },
-      "skewness": -0.0238,
-      "kurtosis": -1.3334,
-      "distribution_type": "approximately_normal",
+      "skewness": -5.1904,
+      "kurtosis": 468.2404,
+      "distribution_type": "left_skewed",
       "commentary": "",
       "visualization_path": "",
       "data": null
@@ -114,13 +114,22 @@
       "column": "acq_date",
       "analysis_type": "univariate",
       "stats": {
-        "count": 36,
+        "count": 9048,
         "missing": 0,
         "missing_pct": 0.0,
-        "unique": 1,
+        "unique": 133,
         "dtype": "str",
         "top_values": {
-          "2026-04-05": 36
+          "2018-07-15": 135,
+          "2017-07-15": 124,
+          "2020-07-15": 121,
+          "2020-08-15": 119,
+          "2015-07-15": 116,
+          "2023-07-15": 115,
+          "2019-07-15": 115,
+          "2016-05-15": 114,
+          "2016-07-15": 112,
+          "2016-08-15": 111
         }
       },
       "skewness": null,
@@ -134,20 +143,20 @@
       "column": "acq_time",
       "analysis_type": "univariate",
       "stats": {
-        "count": 36,
+        "count": 9048,
         "missing": 0,
         "missing_pct": 0.0,
-        "unique": 21,
-        "dtype": "int64",
-        "mean": 53.5,
-        "std": 5.7892,
+        "unique": 46,
+        "dtype": "float64",
+        "mean": 171.9505,
+        "std": 16.8488,
         "min": 45.0,
-        "max": 65.0,
-        "median": 52.5
+        "max": 703.0,
+        "median": 171.5
       },
-      "skewness": 0.3705,
-      "kurtosis": -1.0625,
-      "distribution_type": "approximately_normal",
+      "skewness": 24.0529,
+      "kurtosis": 685.7054,
+      "distribution_type": "right_skewed",
       "commentary": "",
       "visualization_path": "",
       "data": null
@@ -156,13 +165,13 @@
       "column": "satellite",
       "analysis_type": "univariate",
       "stats": {
-        "count": 36,
+        "count": 9048,
         "missing": 0,
         "missing_pct": 0.0,
         "unique": 1,
         "dtype": "str",
         "top_values": {
-          "N": 36
+          "N": 9048
         }
       },
       "skewness": null,
@@ -176,15 +185,15 @@
       "column": "confidence",
       "analysis_type": "univariate",
       "stats": {
-        "count": 36,
+        "count": 9048,
         "missing": 0,
         "missing_pct": 0.0,
         "unique": 3,
         "dtype": "str",
         "top_values": {
-          "h": 18,
-          "n": 12,
-          "l": 6
+          "l": 6096,
+          "n": 2065,
+          "h": 887
         }
       },
       "skewness": null,
@@ -198,13 +207,13 @@
       "column": "version",
       "analysis_type": "univariate",
       "stats": {
-        "count": 36,
-        "missing": 0,
-        "missing_pct": 0.0,
+        "count": 48,
+        "missing": 9000,
+        "missing_pct": 0.9947,
         "unique": 1,
         "dtype": "str",
         "top_values": {
-          "2.0NRT": 36
+          "2.0NRT": 48
         }
       },
       "skewness": null,
@@ -218,20 +227,20 @@
       "column": "bright_t31",
       "analysis_type": "univariate",
       "stats": {
-        "count": 36,
+        "count": 9048,
         "missing": 0,
         "missing_pct": 0.0,
-        "unique": 34,
+        "unique": 46,
         "dtype": "float64",
-        "mean": 297.0167,
-        "std": 5.2416,
+        "mean": 296.1978,
+        "std": 0.3239,
         "min": 287.3,
-        "max": 303.8,
-        "median": 298.65
+        "max": 303.6,
+        "median": 296.20000000000005
       },
-      "skewness": -0.5742,
-      "kurtosis": -1.0754,
-      "distribution_type": "moderately_skewed",
+      "skewness": -6.4241,
+      "kurtosis": 400.5434,
+      "distribution_type": "left_skewed",
       "commentary": "",
       "visualization_path": "",
       "data": null
@@ -240,20 +249,20 @@
       "column": "frp",
       "analysis_type": "univariate",
       "stats": {
-        "count": 36,
+        "count": 9048,
         "missing": 0,
         "missing_pct": 0.0,
-        "unique": 34,
+        "unique": 912,
         "dtype": "float64",
-        "mean": 21.0,
-        "std": 10.5886,
-        "min": 5.2,
-        "max": 38.6,
-        "median": 20.25
+        "mean": 9.2441,
+        "std": 12.3482,
+        "min": 0.0,
+        "max": 50.589999999999996,
+        "median": 3.0
       },
-      "skewness": 0.1498,
-      "kurtosis": -1.3764,
-      "distribution_type": "approximately_normal",
+      "skewness": 1.7295,
+      "kurtosis": 2.1544,
+      "distribution_type": "right_skewed",
       "commentary": "",
       "visualization_path": "",
       "data": null
@@ -262,14 +271,14 @@
       "column": "daynight",
       "analysis_type": "univariate",
       "stats": {
-        "count": 36,
+        "count": 9048,
         "missing": 0,
         "missing_pct": 0.0,
         "unique": 2,
         "dtype": "str",
         "top_values": {
-          "D": 24,
-          "N": 12
+          "D": 9044,
+          "N": 4
         }
       },
       "skewness": null,
@@ -283,11 +292,11 @@
       "column": "type",
       "analysis_type": "univariate",
       "stats": {
-        "count": 36,
+        "count": 9048,
         "missing": 0,
         "missing_pct": 0.0,
         "unique": 1,
-        "dtype": "int64",
+        "dtype": "float64",
         "mean": 0.0,
         "std": 0.0,
         "min": 0.0,
@@ -305,13 +314,45 @@
       "column": "data_source",
       "analysis_type": "univariate",
       "stats": {
-        "count": 36,
+        "count": 9048,
         "missing": 0,
         "missing_pct": 0.0,
-        "unique": 1,
+        "unique": 4,
         "dtype": "str",
         "top_values": {
-          "firms_fallback": 36
+          "synthetic_flood": 3000,
+          "synthetic_drought": 3000,
+          "synthetic_wildfire": 3000,
+          "firms_fallback": 48
+        }
+      },
+      "skewness": null,
+      "kurtosis": null,
+      "distribution_type": "categorical",
+      "commentary": "",
+      "visualization_path": "",
+      "data": null
+    },
+    {
+      "column": "region",
+      "analysis_type": "univariate",
+      "stats": {
+        "count": 9048,
+        "missing": 0,
+        "missing_pct": 0.0,
+        "unique": 26,
+        "dtype": "str",
+        "top_values": {
+          "India \u2014 North": 454,
+          "India \u2014 South": 454,
+          "East Africa \u2014 Kenya": 454,
+          "West Africa \u2014 Nigeria": 454,
+          "Brazil \u2014 Amazon": 454,
+          "India \u2014 East (Bengal)": 450,
+          "India \u2014 West (Maharashtra)": 450,
+          "Southern Africa \u2014 Zambia": 450,
+          "Brazil \u2014 Central": 450,
+          "Indonesia \u2014 Java": 450
         }
       },
       "skewness": null,
@@ -325,19 +366,19 @@
       "column": "temperature_2m",
       "analysis_type": "univariate",
       "stats": {
-        "count": 36,
+        "count": 9048,
         "missing": 0,
         "missing_pct": 0.0,
-        "unique": 36,
+        "unique": 491,
         "dtype": "float64",
-        "mean": 31.2808,
-        "std": 2.7317,
-        "min": 26.1,
-        "max": 37.99,
-        "median": 31.42
+        "mean": 32.7029,
+        "std": 8.2132,
+        "min": 8.5,
+        "max": 61.1,
+        "median": 32.6
       },
-      "skewness": 0.1882,
-      "kurtosis": -0.3255,
+      "skewness": 0.0944,
+      "kurtosis": -0.396,
       "distribution_type": "approximately_normal",
       "commentary": "",
       "visualization_path": "",
@@ -347,20 +388,20 @@
       "column": "temperature_max",
       "analysis_type": "univariate",
       "stats": {
-        "count": 36,
+        "count": 9048,
         "missing": 0,
         "missing_pct": 0.0,
-        "unique": 36,
+        "unique": 49,
         "dtype": "float64",
-        "mean": 37.3589,
-        "std": 3.31,
-        "min": 30.24,
-        "max": 45.83,
-        "median": 37.735
+        "mean": 37.4223,
+        "std": 0.2397,
+        "min": 29.11,
+        "max": 43.3,
+        "median": 37.425
       },
-      "skewness": 0.0685,
-      "kurtosis": 0.1135,
-      "distribution_type": "approximately_normal",
+      "skewness": -12.1692,
+      "kurtosis": 546.2831,
+      "distribution_type": "left_skewed",
       "commentary": "",
       "visualization_path": "",
       "data": null
@@ -369,20 +410,20 @@
       "column": "temperature_min",
       "analysis_type": "univariate",
       "stats": {
-        "count": 36,
+        "count": 9048,
         "missing": 0,
         "missing_pct": 0.0,
-        "unique": 35,
+        "unique": 49,
         "dtype": "float64",
-        "mean": 25.5186,
-        "std": 2.3769,
-        "min": 21.28,
-        "max": 31.55,
-        "median": 25.33
+        "mean": 24.9915,
+        "std": 0.1906,
+        "min": 19.0,
+        "max": 30.75,
+        "median": 24.990000000000002
       },
-      "skewness": 0.3803,
-      "kurtosis": -0.23,
-      "distribution_type": "approximately_normal",
+      "skewness": 5.0284,
+      "kurtosis": 495.8762,
+      "distribution_type": "right_skewed",
       "commentary": "",
       "visualization_path": "",
       "data": null
@@ -391,19 +432,19 @@
       "column": "precipitation",
       "analysis_type": "univariate",
       "stats": {
-        "count": 36,
+        "count": 9048,
         "missing": 0,
         "missing_pct": 0.0,
-        "unique": 32,
+        "unique": 1133,
         "dtype": "float64",
-        "mean": 1.6801,
-        "std": 2.3534,
-        "min": 0.02,
-        "max": 7.9275,
-        "median": 0.5800000000000001
+        "mean": 20.5437,
+        "std": 32.6554,
+        "min": 0.0,
+        "max": 133.79999999999998,
+        "median": 2.0
       },
-      "skewness": 1.6415,
-      "kurtosis": 1.5558,
+      "skewness": 1.7063,
+      "kurtosis": 2.0533,
       "distribution_type": "right_skewed",
       "commentary": "",
       "visualization_path": "",
@@ -413,20 +454,20 @@
       "column": "relative_humidity",
       "analysis_type": "univariate",
       "stats": {
-        "count": 36,
+        "count": 9048,
         "missing": 0,
         "missing_pct": 0.0,
-        "unique": 36,
+        "unique": 936,
         "dtype": "float64",
-        "mean": 35.2356,
-        "std": 12.1784,
-        "min": 8.0,
-        "max": 62.12,
-        "median": 34.585
+        "mean": 40.0573,
+        "std": 26.2953,
+        "min": 5.0,
+        "max": 100.0,
+        "median": 28.7
       },
-      "skewness": -0.0534,
-      "kurtosis": -0.3637,
-      "distribution_type": "approximately_normal",
+      "skewness": 0.6102,
+      "kurtosis": -1.1258,
+      "distribution_type": "moderately_skewed",
       "commentary": "",
       "visualization_path": "",
       "data": null
@@ -435,19 +476,19 @@
       "column": "wind_speed",
       "analysis_type": "univariate",
       "stats": {
-        "count": 36,
+        "count": 9048,
         "missing": 0,
         "missing_pct": 0.0,
-        "unique": 36,
+        "unique": 137,
         "dtype": "float64",
-        "mean": 3.7161,
-        "std": 1.9288,
-        "min": 0.92,
-        "max": 10.04,
-        "median": 3.25
+        "mean": 3.2586,
+        "std": 1.9552,
+        "min": 0.5,
+        "max": 10.3,
+        "median": 2.7
       },
-      "skewness": 1.1017,
-      "kurtosis": 1.7987,
+      "skewness": 1.6153,
+      "kurtosis": 2.7191,
       "distribution_type": "right_skewed",
       "commentary": "",
       "visualization_path": "",
@@ -457,20 +498,20 @@
       "column": "soil_moisture",
       "analysis_type": "univariate",
       "stats": {
-        "count": 36,
+        "count": 9048,
         "missing": 0,
         "missing_pct": 0.0,
-        "unique": 36,
+        "unique": 857,
         "dtype": "float64",
-        "mean": 0.2835,
-        "std": 0.1393,
-        "min": 0.02,
-        "max": 0.6428,
-        "median": 0.28015
+        "mean": 0.3177,
+        "std": 0.2837,
+        "min": 0.01,
+        "max": 1.0,
+        "median": 0.172
       },
-      "skewness": 0.2887,
-      "kurtosis": 0.4213,
-      "distribution_type": "approximately_normal",
+      "skewness": 0.7096,
+      "kurtosis": -1.1526,
+      "distribution_type": "moderately_skewed",
       "commentary": "",
       "visualization_path": "",
       "data": null
@@ -479,20 +520,20 @@
       "column": "vegetation_index",
       "analysis_type": "univariate",
       "stats": {
-        "count": 36,
+        "count": 9048,
         "missing": 0,
         "missing_pct": 0.0,
-        "unique": 35,
+        "unique": 49,
         "dtype": "float64",
-        "mean": 0.4205,
-        "std": 0.129,
-        "min": 0.2378,
-        "max": 0.7773,
-        "median": 0.3926
+        "mean": 0.413,
+        "std": 0.0094,
+        "min": 0.1833,
+        "max": 0.7197,
+        "median": 0.41295
       },
-      "skewness": 0.7373,
-      "kurtosis": 0.1159,
-      "distribution_type": "moderately_skewed",
+      "skewness": 5.0141,
+      "kurtosis": 434.7826,
+      "distribution_type": "right_skewed",
       "commentary": "",
       "visualization_path": "",
       "data": null
@@ -501,20 +542,20 @@
       "column": "solar_radiation",
       "analysis_type": "univariate",
       "stats": {
-        "count": 36,
+        "count": 9048,
         "missing": 0,
         "missing_pct": 0.0,
-        "unique": 36,
+        "unique": 49,
         "dtype": "float64",
-        "mean": 18.9794,
-        "std": 5.4324,
+        "mean": 19.2189,
+        "std": 0.3763,
         "min": 10.79,
         "max": 29.77,
-        "median": 19.705
+        "median": 19.22
       },
-      "skewness": 0.0733,
-      "kurtosis": -0.9621,
-      "distribution_type": "approximately_normal",
+      "skewness": -0.9031,
+      "kurtosis": 373.7887,
+      "distribution_type": "moderately_skewed",
       "commentary": "",
       "visualization_path": "",
       "data": null
@@ -523,19 +564,19 @@
       "column": "drought_severity_index",
       "analysis_type": "univariate",
       "stats": {
-        "count": 36,
+        "count": 9048,
         "missing": 0,
         "missing_pct": 0.0,
-        "unique": 36,
+        "unique": 44,
         "dtype": "float64",
-        "mean": -1.1417,
-        "std": 2.1719,
-        "min": -3.74,
-        "max": 6.0,
-        "median": -1.3450000000000002
+        "mean": -1.4493,
+        "std": 0.1113,
+        "min": -3.64,
+        "max": 3.09,
+        "median": -1.45
       },
-      "skewness": 1.4998,
-      "kurtosis": 2.474,
+      "skewness": 14.4137,
+      "kurtosis": 692.8752,
       "distribution_type": "right_skewed",
       "commentary": "",
       "visualization_path": "",
@@ -545,19 +586,19 @@
       "column": "flood_risk_score",
       "analysis_type": "univariate",
       "stats": {
-        "count": 36,
+        "count": 9048,
         "missing": 0,
         "missing_pct": 0.0,
-        "unique": 34,
+        "unique": 48,
         "dtype": "float64",
-        "mean": 2.4597,
-        "std": 2.3896,
+        "mean": 1.6488,
+        "std": 0.1546,
         "min": 0.0,
-        "max": 9.74,
-        "median": 1.635
+        "max": 8.44,
+        "median": 1.645
       },
-      "skewness": 1.8845,
-      "kurtosis": 3.4365,
+      "skewness": 31.2471,
+      "kurtosis": 1194.0397,
       "distribution_type": "right_skewed",
       "commentary": "",
       "visualization_path": "",
@@ -567,20 +608,20 @@
       "column": "days_since_rain",
       "analysis_type": "univariate",
       "stats": {
-        "count": 36,
+        "count": 9048,
         "missing": 0,
         "missing_pct": 0.0,
         "unique": 9,
-        "dtype": "int64",
-        "mean": 5.7222,
-        "std": 3.3942,
+        "dtype": "float64",
+        "mean": 6.995,
+        "std": 0.2399,
         "min": 0.0,
         "max": 10.0,
         "median": 7.0
       },
-      "skewness": -0.7313,
-      "kurtosis": -0.7462,
-      "distribution_type": "moderately_skewed",
+      "skewness": -21.864,
+      "kurtosis": 673.9046,
+      "distribution_type": "left_skewed",
       "commentary": "",
       "visualization_path": "",
       "data": null
@@ -589,19 +630,221 @@
       "column": "elevation_proxy",
       "analysis_type": "univariate",
       "stats": {
-        "count": 36,
+        "count": 9048,
         "missing": 0,
         "missing_pct": 0.0,
-        "unique": 35,
+        "unique": 48,
         "dtype": "float64",
-        "mean": 374.4444,
-        "std": 110.2474,
-        "min": 213.0,
-        "max": 583.0,
-        "median": 346.0
+        "mean": 310.6306,
+        "std": 8.9773,
+        "min": 139.0,
+        "max": 554.0,
+        "median": 310.5
       },
-      "skewness": 0.4223,
-      "kurtosis": -1.0525,
+      "skewness": 12.2913,
+      "kurtosis": 408.7615,
+      "distribution_type": "right_skewed",
+      "commentary": "",
+      "visualization_path": "",
+      "data": null
+    },
+    {
+      "column": "event_type",
+      "analysis_type": "univariate",
+      "stats": {
+        "count": 9000,
+        "missing": 48,
+        "missing_pct": 0.0053,
+        "unique": 3,
+        "dtype": "str",
+        "top_values": {
+          "flood": 3000,
+          "drought": 3000,
+          "wildfire": 3000
+        }
+      },
+      "skewness": null,
+      "kurtosis": null,
+      "distribution_type": "categorical",
+      "commentary": "",
+      "visualization_path": "",
+      "data": null
+    },
+    {
+      "column": "year",
+      "analysis_type": "univariate",
+      "stats": {
+        "count": 9048,
+        "missing": 0,
+        "missing_pct": 0.0,
+        "unique": 11,
+        "dtype": "float64",
+        "mean": 2019.937,
+        "std": 3.1355,
+        "min": 2015.0,
+        "max": 2025.0,
+        "median": 2020.0
+      },
+      "skewness": 0.0344,
+      "kurtosis": -1.1913,
+      "distribution_type": "approximately_normal",
+      "commentary": "",
+      "visualization_path": "",
+      "data": null
+    },
+    {
+      "column": "month",
+      "analysis_type": "univariate",
+      "stats": {
+        "count": 9048,
+        "missing": 0,
+        "missing_pct": 0.0,
+        "unique": 12,
+        "dtype": "float64",
+        "mean": 6.7466,
+        "std": 2.8119,
+        "min": 1.0,
+        "max": 12.0,
+        "median": 7.0
+      },
+      "skewness": -0.0418,
+      "kurtosis": -0.778,
+      "distribution_type": "approximately_normal",
+      "commentary": "",
+      "visualization_path": "",
+      "data": null
+    },
+    {
+      "column": "temperature",
+      "analysis_type": "univariate",
+      "stats": {
+        "count": 9048,
+        "missing": 0,
+        "missing_pct": 0.0,
+        "unique": 448,
+        "dtype": "float64",
+        "mean": 32.7118,
+        "std": 8.2098,
+        "min": 8.5,
+        "max": 61.1,
+        "median": 32.6
+      },
+      "skewness": 0.0918,
+      "kurtosis": -0.3925,
+      "distribution_type": "approximately_normal",
+      "commentary": "",
+      "visualization_path": "",
+      "data": null
+    },
+    {
+      "column": "humidity",
+      "analysis_type": "univariate",
+      "stats": {
+        "count": 9048,
+        "missing": 0,
+        "missing_pct": 0.0,
+        "unique": 893,
+        "dtype": "float64",
+        "mean": 40.0102,
+        "std": 26.2928,
+        "min": 5.0,
+        "max": 100.0,
+        "median": 28.7
+      },
+      "skewness": 0.6158,
+      "kurtosis": -1.1212,
+      "distribution_type": "moderately_skewed",
+      "commentary": "",
+      "visualization_path": "",
+      "data": null
+    },
+    {
+      "column": "severity",
+      "analysis_type": "univariate",
+      "stats": {
+        "count": 9048,
+        "missing": 0,
+        "missing_pct": 0.0,
+        "unique": 904,
+        "dtype": "float64",
+        "mean": 9.1333,
+        "std": 12.226,
+        "min": 0.0,
+        "max": 48.99,
+        "median": 3.0
+      },
+      "skewness": 1.7191,
+      "kurtosis": 2.051,
+      "distribution_type": "right_skewed",
+      "commentary": "",
+      "visualization_path": "",
+      "data": null
+    },
+    {
+      "column": "crop_type",
+      "analysis_type": "univariate",
+      "stats": {
+        "count": 9000,
+        "missing": 48,
+        "missing_pct": 0.0053,
+        "unique": 7,
+        "dtype": "str",
+        "top_values": {
+          "cotton": 1310,
+          "sugarcane": 1310,
+          "rice": 1308,
+          "vegetables": 1301,
+          "wheat": 1278,
+          "maize": 1247,
+          "soybean": 1246
+        }
+      },
+      "skewness": null,
+      "kurtosis": null,
+      "distribution_type": "categorical",
+      "commentary": "",
+      "visualization_path": "",
+      "data": null
+    },
+    {
+      "column": "crop_impact",
+      "analysis_type": "univariate",
+      "stats": {
+        "count": 9000,
+        "missing": 48,
+        "missing_pct": 0.0053,
+        "unique": 3,
+        "dtype": "str",
+        "top_values": {
+          "medium": 3645,
+          "high": 3074,
+          "low": 2281
+        }
+      },
+      "skewness": null,
+      "kurtosis": null,
+      "distribution_type": "categorical",
+      "commentary": "",
+      "visualization_path": "",
+      "data": null
+    },
+    {
+      "column": "crop_yield_loss_pct",
+      "analysis_type": "univariate",
+      "stats": {
+        "count": 9048,
+        "missing": 0,
+        "missing_pct": 0.0,
+        "unique": 983,
+        "dtype": "float64",
+        "mean": 41.4764,
+        "std": 26.035,
+        "min": 0.0,
+        "max": 100.0,
+        "median": 38.5
+      },
+      "skewness": 0.3259,
+      "kurtosis": -0.8103,
       "distribution_type": "approximately_normal",
       "commentary": "",
       "visualization_path": "",
@@ -613,116 +856,116 @@
       "stats": {
         "high_correlations": [
           {
-            "col_a": "brightness",
-            "col_b": "frp",
-            "correlation": 0.9963
+            "col_a": "temperature_2m",
+            "col_b": "temperature",
+            "correlation": 0.9996
           },
           {
-            "col_a": "latitude",
-            "col_b": "longitude",
-            "correlation": -0.9897
+            "col_a": "relative_humidity",
+            "col_b": "humidity",
+            "correlation": 0.9991
           },
           {
-            "col_a": "scan",
-            "col_b": "bright_t31",
-            "correlation": 0.9805
-          },
-          {
-            "col_a": "brightness",
-            "col_b": "scan",
-            "correlation": 0.9737
-          },
-          {
-            "col_a": "brightness",
-            "col_b": "bright_t31",
-            "correlation": 0.9614
+            "col_a": "frp",
+            "col_b": "severity",
+            "correlation": 0.9949
           },
           {
             "col_a": "scan",
-            "col_b": "frp",
-            "correlation": 0.9592
-          },
-          {
-            "col_a": "brightness",
             "col_b": "track",
-            "correlation": 0.9538
+            "correlation": 0.9609
+          },
+          {
+            "col_a": "scan",
+            "col_b": "bright_t31",
+            "correlation": 0.9568
+          },
+          {
+            "col_a": "track",
+            "col_b": "bright_t31",
+            "correlation": 0.9394
+          },
+          {
+            "col_a": "soil_moisture",
+            "col_b": "humidity",
+            "correlation": 0.8983
+          },
+          {
+            "col_a": "relative_humidity",
+            "col_b": "soil_moisture",
+            "correlation": 0.8979
+          },
+          {
+            "col_a": "brightness",
+            "col_b": "frp",
+            "correlation": 0.8865
+          },
+          {
+            "col_a": "brightness",
+            "col_b": "severity",
+            "correlation": 0.8824
+          },
+          {
+            "col_a": "flood_risk_score",
+            "col_b": "days_since_rain",
+            "correlation": -0.8508
           },
           {
             "col_a": "precipitation",
-            "col_b": "flood_risk_score",
-            "correlation": 0.9531
-          },
-          {
-            "col_a": "scan",
-            "col_b": "track",
-            "correlation": 0.9505
+            "col_b": "soil_moisture",
+            "correlation": 0.7957
           },
           {
             "col_a": "bright_t31",
-            "col_b": "frp",
-            "correlation": 0.9498
+            "col_b": "elevation_proxy",
+            "correlation": -0.7841
           },
           {
-            "col_a": "track",
-            "col_b": "frp",
-            "correlation": 0.9436
+            "col_a": "scan",
+            "col_b": "elevation_proxy",
+            "correlation": -0.7816
           },
           {
-            "col_a": "track",
-            "col_b": "bright_t31",
-            "correlation": 0.9346
+            "col_a": "precipitation",
+            "col_b": "humidity",
+            "correlation": 0.7757
           },
           {
-            "col_a": "temperature_2m",
-            "col_b": "temperature_max",
-            "correlation": 0.9126
+            "col_a": "precipitation",
+            "col_b": "relative_humidity",
+            "correlation": 0.7746
           },
           {
-            "col_a": "latitude",
-            "col_b": "bright_t31",
-            "correlation": -0.9092
-          },
-          {
-            "col_a": "latitude",
-            "col_b": "scan",
-            "correlation": -0.9078
-          },
-          {
-            "col_a": "longitude",
-            "col_b": "bright_t31",
-            "correlation": 0.9053
-          },
-          {
-            "col_a": "longitude",
-            "col_b": "scan",
-            "correlation": 0.8971
-          },
-          {
-            "col_a": "temperature_2m",
+            "col_a": "temperature_max",
             "col_b": "temperature_min",
-            "correlation": 0.8944
+            "correlation": 0.7384
           },
           {
-            "col_a": "precipitation",
-            "col_b": "drought_severity_index",
-            "correlation": 0.8769
+            "col_a": "drought_severity_index",
+            "col_b": "flood_risk_score",
+            "correlation": 0.7199
           },
           {
-            "col_a": "precipitation",
-            "col_b": "days_since_rain",
-            "correlation": -0.8759
+            "col_a": "track",
+            "col_b": "elevation_proxy",
+            "correlation": -0.6861
+          },
+          {
+            "col_a": "severity",
+            "col_b": "crop_yield_loss_pct",
+            "correlation": 0.6809
           }
         ]
       },
       "skewness": null,
       "kurtosis": null,
       "distribution_type": "",
-      "commentary": "Found 57 high-correlation pairs (|r| > 0.5)",
+      "commentary": "Found 34 high-correlation pairs (|r| > 0.5)",
       "visualization_path": "",
       "data": null
     }
   ],
-  "narrative": "Dataset contains 36 rows and 28 columns. Average missing rate is 0.0%.",
+  "narrative": "Dataset contains 9048 rows and 38 columns. Average missing rate is 2.7%.",
   "hypotheses": [],
   "recommended_features": [
     "latitude",
@@ -747,25 +990,33 @@
     "flood_risk_score",
     "days_since_rain",
     "elevation_proxy",
-    "acq_date",
+    "year",
+    "month",
+    "temperature",
+    "humidity",
+    "severity",
+    "crop_yield_loss_pct",
     "satellite",
     "version",
     "daynight",
-    "data_source"
+    "data_source",
+    "event_type",
+    "crop_type",
+    "crop_impact"
   ],
   "correlation_matrix_path": "output\\charts\\correlation_matrix.png",
   "data_traits": {
-    "n_rows": 36,
-    "n_columns": 28,
-    "n_numeric": 22,
-    "n_categorical": 6,
-    "avg_missing_pct": 0.0,
+    "n_rows": 9048,
+    "n_columns": 38,
+    "n_numeric": 28,
+    "n_categorical": 10,
+    "avg_missing_pct": 0.0266,
     "has_duplicates": false,
     "task_type": "classification",
     "class_balance": {
-      "h": 0.5,
-      "n": 0.3333,
-      "l": 0.1667
+      "l": 0.6737,
+      "n": 0.2282,
+      "h": 0.098
     }
   }
 }

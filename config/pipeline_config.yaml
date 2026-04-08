@@ -1,12 +1,18 @@
 # Pipeline Configuration
 problem_statement: |
-  Predict the confidence of active fires based on NASA FIRMS telemetry data.
-  Focus on identifying high-confidence active fire vectors for emergency dispatch.
+  Predict and classify natural disasters (wildfires, floods, droughts) and their
+  impact on crops using global satellite telemetry data from NASA FIRMS, EONET,
+  and POWER APIs, combined with historical disaster training data from Kaggle.
+  Focus on identifying high-risk zones for emergency dispatch and agricultural protection.
 
 domain_context: |
-  Global Environmental Resilience Command Center.
-  Data comes from the NASA FIRMS VIIRS_SNPP_NRT satellite payload.
-  The target column is "confidence" (nominal string: 'l', 'n', 'h', meaning low, normal, high).
+  Global Environmental Resilience & Crop Protection Command Center.
+  Live data from NASA FIRMS VIIRS_SNPP_NRT satellite (375m resolution),
+  NASA EONET (natural event tracker), and NASA POWER (weather/climate).
+  Historical training data from Kaggle (flood, drought, wildfire, crop impact).
+  Covers 20+ global regions: India, Sub-Saharan Africa, Brazil, SE Asia,
+  Mediterranean Europe, Central America, Middle East, Australia, North America.
+  Target column is "confidence" (fire detection confidence: 'l', 'n', 'h').
 
 target_column: "confidence"
 task_type: "classification"
@@ -15,6 +21,8 @@ sources:
   - source_type: "nasa_api"
     map_key: "VIIRS_SNPP_NRT"
     area_coords: "world"
+
+kaggle_data_dir: "data/kaggle"
 
 llm:
   provider: "auto"

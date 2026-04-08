@@ -1,5 +1,11 @@
 [
   {
+    "operation": "fill_numeric_missing",
+    "reasoning": "Fill missing numeric values with column median.",
+    "rows_affected": 0,
+    "reversible": true
+  },
+  {
     "operation": "cap_outliers_iqr",
     "reasoning": "Cap extreme outliers using IQR method.",
     "rows_affected": 0,

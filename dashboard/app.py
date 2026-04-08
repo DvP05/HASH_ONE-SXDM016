@@ -94,6 +94,44 @@ def create_app(output_dir: str = "output") -> Flask:
                 return jsonify({"content": f.read()})
         return jsonify({"content": ""})
 
+    @app.route("/api/refresh-status")
+    def api_refresh_status():
+        """API: Get the scheduler refresh status."""
+        try:
+            from scheduler import load_latest_cache
+            cache = load_latest_cache()
+            cache_info = {}
+            for source in ("firms", "eonet", "power"):
+                latest_path = os.path.join("data", "live_cache", f"{source}_latest.csv")
+                if os.path.exists(latest_path):
+                    import time as _t
+                    mtime = os.path.getmtime(latest_path)
+                    cache_info[source] = {
+                        "available": True,
+                        "rows": len(cache.get(source, [])) if cache.get(source) is not None else 0,
+                        "last_updated": _t.strftime("%Y-%m-%dT%H:%M:%SZ", _t.gmtime(mtime)),
+                    }
+                else:
+                    cache_info[source] = {"available": False, "rows": 0, "last_updated": None}
+            return jsonify({"status": "ok", "cache": cache_info})
+        except Exception as e:
+            return jsonify({"status": "no_scheduler", "error": str(e)})
+
+    @app.route("/api/global-regions")
+    def api_global_regions():
+        """API: Get the list of monitored global regions."""
+        from tools.api_tools import GLOBAL_REGIONS
+        regions = []
+        for key, info in GLOBAL_REGIONS.items():
+            regions.append({
+                "key": key,
+                "name": info["name"],
+                "centroid_lat": info["centroid"][0],
+                "centroid_lon": info["centroid"][1],
+                "bbox": info["bbox"],
+            })
+        return jsonify(regions)
+
     return app
 
 
@@ -166,41 +204,101 @@ def _compute_disaster_summary() -> dict:
 
 
 def _build_fire_locations() -> list[dict]:
-    """Build fire location data with ALL disaster types (Fire, Flood, Drought) and enriched features."""
+    """Build fire location data with ALL disaster types (Fire, Flood, Drought) and global coverage."""
 
     np.random.seed(42)
 
     base_rows = [
+        # Australia
         {"id": 0, "latitude": -12.45, "longitude": 130.84, "brightness": 327.4,
          "scan": 0.51, "track": 0.41, "acq_date": "2026-04-05", "acq_time": "00:45",
          "satellite": "VIIRS SNPP", "confidence": "high", "bright_t31": 299.2,
          "frp": 21.7, "daynight": "Day", "region": "Northern Territory, Australia"},
-        {"id": 1, "latitude": -11.98, "longitude": 131.12, "brightness": 319.6,
-         "scan": 0.49, "track": 0.38, "acq_date": "2026-04-05", "acq_time": "00:46",
-         "satellite": "VIIRS SNPP", "confidence": "nominal", "bright_t31": 296.1,
-         "frp": 14.3, "daynight": "Day", "region": "Northern Territory, Australia"},
-        {"id": 2, "latitude": -13.22, "longitude": 129.76, "brightness": 345.9,
-         "scan": 0.58, "track": 0.44, "acq_date": "2026-04-05", "acq_time": "00:47",
-         "satellite": "VIIRS SNPP", "confidence": "high", "bright_t31": 301.8,
-         "frp": 34.1, "daynight": "Day", "region": "Northern Territory, Australia"},
-        {"id": 3, "latitude": 38.51, "longitude": -121.42, "brightness": 302.8,
+        {"id": 1, "latitude": -33.87, "longitude": 151.21, "brightness": 306.8,
+         "scan": 0.40, "track": 0.35, "acq_date": "2026-04-05", "acq_time": "00:50",
+         "satellite": "VIIRS SNPP", "confidence": "nominal", "bright_t31": 288.5,
+         "frp": 8.9, "daynight": "Day", "region": "Southeast Australia"},
+        # USA
+        {"id": 2, "latitude": 38.51, "longitude": -121.42, "brightness": 302.8,
          "scan": 0.37, "track": 0.33, "acq_date": "2026-04-05", "acq_time": "00:53",
          "satellite": "VIIRS SNPP", "confidence": "low", "bright_t31": 287.3,
-         "frp": 5.2, "daynight": "Night", "region": "California, United States"},
-        {"id": 4, "latitude": 39.02, "longitude": -120.84, "brightness": 311.1,
+         "frp": 5.2, "daynight": "Night", "region": "California, USA"},
+        {"id": 3, "latitude": 31.0, "longitude": -83.5, "brightness": 311.1,
          "scan": 0.42, "track": 0.36, "acq_date": "2026-04-05", "acq_time": "00:55",
          "satellite": "VIIRS SNPP", "confidence": "nominal", "bright_t31": 291.5,
-         "frp": 8.8, "daynight": "Night", "region": "California, United States"},
-        {"id": 5, "latitude": -23.64, "longitude": 134.11, "brightness": 338.7,
-         "scan": 0.55, "track": 0.46, "acq_date": "2026-04-05", "acq_time": "01:00",
-         "satellite": "VIIRS SNPP", "confidence": "high", "bright_t31": 300.2,
-         "frp": 28.4, "daynight": "Day", "region": "Central Australia"},
+         "frp": 10.2, "daynight": "Night", "region": "Southeast USA"},
+        # India
+        {"id": 4, "latitude": 28.61, "longitude": 77.21, "brightness": 310.5,
+         "scan": 0.45, "track": 0.39, "acq_date": "2026-04-05", "acq_time": "02:10",
+         "satellite": "VIIRS SNPP", "confidence": "high", "bright_t31": 294.8,
+         "frp": 18.2, "daynight": "Day", "region": "India — North (Delhi)"},
+        {"id": 5, "latitude": 13.08, "longitude": 80.27, "brightness": 305.2,
+         "scan": 0.42, "track": 0.35, "acq_date": "2026-04-05", "acq_time": "02:20",
+         "satellite": "VIIRS SNPP", "confidence": "nominal", "bright_t31": 290.5,
+         "frp": 12.1, "daynight": "Day", "region": "India — South (Chennai)"},
+        {"id": 6, "latitude": 22.57, "longitude": 88.36, "brightness": 315.8,
+         "scan": 0.48, "track": 0.40, "acq_date": "2026-04-05", "acq_time": "02:15",
+         "satellite": "VIIRS SNPP", "confidence": "high", "bright_t31": 296.3,
+         "frp": 16.5, "daynight": "Day", "region": "India — East (Kolkata)"},
+        {"id": 7, "latitude": 19.08, "longitude": 72.88, "brightness": 308.3,
+         "scan": 0.44, "track": 0.37, "acq_date": "2026-04-05", "acq_time": "02:25",
+         "satellite": "VIIRS SNPP", "confidence": "nominal", "bright_t31": 292.1,
+         "frp": 11.4, "daynight": "Day", "region": "India — West (Mumbai)"},
+        # Africa
+        {"id": 8, "latitude": -1.29, "longitude": 36.82, "brightness": 322.1,
+         "scan": 0.52, "track": 0.42, "acq_date": "2026-04-05", "acq_time": "03:20",
+         "satellite": "VIIRS SNPP", "confidence": "high", "bright_t31": 298.7,
+         "frp": 22.8, "daynight": "Day", "region": "East Africa — Kenya"},
+        {"id": 9, "latitude": 9.06, "longitude": 7.49, "brightness": 318.4,
+         "scan": 0.50, "track": 0.41, "acq_date": "2026-04-05", "acq_time": "03:30",
+         "satellite": "VIIRS SNPP", "confidence": "nominal", "bright_t31": 295.2,
+         "frp": 15.9, "daynight": "Day", "region": "West Africa — Nigeria"},
+        {"id": 10, "latitude": -25.0, "longitude": 28.5, "brightness": 309.7,
+         "scan": 0.43, "track": 0.36, "acq_date": "2026-04-05", "acq_time": "03:40",
+         "satellite": "VIIRS SNPP", "confidence": "low", "bright_t31": 289.1,
+         "frp": 7.2, "daynight": "Day", "region": "Southern Africa"},
+        # Brazil / Amazon
+        {"id": 11, "latitude": -3.12, "longitude": -59.98, "brightness": 340.2,
+         "scan": 0.56, "track": 0.45, "acq_date": "2026-04-05", "acq_time": "05:00",
+         "satellite": "VIIRS SNPP", "confidence": "high", "bright_t31": 302.4,
+         "frp": 32.5, "daynight": "Day", "region": "Brazil — Amazon"},
+        {"id": 12, "latitude": -15.8, "longitude": -47.9, "brightness": 315.6,
+         "scan": 0.47, "track": 0.39, "acq_date": "2026-04-05", "acq_time": "05:10",
+         "satellite": "VIIRS SNPP", "confidence": "nominal", "bright_t31": 293.8,
+         "frp": 14.7, "daynight": "Day", "region": "Brazil — Central"},
+        # Southeast Asia
+        {"id": 13, "latitude": -6.17, "longitude": 106.83, "brightness": 325.7,
+         "scan": 0.53, "track": 0.43, "acq_date": "2026-04-05", "acq_time": "08:20",
+         "satellite": "VIIRS SNPP", "confidence": "high", "bright_t31": 300.1,
+         "frp": 25.3, "daynight": "Day", "region": "Indonesia — Java"},
+        {"id": 14, "latitude": 13.8, "longitude": 100.5, "brightness": 312.4,
+         "scan": 0.46, "track": 0.38, "acq_date": "2026-04-05", "acq_time": "08:30",
+         "satellite": "VIIRS SNPP", "confidence": "nominal", "bright_t31": 291.8,
+         "frp": 11.6, "daynight": "Day", "region": "Thailand — Bangkok"},
+        {"id": 15, "latitude": 21.03, "longitude": 105.85, "brightness": 308.9,
+         "scan": 0.44, "track": 0.37, "acq_date": "2026-04-05", "acq_time": "08:40",
+         "satellite": "VIIRS SNPP", "confidence": "low", "bright_t31": 289.4,
+         "frp": 6.8, "daynight": "Day", "region": "Vietnam — Hanoi"},
+        # Europe / Middle East
+        {"id": 16, "latitude": 37.39, "longitude": 15.09, "brightness": 308.3,
+         "scan": 0.43, "track": 0.37, "acq_date": "2026-04-05", "acq_time": "10:00",
+         "satellite": "VIIRS SNPP", "confidence": "nominal", "bright_t31": 289.5,
+         "frp": 9.7, "daynight": "Day", "region": "Mediterranean — Sicily"},
+        {"id": 17, "latitude": 35.69, "longitude": 51.39, "brightness": 312.6,
+         "scan": 0.46, "track": 0.38, "acq_date": "2026-04-05", "acq_time": "11:00",
+         "satellite": "VIIRS SNPP", "confidence": "low", "bright_t31": 292.1,
+         "frp": 7.4, "daynight": "Day", "region": "Middle East — Iran"},
+        # Central America
+        {"id": 18, "latitude": 13.0, "longitude": -86.0, "brightness": 319.8,
+         "scan": 0.51, "track": 0.42, "acq_date": "2026-04-05", "acq_time": "06:00",
+         "satellite": "VIIRS SNPP", "confidence": "high", "bright_t31": 297.4,
+         "frp": 19.5, "daynight": "Day", "region": "Central America — Honduras"},
     ]
 
     locations = []
     idx = 0
     disaster_types = ["Fire", "Flood", "Drought"]
-    for i in range(6):
+    for i in range(3):
         for row in base_rows:
             r = row.copy()
             r["id"] = idx

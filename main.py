@@ -121,6 +121,10 @@ def main():
                         help="Launch web dashboard after pipeline completes")
     parser.add_argument("--generate-data", action="store_true",
                         help="Generate sample dataset and exit")
+    parser.add_argument("--download-kaggle", action="store_true",
+                        help="Download Kaggle disaster datasets and exit")
+    parser.add_argument("--scheduler", action="store_true",
+                        help="Enable hourly NASA API refresh scheduler")
     parser.add_argument("--verbose", "-v", action="store_true",
                         help="Enable verbose logging")
     parser.add_argument("--output", type=str, default="",
@@ -136,6 +140,15 @@ def main():
     if args.generate_data:
         from data.generate_sample_data import generate_churn_data
         generate_churn_data()
+        return
+
+    # ── Download Kaggle Datasets ──
+    if args.download_kaggle:
+        from data.kaggle_downloader import generate_disaster_training_data
+        logger.info("Downloading Kaggle disaster datasets...")
+        df = generate_disaster_training_data(force_download=True)
+        logger.info(f"Combined training data: {df.shape[0]} rows × {df.shape[1]} columns")
+        logger.info(f"Event types: {df['event_type'].value_counts().to_dict()}")
         return
 
     # ── Load Config ──
@@ -177,6 +190,19 @@ def main():
     orchestrator = PipelineOrchestrator(config=config, memory=memory)
     result = orchestrator.run()
 
+    # ── Scheduler ──
+    if args.scheduler:
+        from scheduler import DataRefreshScheduler
+        interval = int(os.getenv("REFRESH_INTERVAL_SECONDS", "3600"))
+        scheduler = DataRefreshScheduler(
+            interval_seconds=interval,
+            cache_dir="data/live_cache",
+            output_dir=config.output_dir,
+        )
+        scheduler.start()
+        logger.info(f"\n🔄 Scheduler active — refreshing every {interval}s")
+        logger.info(f"   Press Ctrl+C to stop")
+
     # ── Dashboard ──
     if args.dashboard:
         logger.info("\n🌐 Launching dashboard at http://localhost:5000 ...")
@@ -187,9 +213,19 @@ def main():
         except ImportError as e:
             logger.error(f"Dashboard failed to start: {e}")
             logger.info("Install Flask: pip install flask")
+    elif args.scheduler:
+        # Keep the process alive for the scheduler
+        try:
+            while True:
+                import time
+                time.sleep(60)
+        except KeyboardInterrupt:
+            logger.info("\n⏹️ Shutting down scheduler...")
+            scheduler.stop()
     else:
         logger.info(f"\n📊 Results saved to {config.output_dir}/")
         logger.info(f"   Launch dashboard: python main.py --dashboard")
+        logger.info(f"   Enable scheduler: python main.py --scheduler")
 
     return result
 
