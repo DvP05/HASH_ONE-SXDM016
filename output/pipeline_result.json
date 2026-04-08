@@ -1,13 +1,13 @@
 {
-  "completed_at": "2026-04-08T11:57:52.796354+00:00",
-  "total_duration_seconds": 2.08,
+  "completed_at": "2026-04-08T12:05:27.441631+00:00",
+  "total_duration_seconds": 6.66,
   "total_llm_calls": 0,
   "total_tokens": 0,
   "stages": {
     "data_collection": {
       "status": "failed",
       "quality_gate_passed": true,
-      "output_summary": "Stage data_collection failed after 3 attempts: \"Tool 'fetch_nasa_firms' not found in registry\""
+      "output_summary": "Stage data_collection failed after 3 attempts: HTTP Error 400: Bad Request"
     }
   }
 }

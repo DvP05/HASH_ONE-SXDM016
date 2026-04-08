@@ -7,15 +7,19 @@ from tools.registry import tool
 def fetch_nasa_firms(map_key: str = "VIIRS_SNPP_NRT", area_coords: str = "world") -> pd.DataFrame:
     """
     Hits the NASA FIRMS API and returns a DataFrame of active fire telemetry.
-    The default model/sensor is set to VIIRS_SNPP_NRT (375m resolution), which is 
-    superior for the tactical command center compared to standard MODIS (1km).
+    The default model/sensor is set to VIIRS_SNPP_NRT (375m resolution).
     """
     # Pull the API key from environment variables
     api_key = os.getenv("NASA_API_KEY")
     if not api_key:
         raise ValueError("NASA_API_KEY environment variable is not set. Please add it to your .env file.")
         
-    url = f"https://firms.modaps.eosdis.nasa.gov/api/area/csv/{api_key}/{map_key}/{area_coords}/1"
+    # Handle "world" alias
+    extent = area_coords
+    if area_coords.lower() == "world":
+        extent = "-180,-90,180,90"
+        
+    url = f"https://firms.modaps.eosdis.nasa.gov/api/area/csv/{api_key}/{map_key}/{extent}/1"
     
     # NASA FIRMS returns CSV format directly
     df = pd.read_csv(url)
