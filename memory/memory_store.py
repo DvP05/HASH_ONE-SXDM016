@@ -67,17 +67,35 @@ class MemoryStore:
 
         logger.debug(f"Memory: stored '{key}' (v{entry.version})")
 
-    def retrieve(self, key: str, default: Any = None) -> Any:
+    def retrieve(self, key: str, default: Any = None,
+                 version: Optional[int] = None) -> Any:
         """
         Retrieve a value from the store.
 
         Args:
             key: Storage key
             default: Default value if key not found
+            version: Optional zero-based historical version index.
+                     If None, return latest value.
 
         Returns:
             The stored value, or default if not found
         """
+        if version is not None:
+            history = self._history.get(key, [])
+            if not history:
+                if default is not None:
+                    return default
+                logger.warning(f"Memory: key '{key}' not found")
+                return None
+
+            if version < 0 or version >= len(history):
+                raise IndexError(
+                    f"Version index {version} out of range for key '{key}' "
+                    f"(available: 0..{len(history) - 1})"
+                )
+            return history[version].value
+
         entry = self._store.get(key)
         if entry is None:
             if default is not None:

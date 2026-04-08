@@ -137,12 +137,20 @@ def train_model(X: pd.DataFrame, y: pd.Series, model_name: str = "random_forest_
 
     # Prepare data
     X_clean = X.copy()
+    y_clean = y.copy()
     # Handle categorical columns
     label_encoders = {}
     for col in X_clean.select_dtypes(include=["object", "category"]).columns:
         le = LabelEncoder()
         X_clean[col] = le.fit_transform(X_clean[col].astype(str))
         label_encoders[col] = le
+
+    # Encode classification target if needed (required by some estimators like XGBoost)
+    target_encoder = None
+    y_clean = y.copy()
+    if task_type == "classification":
+        target_encoder = LabelEncoder()
+        y_clean = pd.Series(target_encoder.fit_transform(y.astype(str)), index=y.index)
 
     # Fill remaining NaNs
     X_clean = X_clean.fillna(0)
@@ -156,15 +164,16 @@ def train_model(X: pd.DataFrame, y: pd.Series, model_name: str = "random_forest_
     # Cross-validation
     if task_type == "classification":
         cv = StratifiedKFold(n_splits=5, shuffle=True, random_state=42)
-        scoring = "roc_auc"
+        n_classes = int(pd.Series(y_clean).nunique())
+        scoring = "roc_auc" if n_classes == 2 else "roc_auc_ovr_weighted"
     else:
         cv = KFold(n_splits=5, shuffle=True, random_state=42)
         scoring = "r2"
 
-    cv_scores = cross_val_score(model, X_clean, y, cv=cv, scoring=scoring)
+    cv_scores = cross_val_score(model, X_clean, y_clean, cv=cv, scoring=scoring)
 
     # Train on full dataset
-    model.fit(X_clean, y)
+    model.fit(X_clean, y_clean)
     y_pred = model.predict(X_clean)
 
     result = {
@@ -172,6 +181,7 @@ def train_model(X: pd.DataFrame, y: pd.Series, model_name: str = "random_forest_
         "model": model,
         "scaler": scaler,
         "label_encoders": label_encoders,
+        "target_encoder_classes": target_encoder.classes_.tolist() if target_encoder else [],
         "cv_mean": round(float(cv_scores.mean()), 4),
         "cv_std": round(float(cv_scores.std()), 4),
         "cv_scores": [round(float(s), 4) for s in cv_scores],
@@ -180,17 +190,17 @@ def train_model(X: pd.DataFrame, y: pd.Series, model_name: str = "random_forest_
 
     if task_type == "classification":
         result.update({
-            "accuracy": round(float(accuracy_score(y, y_pred)), 4),
-            "f1_score": round(float(f1_score(y, y_pred, average="weighted")), 4),
-            "precision": round(float(precision_score(y, y_pred, average="weighted", zero_division=0)), 4),
-            "recall": round(float(recall_score(y, y_pred, average="weighted", zero_division=0)), 4),
-            "confusion_matrix": confusion_matrix(y, y_pred).tolist(),
+            "accuracy": round(float(accuracy_score(y_clean, y_pred)), 4),
+            "f1_score": round(float(f1_score(y_clean, y_pred, average="weighted")), 4),
+            "precision": round(float(precision_score(y_clean, y_pred, average="weighted", zero_division=0)), 4),
+            "recall": round(float(recall_score(y_clean, y_pred, average="weighted", zero_division=0)), 4),
+            "confusion_matrix": confusion_matrix(y_clean, y_pred).tolist(),
         })
         # ROC-AUC for binary
-        if len(np.unique(y)) == 2:
+        if len(np.unique(y_clean)) == 2:
             try:
                 y_proba = model.predict_proba(X_clean)[:, 1]
-                result["roc_auc"] = round(float(roc_auc_score(y, y_proba)), 4)
+                result["roc_auc"] = round(float(roc_auc_score(y_clean, y_proba)), 4)
             except Exception:
                 result["roc_auc"] = result["cv_mean"]
     else:
@@ -229,10 +239,14 @@ def optimize_hyperparams(X: pd.DataFrame, y: pd.Series,
 
     # Prepare data
     X_clean = X.copy()
+    y_clean = y.copy()
     for col in X_clean.select_dtypes(include=["object", "category"]).columns:
         le = LabelEncoder()
         X_clean[col] = le.fit_transform(X_clean[col].astype(str))
     X_clean = X_clean.fillna(0)
+
+    if task_type == "classification":
+        y_clean = pd.Series(LabelEncoder().fit_transform(y.astype(str)), index=y.index)
 
     def objective(trial):
         if "random_forest" in model_name:
@@ -282,12 +296,13 @@ def optimize_hyperparams(X: pd.DataFrame, y: pd.Series,
 
         if task_type == "classification":
             cv = StratifiedKFold(n_splits=5, shuffle=True, random_state=42)
-            scoring = "roc_auc"
+            n_classes = int(pd.Series(y_clean).nunique())
+            scoring = "roc_auc" if n_classes == 2 else "roc_auc_ovr_weighted"
         else:
             cv = KFold(n_splits=5, shuffle=True, random_state=42)
             scoring = "r2"
 
-        scores = cross_val_score(model, X_clean, y, cv=cv, scoring=scoring)
+        scores = cross_val_score(model, X_clean, y_clean, cv=cv, scoring=scoring)
         return scores.mean()
 
     study = optuna.create_study(direction="maximize")

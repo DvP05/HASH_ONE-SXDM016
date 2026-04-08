@@ -1,30 +1,29 @@
-# Model Card: logistic_regression
+# Model Card: random_forest
 
-**Type**: logistic
+**Type**: random
 **Task**: classification
 
 ## Intended Use
 
-Predict 30-day customer churn for a SaaS product.
-Minimize false negatives (missed churners) â€” recall
-is more important than precision for this use case.
+Predict the confidence of active fires based on NASA FIRMS telemetry data.
+Focus on identifying high-confidence active fire vectors for emergency dispatch.
 
 
 ## Performance
 
-- CV Score: 0.8288 ± 0.0055
-- ROC-AUC: 0.8296
-- Accuracy: 76.8%
+- CV Score: 1.0000 ± 0.0000
+- Accuracy: 100.0%
 
 ## Limitations
 
-Analysis complete.
+Model trained on historical data; may not generalize to distribution shifts.
 
 ## Hyperparameters
 
 ```json
 {
-  "max_iter": 1000,
-  "random_state": 42
+  "n_estimators": 100,
+  "random_state": 42,
+  "n_jobs": -1
 }
 ```
