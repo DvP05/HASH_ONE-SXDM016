@@ -33,6 +33,7 @@ from orchestrator.pipeline_orchestrator import PipelineOrchestrator
 import tools.data_tools   # noqa: F401
 import tools.ml_tools     # noqa: F401
 import tools.viz_tools    # noqa: F401
+import tools.api_tools    # noqa: F401
 
 # ─── Logging Setup ───
 def setup_logging(verbose: bool = False):

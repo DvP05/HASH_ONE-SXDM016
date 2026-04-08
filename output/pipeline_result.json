@@ -1,68 +1,13 @@
 {
-  "completed_at": "2026-04-08T10:57:36.627251+00:00",
-  "total_duration_seconds": 54.05,
-  "total_llm_calls": 7,
+  "completed_at": "2026-04-08T11:57:52.796354+00:00",
+  "total_duration_seconds": 2.08,
+  "total_llm_calls": 0,
   "total_tokens": 0,
   "stages": {
     "data_collection": {
-      "status": "success",
+      "status": "failed",
       "quality_gate_passed": true,
-      "output_summary": "{'rows': 10025, 'columns': 21, 'column_names': ['customer_id', 'signup_date', 'tenure_days', 'plan_type', 'monthly_charges', 'total_charges', 'num_support_tickets', 'avg_response_time_hrs', 'login_fre",
-      "trace": {
-        "duration_seconds": 0.09,
-        "llm_calls": 1,
-        "reasoning_steps_count": 7
-      }
-    },
-    "data_cleaning": {
-      "status": "success",
-      "quality_gate_passed": true,
-      "output_summary": "log=[CleaningLogEntry(operation='drop_duplicates', reasoning='Remove exact duplicate rows.', rows_affected=25, reversible=True), CleaningLogEntry(operation='fill_numeric_missing', reasoning='Fill miss",
-      "trace": {
-        "duration_seconds": 0.16,
-        "llm_calls": 0,
-        "reasoning_steps_count": 13
-      }
-    },
-    "eda": {
-      "status": "success",
-      "quality_gate_passed": true,
-      "output_summary": "findings=[Finding(column='customer_id', analysis_type='univariate', stats={'count': 10000, 'missing': 0, 'missing_pct': 0.0, 'unique': 10000, 'dtype': 'str', 'top_values': {'CUST-03313': 1, 'CUST-0907",
-      "trace": {
-        "duration_seconds": 2.83,
-        "llm_calls": 2,
-        "reasoning_steps_count": 19
-      }
-    },
-    "feature_engineering": {
-      "status": "success",
-      "quality_gate_passed": true,
-      "output_summary": "feature_names=['num_support_tickets', 'tenure_days', 'monthly_charges', 'feature_usage_score', 'tenure_days_x_total_charges', 'login_frequency', 'num_products', 'has_dependents', 'region'] lineage={'n",
-      "trace": {
-        "duration_seconds": 0.29,
-        "llm_calls": 0,
-        "reasoning_steps_count": 12
-      }
-    },
-    "modeling": {
-      "status": "success",
-      "quality_gate_passed": true,
-      "output_summary": "model_name='logistic_regression' evaluation=ModelEvaluation(task_type='classification', accuracy=0.7677, roc_auc=0.8296, f1_score=0.7624, precision=0.7652, recall=0.7677, confusion_matrix=[[5322, 814]",
-      "trace": {
-        "duration_seconds": 50.67,
-        "llm_calls": 1,
-        "reasoning_steps_count": 21
-      }
-    },
-    "insight_generation": {
-      "status": "success",
-      "quality_gate_passed": true,
-      "output_summary": "executive_summary='Analysis complete.' data_quality_section=\"## Data Quality\\n\\n**3 cleaning operations** were applied:\\n\\n- **drop_duplicates**: Remove exact duplicate rows. (25 rows affected)\\n- **f",
-      "trace": {
-        "duration_seconds": 0.0,
-        "llm_calls": 3,
-        "reasoning_steps_count": 10
-      }
+      "output_summary": "Stage data_collection failed after 3 attempts: \"Tool 'fetch_nasa_firms' not found in registry\""
     }
   }
 }
