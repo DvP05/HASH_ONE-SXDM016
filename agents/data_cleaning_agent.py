@@ -142,7 +142,7 @@ class DataCleaningAgent(BaseAgent):
                 f"Duplicates: {profile.duplicate_count}\n"
                 f"Outliers: {dict(list(profile.outlier_flags.items())[:10])}\n"
                 f"Dtypes: {profile.dtypes}\n"
-                f"Cardinality: {dict(sorted(profile.cardinality.items(), key=lambda x: x[1]))[:10]}"
+                f"Cardinality: {dict(sorted(profile.cardinality.items(), key=lambda x: x[1])[:10])}"
             )
 
             domain_context = self.memory.retrieve("domain_context", "")

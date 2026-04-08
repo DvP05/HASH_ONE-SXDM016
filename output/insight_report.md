@@ -1,80 +1,71 @@
 # Autonomous Analysis — Insight Report
 
-*Generated at: 2026-04-08T10:57:36.625694+00:00*
+*Generated at: 2026-04-08T12:58:10.892344+00:00*
 
 ---
 
 ## Executive Summary
 
-Analysis complete.
+Analysis of Predict the confidence of active fires based on NASA FIRMS telemetry data.
+Focus on identifying high-confidence active fire vectors for emergency dispatch.
+ is complete. Accuracy: 100.0%. Cross-validation score: 1.0000 ± 0.0000.
 
 ---
 
 ## Data Quality
 
-**3 cleaning operations** were applied:
-
-- **drop_duplicates**: Remove exact duplicate rows. (25 rows affected)
-- **fill_numeric_missing**: Fill missing numeric values with column median. (0 rows affected)
-- **cap_outliers_iqr**: Cap extreme outliers using IQR method. (0 rows affected)
-
-**Dataset**: 10,000 rows × 21 columns
-**Average missing rate**: 0.2%
-**Class balance**: {'0': 0.6136, '1': 0.3864}
+**Dataset**: 36 rows × 15 columns
+**Average missing rate**: 0.0%
+**Class balance**: {'h': 0.5, 'n': 0.3333, 'l': 0.1667}
 
 ---
 
 ## Key Patterns
 
-The dataset shows typical patterns for the domain with some notable correlations.
+Dataset contains 36 rows and 15 columns. Average missing rate is 0.0%.
 
 
 ---
 
 ## Model Performance
 
-**Selected model**: logistic_regression
+**Selected model**: random_forest
 
-**Cross-validation**: 0.8288 ± 0.0055
+**Cross-validation**: 1.0000 ± 0.0000
 
-**Metrics**: Accuracy: 76.8% | ROC-AUC: 0.8296 | F1-Score: 0.7624 | Precision: 0.7652 | Recall: 0.7677
+**Metrics**: Accuracy: 100.0% | F1-Score: 1.0000 | Precision: 1.0000 | Recall: 1.0000
+
+### Top Predictive Features
+
+1. **track** (importance: 0.5847)
+2. **longitude** (importance: 0.2633)
+3. **latitude_x_longitude** (importance: 0.1469)
+4. **acq_time** (importance: 0.0050)
 
 ### Model Comparison
 
 | Model | CV Score |
 |-------|---------|
-| logistic_regression | 0.8288 ± 0.0055 |
-| xgboost | 0.8220 ± 0.0053 |
-| lightgbm | 0.8202 ± 0.0052 |
-| random_forest | 0.8103 ± 0.0055 |
+| random_forest | 1.0000 ± 0.0000 |
+| logistic_regression | 1.0000 ± 0.0000 |
+| xgboost | 1.0000 ± 0.0000 |
+| lightgbm | 0.5000 ± 0.0000 |
 
 ---
 
 ## Recommendations
 
 
-### [MEDIUM] Improve Model Performance with More Data
+### [HIGH] Focus on Top Predictive Features
 
-Current ROC-AUC is 0.830. Consider collecting additional features (behavioral signals, interaction data) and more recent data to push performance above 0.85.
-
-**Action Items:**
-- Collect additional behavioral features
-- Try ensemble methods (stacking, blending)
-- Experiment with deep learning on larger datasets
-
-*Confidence: 70%*
-
-
-### [MEDIUM] Improve Data Collection Quality
-
-3 data quality issues were fixed, affecting 25 records. Addressing root causes at the source will improve future model reliability.
+The model identifies track, longitude, latitude_x_longitude as the strongest predictors. Design targeted interventions around these variables to maximize impact.
 
 **Action Items:**
-- Add input validation at data collection points
-- Set up data quality monitoring alerts
-- Document data standards for upstream providers
+- Investigate why 'track' has the highest impact
+- Design interventions targeting top features
+- Create monitoring dashboards for these key variables
 
-*Confidence: 75%*
+*Confidence: 85%*
 
 
 ### [HIGH] Deploy Model with Monitoring
@@ -95,5 +86,6 @@ Deploy the trained model to a staging environment with A/B testing and set up dr
 ## Next Steps
 
 - Validate model on holdout/test data
-- Deploy model to staging environment
-- Set up monitoring for model drift
+- Collect more recent data for retraining
+- A/B test recommendations in production
+- Set up monitoring for model performance drift

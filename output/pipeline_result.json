@@ -1,13 +1,68 @@
 {
-  "completed_at": "2026-04-08T12:05:27.441631+00:00",
-  "total_duration_seconds": 6.66,
+  "completed_at": "2026-04-08T12:58:10.893598+00:00",
+  "total_duration_seconds": 93.45,
   "total_llm_calls": 0,
   "total_tokens": 0,
   "stages": {
     "data_collection": {
-      "status": "failed",
+      "status": "success",
       "quality_gate_passed": true,
-      "output_summary": "Stage data_collection failed after 3 attempts: HTTP Error 400: Bad Request"
+      "output_summary": "{'rows': 36, 'columns': 15, 'column_names': ['latitude', 'longitude', 'brightness', 'scan', 'track', 'acq_date', 'acq_time', 'satellite', 'confidence', 'version', 'bright_t31', 'frp', 'daynight', 'typ",
+      "trace": {
+        "duration_seconds": 3.06,
+        "llm_calls": 1,
+        "reasoning_steps_count": 6
+      }
+    },
+    "data_cleaning": {
+      "status": "success",
+      "quality_gate_passed": true,
+      "output_summary": "log=[] profile_before=DataProfile(shape=(36, 15), dtypes={'latitude': 'float64', 'longitude': 'float64', 'brightness': 'float64', 'scan': 'float64', 'track': 'float64', 'acq_date': 'object', 'acq_time",
+      "trace": {
+        "duration_seconds": 3.08,
+        "llm_calls": 1,
+        "reasoning_steps_count": 7
+      }
+    },
+    "eda": {
+      "status": "success",
+      "quality_gate_passed": true,
+      "output_summary": "findings=[Finding(column='latitude', analysis_type='univariate', stats={'count': 36, 'missing': 0, 'missing_pct': 0.0, 'unique': 36, 'dtype': 'float64', 'mean': 2.8817, 'std': 26.166, 'min': -23.64, '",
+      "trace": {
+        "duration_seconds": 10.45,
+        "llm_calls": 2,
+        "reasoning_steps_count": 18
+      }
+    },
+    "feature_engineering": {
+      "status": "success",
+      "quality_gate_passed": true,
+      "output_summary": "feature_names=['track', 'longitude', 'latitude_x_longitude', 'acq_time'] lineage={'track': 'original:track', 'longitude': 'original:longitude', 'latitude_x_longitude': 'interaction:latitude*longitude'",
+      "trace": {
+        "duration_seconds": 0.1,
+        "llm_calls": 0,
+        "reasoning_steps_count": 13
+      }
+    },
+    "modeling": {
+      "status": "success",
+      "quality_gate_passed": true,
+      "output_summary": "model_name='random_forest' evaluation=ModelEvaluation(task_type='classification', accuracy=1.0, roc_auc=None, f1_score=1.0, precision=1.0, recall=1.0, confusion_matrix=[[18, 0, 0], [0, 6, 0], [0, 0, 1",
+      "trace": {
+        "duration_seconds": 67.74,
+        "llm_calls": 1,
+        "reasoning_steps_count": 22
+      }
+    },
+    "insight_generation": {
+      "status": "success",
+      "quality_gate_passed": true,
+      "output_summary": "executive_summary='Analysis of Predict the confidence of active fires based on NASA FIRMS telemetry data.\\nFocus on identifying high-confidence active fire vectors for emergency dispatch.\\n is complet",
+      "trace": {
+        "duration_seconds": 9.02,
+        "llm_calls": 3,
+        "reasoning_steps_count": 12
+      }
     }
   }
 }
