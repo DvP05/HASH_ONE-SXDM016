@@ -322,6 +322,292 @@
       "data": null
     },
     {
+      "column": "temperature_2m",
+      "analysis_type": "univariate",
+      "stats": {
+        "count": 36,
+        "missing": 0,
+        "missing_pct": 0.0,
+        "unique": 36,
+        "dtype": "float64",
+        "mean": 31.2808,
+        "std": 2.7317,
+        "min": 26.1,
+        "max": 37.99,
+        "median": 31.42
+      },
+      "skewness": 0.1882,
+      "kurtosis": -0.3255,
+      "distribution_type": "approximately_normal",
+      "commentary": "",
+      "visualization_path": "",
+      "data": null
+    },
+    {
+      "column": "temperature_max",
+      "analysis_type": "univariate",
+      "stats": {
+        "count": 36,
+        "missing": 0,
+        "missing_pct": 0.0,
+        "unique": 36,
+        "dtype": "float64",
+        "mean": 37.3589,
+        "std": 3.31,
+        "min": 30.24,
+        "max": 45.83,
+        "median": 37.735
+      },
+      "skewness": 0.0685,
+      "kurtosis": 0.1135,
+      "distribution_type": "approximately_normal",
+      "commentary": "",
+      "visualization_path": "",
+      "data": null
+    },
+    {
+      "column": "temperature_min",
+      "analysis_type": "univariate",
+      "stats": {
+        "count": 36,
+        "missing": 0,
+        "missing_pct": 0.0,
+        "unique": 35,
+        "dtype": "float64",
+        "mean": 25.5186,
+        "std": 2.3769,
+        "min": 21.28,
+        "max": 31.55,
+        "median": 25.33
+      },
+      "skewness": 0.3803,
+      "kurtosis": -0.23,
+      "distribution_type": "approximately_normal",
+      "commentary": "",
+      "visualization_path": "",
+      "data": null
+    },
+    {
+      "column": "precipitation",
+      "analysis_type": "univariate",
+      "stats": {
+        "count": 36,
+        "missing": 0,
+        "missing_pct": 0.0,
+        "unique": 32,
+        "dtype": "float64",
+        "mean": 1.6801,
+        "std": 2.3534,
+        "min": 0.02,
+        "max": 7.9275,
+        "median": 0.5800000000000001
+      },
+      "skewness": 1.6415,
+      "kurtosis": 1.5558,
+      "distribution_type": "right_skewed",
+      "commentary": "",
+      "visualization_path": "",
+      "data": null
+    },
+    {
+      "column": "relative_humidity",
+      "analysis_type": "univariate",
+      "stats": {
+        "count": 36,
+        "missing": 0,
+        "missing_pct": 0.0,
+        "unique": 36,
+        "dtype": "float64",
+        "mean": 35.2356,
+        "std": 12.1784,
+        "min": 8.0,
+        "max": 62.12,
+        "median": 34.585
+      },
+      "skewness": -0.0534,
+      "kurtosis": -0.3637,
+      "distribution_type": "approximately_normal",
+      "commentary": "",
+      "visualization_path": "",
+      "data": null
+    },
+    {
+      "column": "wind_speed",
+      "analysis_type": "univariate",
+      "stats": {
+        "count": 36,
+        "missing": 0,
+        "missing_pct": 0.0,
+        "unique": 36,
+        "dtype": "float64",
+        "mean": 3.7161,
+        "std": 1.9288,
+        "min": 0.92,
+        "max": 10.04,
+        "median": 3.25
+      },
+      "skewness": 1.1017,
+      "kurtosis": 1.7987,
+      "distribution_type": "right_skewed",
+      "commentary": "",
+      "visualization_path": "",
+      "data": null
+    },
+    {
+      "column": "soil_moisture",
+      "analysis_type": "univariate",
+      "stats": {
+        "count": 36,
+        "missing": 0,
+        "missing_pct": 0.0,
+        "unique": 36,
+        "dtype": "float64",
+        "mean": 0.2835,
+        "std": 0.1393,
+        "min": 0.02,
+        "max": 0.6428,
+        "median": 0.28015
+      },
+      "skewness": 0.2887,
+      "kurtosis": 0.4213,
+      "distribution_type": "approximately_normal",
+      "commentary": "",
+      "visualization_path": "",
+      "data": null
+    },
+    {
+      "column": "vegetation_index",
+      "analysis_type": "univariate",
+      "stats": {
+        "count": 36,
+        "missing": 0,
+        "missing_pct": 0.0,
+        "unique": 35,
+        "dtype": "float64",
+        "mean": 0.4205,
+        "std": 0.129,
+        "min": 0.2378,
+        "max": 0.7773,
+        "median": 0.3926
+      },
+      "skewness": 0.7373,
+      "kurtosis": 0.1159,
+      "distribution_type": "moderately_skewed",
+      "commentary": "",
+      "visualization_path": "",
+      "data": null
+    },
+    {
+      "column": "solar_radiation",
+      "analysis_type": "univariate",
+      "stats": {
+        "count": 36,
+        "missing": 0,
+        "missing_pct": 0.0,
+        "unique": 36,
+        "dtype": "float64",
+        "mean": 18.9794,
+        "std": 5.4324,
+        "min": 10.79,
+        "max": 29.77,
+        "median": 19.705
+      },
+      "skewness": 0.0733,
+      "kurtosis": -0.9621,
+      "distribution_type": "approximately_normal",
+      "commentary": "",
+      "visualization_path": "",
+      "data": null
+    },
+    {
+      "column": "drought_severity_index",
+      "analysis_type": "univariate",
+      "stats": {
+        "count": 36,
+        "missing": 0,
+        "missing_pct": 0.0,
+        "unique": 36,
+        "dtype": "float64",
+        "mean": -1.1417,
+        "std": 2.1719,
+        "min": -3.74,
+        "max": 6.0,
+        "median": -1.3450000000000002
+      },
+      "skewness": 1.4998,
+      "kurtosis": 2.474,
+      "distribution_type": "right_skewed",
+      "commentary": "",
+      "visualization_path": "",
+      "data": null
+    },
+    {
+      "column": "flood_risk_score",
+      "analysis_type": "univariate",
+      "stats": {
+        "count": 36,
+        "missing": 0,
+        "missing_pct": 0.0,
+        "unique": 34,
+        "dtype": "float64",
+        "mean": 2.4597,
+        "std": 2.3896,
+        "min": 0.0,
+        "max": 9.74,
+        "median": 1.635
+      },
+      "skewness": 1.8845,
+      "kurtosis": 3.4365,
+      "distribution_type": "right_skewed",
+      "commentary": "",
+      "visualization_path": "",
+      "data": null
+    },
+    {
+      "column": "days_since_rain",
+      "analysis_type": "univariate",
+      "stats": {
+        "count": 36,
+        "missing": 0,
+        "missing_pct": 0.0,
+        "unique": 9,
+        "dtype": "int64",
+        "mean": 5.7222,
+        "std": 3.3942,
+        "min": 0.0,
+        "max": 10.0,
+        "median": 7.0
+      },
+      "skewness": -0.7313,
+      "kurtosis": -0.7462,
+      "distribution_type": "moderately_skewed",
+      "commentary": "",
+      "visualization_path": "",
+      "data": null
+    },
+    {
+      "column": "elevation_proxy",
+      "analysis_type": "univariate",
+      "stats": {
+        "count": 36,
+        "missing": 0,
+        "missing_pct": 0.0,
+        "unique": 35,
+        "dtype": "float64",
+        "mean": 374.4444,
+        "std": 110.2474,
+        "min": 213.0,
+        "max": 583.0,
+        "median": 346.0
+      },
+      "skewness": 0.4223,
+      "kurtosis": -1.0525,
+      "distribution_type": "approximately_normal",
+      "commentary": "",
+      "visualization_path": "",
+      "data": null
+    },
+    {
       "column": "",
       "analysis_type": "correlation",
       "stats": {
@@ -362,6 +648,11 @@
             "correlation": 0.9538
           },
           {
+            "col_a": "precipitation",
+            "col_b": "flood_risk_score",
+            "correlation": 0.9531
+          },
+          {
             "col_a": "scan",
             "col_b": "track",
             "correlation": 0.9505
@@ -380,6 +671,11 @@
             "col_a": "track",
             "col_b": "bright_t31",
             "correlation": 0.9346
+          },
+          {
+            "col_a": "temperature_2m",
+            "col_b": "temperature_max",
+            "correlation": 0.9126
           },
           {
             "col_a": "latitude",
@@ -402,41 +698,31 @@
             "correlation": 0.8971
           },
           {
-            "col_a": "latitude",
-            "col_b": "track",
-            "correlation": -0.8669
+            "col_a": "temperature_2m",
+            "col_b": "temperature_min",
+            "correlation": 0.8944
           },
           {
-            "col_a": "latitude",
-            "col_b": "brightness",
-            "correlation": -0.834
+            "col_a": "precipitation",
+            "col_b": "drought_severity_index",
+            "correlation": 0.8769
           },
           {
-            "col_a": "latitude",
-            "col_b": "frp",
-            "correlation": -0.8189
-          },
-          {
-            "col_a": "longitude",
-            "col_b": "track",
-            "correlation": 0.8155
-          },
-          {
-            "col_a": "longitude",
-            "col_b": "brightness",
-            "correlation": 0.8105
+            "col_a": "precipitation",
+            "col_b": "days_since_rain",
+            "correlation": -0.8759
           }
         ]
       },
       "skewness": null,
       "kurtosis": null,
       "distribution_type": "",
-      "commentary": "Found 21 high-correlation pairs (|r| > 0.5)",
+      "commentary": "Found 57 high-correlation pairs (|r| > 0.5)",
       "visualization_path": "",
       "data": null
     }
   ],
-  "narrative": "Dataset contains 36 rows and 15 columns. Average missing rate is 0.0%.",
+  "narrative": "Dataset contains 36 rows and 28 columns. Average missing rate is 0.0%.",
   "hypotheses": [],
   "recommended_features": [
     "latitude",
@@ -448,6 +734,19 @@
     "bright_t31",
     "frp",
     "type",
+    "temperature_2m",
+    "temperature_max",
+    "temperature_min",
+    "precipitation",
+    "relative_humidity",
+    "wind_speed",
+    "soil_moisture",
+    "vegetation_index",
+    "solar_radiation",
+    "drought_severity_index",
+    "flood_risk_score",
+    "days_since_rain",
+    "elevation_proxy",
     "acq_date",
     "satellite",
     "version",
@@ -457,8 +756,8 @@
   "correlation_matrix_path": "output\\charts\\correlation_matrix.png",
   "data_traits": {
     "n_rows": 36,
-    "n_columns": 15,
-    "n_numeric": 9,
+    "n_columns": 28,
+    "n_numeric": 22,
     "n_categorical": 6,
     "avg_missing_pct": 0.0,
     "has_duplicates": false,

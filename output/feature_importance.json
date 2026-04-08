@@ -1,6 +1,15 @@
 {
-  "track": 0.5847,
-  "longitude": 0.2633,
-  "latitude_x_longitude": 0.1469,
-  "acq_time": 0.005
+  "track": 0.8656,
+  "drought_severity_index": 0.0378,
+  "latitude": 0.0365,
+  "vegetation_index": 0.0261,
+  "temperature_min": 0.0168,
+  "soil_moisture": 0.0095,
+  "relative_humidity": 0.0078,
+  "elevation_proxy": 0.0,
+  "latitude_x_longitude": 0.0,
+  "flood_risk_score": 0.0,
+  "days_since_rain": 0.0,
+  "acq_time": 0.0,
+  "wind_speed": 0.0
 }

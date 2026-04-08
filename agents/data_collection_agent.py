@@ -47,13 +47,24 @@ class DataCollectionAgent(BaseAgent):
             for source in sources:
                 source_type = source.get("source_type", "file")
                 if source_type == "nasa_api":
-                    self.log("🛰️ Executing NASA API extraction...")
+                    self.log("🛰️ Executing NASA FIRMS API extraction...")
                     map_key = source.get("map_key", "VIIRS_SNPP_NRT")
                     area_coords = source.get("area_coords", "world")
                     df = self.execute_tool("fetch_nasa_firms", map_key=map_key, area_coords=area_coords)
                     frames.append(df)
                     schema = self._infer_schema(df)
                     self.memory.store(f"schema:nasa_api_{map_key}", schema, source="data_collection")
+                    self.log(f"   FIRMS: {len(df)} rows, {len(df.columns)} columns (enriched with weather features)")
+
+                    # Also fetch EONET natural disaster events
+                    try:
+                        self.log("🌍 Fetching NASA EONET natural disaster events...")
+                        eonet_df = self.execute_tool("fetch_nasa_eonet", days=30, limit=50)
+                        if eonet_df is not None and not eonet_df.empty:
+                            self.log(f"   EONET: {len(eonet_df)} event observations fetched")
+                            self.memory.store("eonet_events", eonet_df, source="data_collection")
+                    except Exception as e:
+                        self.log(f"⚠️ EONET fetch skipped: {e}", level="warning")
                 else:
                     path = source.get("path", source.get("uri", ""))
                     if path and os.path.exists(path):

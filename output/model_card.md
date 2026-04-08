@@ -1,6 +1,6 @@
-# Model Card: random_forest
+# Model Card: xgboost
 
-**Type**: random
+**Type**: xgboost
 **Task**: classification
 
 ## Intended Use
@@ -24,7 +24,9 @@ Model trained on historical data; may not generalize to distribution shifts.
 ```json
 {
   "n_estimators": 100,
+  "max_depth": 6,
+  "learning_rate": 0.1,
   "random_state": 42,
-  "n_jobs": -1
+  "eval_metric": "logloss"
 }
 ```

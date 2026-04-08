@@ -10,6 +10,15 @@ env/
 .coverage
 htmlcov/
 
+# API Keys & Secrets
+.env
+.env.local
+.env.*.local
+*.key
+*.pem
+secrets.yaml
+secrets.json
+
 # Local Gemini/Agent junk
 .gemini/
 .agent/
@@ -24,4 +33,8 @@ brain/
 .DS_Store
 Thumbs.db
 
-# NOTE: .env and output/ are NOT ignored because the user explicitly requested to push them.
+# Temp test scripts
+tmp_test_*.py
+
+# Log files
+*.log

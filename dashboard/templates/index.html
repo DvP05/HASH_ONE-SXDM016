@@ -1,585 +1,682 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sentinel Core — Global Risk Command Center</title>
-    <meta name="description" content="Real-time autonomous wildfire monitoring and risk assessment powered by NASA FIRMS satellite data and agentic AI.">
+    <title>Geo Caster — Global Risk Command Center</title>
+    <meta name="description"
+        content="Real-time autonomous wildfire monitoring and risk assessment powered by NASA FIRMS satellite data and agentic AI.">
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 </head>
+
 <body>
 
-<!-- ═══ Top Navigation ═══ -->
-<nav class="top-nav" id="top-nav">
-    <div class="nav-brand">
-        <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
-        <span>Sentinel Core</span>
-        <div class="brand-dot"></div>
-    </div>
-    <div class="nav-tabs" id="nav-tabs">
-        <button class="nav-tab active" data-page="dashboard" id="nav-dashboard">Dashboard</button>
-        <button class="nav-tab" data-page="monitor" id="nav-monitor">Monitor</button>
-        <button class="nav-tab" data-page="analytics" id="nav-analytics">Analytics</button>
-        <button class="nav-tab" data-page="prediction" id="nav-prediction">Prediction</button>
-        <button class="nav-tab" data-page="logs" id="nav-logs">Logs</button>
-    </div>
-    <div class="nav-right">
-        <div class="nav-status">
-            {% if data.pipeline_result.stages %}
-            <div class="status-dot green"></div>
-            <span>PIPELINE ACTIVE</span>
-            {% else %}
-            <div class="status-dot gold"></div>
-            <span>AWAITING RUN</span>
-            {% endif %}
+    <!-- ═══ Top Navigation ═══ -->
+    <nav class="top-nav" id="top-nav">
+        <div class="nav-brand">
+            <svg viewBox="0 0 24 24">
+                <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
+            </svg>
+            <span>Geo Caster</span>
+            <div class="brand-dot"></div>
         </div>
-        <span>{{ data.pipeline_result.completed_at[:16] if data.pipeline_result.completed_at else '--' }}</span>
-    </div>
-</nav>
+        <div class="nav-tabs" id="nav-tabs">
+            <button class="nav-tab active" data-page="dashboard" id="nav-dashboard">Dashboard</button>
+            <button class="nav-tab" data-page="monitor" id="nav-monitor">Monitor</button>
+            <button class="nav-tab" data-page="analytics" id="nav-analytics">Analytics</button>
+            <button class="nav-tab" data-page="prediction" id="nav-prediction">Prediction</button>
+            <button class="nav-tab" data-page="logs" id="nav-logs">Logs</button>
+        </div>
+        <div class="nav-right">
+            <div class="nav-status">
+                {% if data.pipeline_result.stages %}
+                <div class="status-dot green"></div>
+                <span>PIPELINE ACTIVE</span>
+                {% else %}
+                <div class="status-dot gold"></div>
+                <span>AWAITING RUN</span>
+                {% endif %}
+            </div>
+            <span>{{ data.pipeline_result.completed_at[:16] if data.pipeline_result.completed_at else '--' }}</span>
+        </div>
+    </nav>
 
-<div class="page-container">
+    <div class="page-container">
 
-<!-- ═══════════════════════════════════════════════════════════
+        <!-- ═══════════════════════════════════════════════════════════
      PAGE 1: DASHBOARD
      ═══════════════════════════════════════════════════════════ -->
-<div class="page active" id="page-dashboard">
+        <div class="page active" id="page-dashboard">
 
-    <!-- Hero Section -->
-    <section class="hero-section">
-        <div class="hero-grid">
-            <div class="hero-left">
-                <div class="hero-eyebrow">
-                    <span></span> STATUS: ALL SYSTEMS ACTIVE <span></span> V2.0 BUILD
-                </div>
-                <h1 class="hero-title">
-                    Global<br>
-                    Environmental<br>
-                    Resilience<br>
-                    through<br>
-                    <em>Autonomous<br>
-                    Intelligence</em>
-                </h1>
-                <p class="hero-subtitle">
-                    Fusing NASA Satellite Data with Agentic AI to predict, simulate,
-                    and mitigate environmental hazards in real-time. The next
-                    generation of planetary-scale autonomous observation.
-                </p>
-                <div class="hero-actions">
-                    <button class="btn btn-primary" onclick="switchPage('monitor')">Deploy Sentinel Scan</button>
-                    <button class="btn btn-outline" onclick="switchPage('analytics')">Risk Level Matrix</button>
-                </div>
-            </div>
-            <div class="hero-right">
-                {% set pr = data.pipeline_result %}
-                <div class="stats-grid">
-                    <div class="stat-card">
-                        <div class="stat-label">Total Duration</div>
-                        <div class="stat-value green">{{ "%.1f"|format(pr.total_duration_seconds|default(0)) }}s</div>
-                        <div class="stat-detail">Full pipeline execution</div>
+            <!-- Hero Section -->
+            <section class="hero-section">
+                <div class="hero-grid">
+                    <div class="hero-left">
+                        <div class="hero-eyebrow">
+                            <span></span> STATUS: ALL SYSTEMS ACTIVE <span></span> V2.0 BUILD
+                        </div>
+                        <h1 class="hero-title">
+                            Global<br>
+                            Environmental<br>
+                            Resilience<br>
+                            through<br>
+                            <em>Autonomous<br>
+                                Intelligence</em>
+                        </h1>
+                        <p class="hero-subtitle">
+                            Fusing NASA Satellite Data with Agentic AI to predict, simulate,
+                            and mitigate environmental hazards in real-time. The next
+                            generation of planetary-scale autonomous observation.
+                        </p>
+                        <div class="hero-actions">
+                            <button class="btn btn-primary" onclick="switchPage('monitor')">Deploy Sentinel
+                                Scan</button>
+                            <button class="btn btn-outline" onclick="switchPage('analytics')">Risk Level Matrix</button>
+                        </div>
                     </div>
-                    <div class="stat-card">
-                        <div class="stat-label">LLM Calls</div>
-                        <div class="stat-value">{{ pr.total_llm_calls|default(0) }}</div>
-                        <div class="stat-detail">{{ pr.total_tokens|default(0) }} tokens used</div>
+                    <div class="hero-right">
+                        {% set pr = data.pipeline_result %}
+                        <div class="stats-grid">
+                            <div class="stat-card">
+                                <div class="stat-label">Total Duration</div>
+                                <div class="stat-value green">{{ "%.1f"|format(pr.total_duration_seconds|default(0)) }}s
+                                </div>
+                                <div class="stat-detail">Full pipeline execution</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-label">LLM Calls</div>
+                                <div class="stat-value">{{ pr.total_llm_calls|default(0) }}</div>
+                                <div class="stat-detail">{{ pr.total_tokens|default(0) }} tokens used</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-label">Total Vectors</div>
+                                <div class="stat-value coral">{{ data.disaster_summary.total|default(36) }}</div>
+                                <div class="stat-detail">All disaster detections</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-label">Model Accuracy</div>
+                                <div class="stat-value green">100%</div>
+                                <div class="stat-detail">Random Forest (CV 1.0)</div>
+                            </div>
+                        </div>
+
+                        <!-- Disaster Type Breakdown -->
+                        <div class="stats-grid" style="margin-top: 12px;">
+                            <div class="stat-card" style="border-left: 3px solid #ef5350;">
+                                <div class="stat-label">🔥 Fire Alerts</div>
+                                <div class="stat-value" style="color: #ef5350;">{{
+                                    data.disaster_summary.fire.count|default(12) }}</div>
+                                <div class="stat-detail">High: {{ data.disaster_summary.fire.high_count|default(6) }} |
+                                    Avg FRP: {{ data.disaster_summary.fire.avg_frp|default(0) }} MW</div>
+                            </div>
+                            <div class="stat-card" style="border-left: 3px solid #29b6f6;">
+                                <div class="stat-label">🌊 Flood Alerts</div>
+                                <div class="stat-value" style="color: #29b6f6;">{{
+                                    data.disaster_summary.flood.count|default(12) }}</div>
+                                <div class="stat-detail">High: {{ data.disaster_summary.flood.high_count|default(0) }} |
+                                    Avg Level: {{ data.disaster_summary.flood.avg_water_level|default(0) }}m</div>
+                            </div>
+                            <div class="stat-card" style="border-left: 3px solid #ffa726;">
+                                <div class="stat-label">🏜️ Drought Alerts</div>
+                                <div class="stat-value" style="color: #ffa726;">{{
+                                    data.disaster_summary.drought.count|default(12) }}</div>
+                                <div class="stat-detail">High: {{ data.disaster_summary.drought.high_count|default(0) }}
+                                    | Avg PDSI: {{ data.disaster_summary.drought.avg_pdsi|default(0) }}</div>
+                            </div>
+                            <div class="stat-card" style="border-left: 3px solid #66bb6a;">
+                                <div class="stat-label">🌱 Soil Moisture</div>
+                                <div class="stat-value" style="color: #66bb6a;">{{
+                                    "%.1f"|format(data.disaster_summary.drought.avg_soil_moisture|default(0) * 100) }}%
+                                </div>
+                                <div class="stat-detail">Drought zones avg moisture</div>
+                            </div>
+                        </div>
+
+                        <!-- Mini chart placeholder -->
+                        <div class="card" style="margin-top: 12px;">
+                            <div class="card-header">
+                                <span>Confidence Distribution</span>
+                                <span class="section-badge">REAL-TIME</span>
+                            </div>
+                            <div class="card-body" id="hero-confidence-chart" style="height: 160px;"></div>
+                        </div>
                     </div>
-                    <div class="stat-card">
-                        <div class="stat-label">Fire Vectors</div>
-                        <div class="stat-value coral">36</div>
-                        <div class="stat-detail">Active detections today</div>
+                </div>
+            </section>
+
+            <!-- Agentic Pipeline -->
+            <section class="section">
+                <div class="section-header">
+                    <div class="section-title-group">
+                        <span class="section-title">The Agentic Pipeline</span>
+                        <span class="section-subtitle">6-stage autonomous analysis engine</span>
                     </div>
-                    <div class="stat-card">
-                        <div class="stat-label">Model Accuracy</div>
-                        <div class="stat-value green">100%</div>
-                        <div class="stat-detail">Random Forest (CV 1.0)</div>
+                    <span class="section-badge">ALL GATES PASSED</span>
+                </div>
+                <div class="pipeline-grid" id="pipeline-grid">
+                    {% if pr.stages %}
+                    {% set icons = {'data_collection': '📡', 'data_cleaning': '🧹', 'eda': '📊', 'feature_engineering':
+                    '⚙️', 'modeling': '🤖', 'insight_generation': '💡'} %}
+                    {% set labels = {'data_collection': 'Data Collection', 'data_cleaning': 'Clean', 'eda': 'Autonomous
+                    EDA', 'feature_engineering': 'Feature Eng.', 'modeling': 'Modeling', 'insight_generation':
+                    'Insights'} %}
+                    {% for stage_name, stage_data in pr.stages.items() %}
+                    <div class="pipeline-card {{ stage_data.status }}">
+                        <div class="pipeline-icon">{{ icons.get(stage_name, '📦') }}</div>
+                        <div class="pipeline-label">{{ labels.get(stage_name, stage_name) }}</div>
+                        <div class="pipeline-time">{{ "%.1f"|format(stage_data.trace.duration_seconds|default(0)) }}s
+                        </div>
+                        <div class="pipeline-status {{ 'pass' if stage_data.quality_gate_passed else 'warn' }}">
+                            {{ 'PASSED' if stage_data.quality_gate_passed else 'WARNING' }}
+                        </div>
+                    </div>
+                    {% endfor %}
+                    {% endif %}
+                </div>
+            </section>
+
+            <!-- Multi-Modal Telemetry -->
+            <section class="section">
+                <div class="section-header">
+                    <div class="section-title-group">
+                        <span class="section-title">Multi-Modal Telemetry</span>
+                        <span class="section-subtitle">Real-time feed of composite environmental data across fire
+                            vectors</span>
+                    </div>
+                    <span class="section-badge">VIIRS SNPP</span>
+                </div>
+                <div class="telemetry-grid">
+                    <div class="card">
+                        <div class="card-header">
+                            <span>Thermal Brightness (K)</span>
+                            <span class="section-badge">LIVE FEED</span>
+                        </div>
+                        <div class="card-body" id="chart-brightness" style="height: 260px;"></div>
+                    </div>
+                    <div class="card">
+                        <div class="card-header">
+                            <span>Fire Radiative Power (MW)</span>
+                            <span class="section-badge">LIVE FEED</span>
+                        </div>
+                        <div class="card-body" id="chart-frp" style="height: 260px;"></div>
+                    </div>
+                    <div class="card">
+                        <div class="card-header">
+                            <span>Detection Timeline</span>
+                            <span class="section-badge">24H ROLLING</span>
+                        </div>
+                        <div class="card-body" id="chart-timeline" style="height: 260px;"></div>
                     </div>
                 </div>
+            </section>
 
-                <!-- Mini chart placeholder -->
-                <div class="card" style="margin-top: 12px;">
-                    <div class="card-header">
-                        <span>Confidence Distribution</span>
-                        <span class="section-badge">REAL-TIME</span>
+            <!-- Vulnerability Matrix -->
+            <section class="section">
+                <div class="section-header">
+                    <div class="section-title-group">
+                        <span class="section-title">Multi-Hazard Vulnerability Matrix</span>
+                        <span class="section-subtitle">Risk scoring across Fire, Flood & Drought vectors</span>
                     </div>
-                    <div class="card-body" id="hero-confidence-chart" style="height: 160px;"></div>
+                    <span class="section-badge">UPDATED LIVE</span>
                 </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Agentic Pipeline -->
-    <section class="section">
-        <div class="section-header">
-            <div class="section-title-group">
-                <span class="section-title">The Agentic Pipeline</span>
-                <span class="section-subtitle">6-stage autonomous analysis engine</span>
-            </div>
-            <span class="section-badge">ALL GATES PASSED</span>
-        </div>
-        <div class="pipeline-grid" id="pipeline-grid">
-            {% if pr.stages %}
-            {% set icons = {'data_collection': '📡', 'data_cleaning': '🧹', 'eda': '📊', 'feature_engineering': '⚙️', 'modeling': '🤖', 'insight_generation': '💡'} %}
-            {% set labels = {'data_collection': 'Data Collection', 'data_cleaning': 'Clean', 'eda': 'Autonomous EDA', 'feature_engineering': 'Feature Eng.', 'modeling': 'Modeling', 'insight_generation': 'Insights'} %}
-            {% for stage_name, stage_data in pr.stages.items() %}
-            <div class="pipeline-card {{ stage_data.status }}">
-                <div class="pipeline-icon">{{ icons.get(stage_name, '📦') }}</div>
-                <div class="pipeline-label">{{ labels.get(stage_name, stage_name) }}</div>
-                <div class="pipeline-time">{{ "%.1f"|format(stage_data.trace.duration_seconds|default(0)) }}s</div>
-                <div class="pipeline-status {{ 'pass' if stage_data.quality_gate_passed else 'warn' }}">
-                    {{ 'PASSED' if stage_data.quality_gate_passed else 'WARNING' }}
+                <div class="vuln-grid">
+                    <div class="vuln-card">
+                        <div class="vuln-label" style="color: #ef5350;">🔥 Fire Risk</div>
+                        <div class="vuln-value" style="color: #ef5350;">{{
+                            data.disaster_summary.fire.avg_severity|default(0) }}</div>
+                        <div class="vuln-detail">Avg MW | {{ data.disaster_summary.fire.high_count|default(0) }}
+                            high-conf</div>
+                    </div>
+                    <div class="vuln-card">
+                        <div class="vuln-label" style="color: #29b6f6;">🌊 Flood Risk</div>
+                        <div class="vuln-value" style="color: #29b6f6;">{{
+                            data.disaster_summary.flood.avg_severity|default(0) }}</div>
+                        <div class="vuln-detail">Avg Water Level (m) | {{ data.disaster_summary.flood.count|default(0)
+                            }} alerts</div>
+                    </div>
+                    <div class="vuln-card">
+                        <div class="vuln-label" style="color: #ffa726;">🏜️ Drought</div>
+                        <div class="vuln-value" style="color: #ffa726;">{{
+                            data.disaster_summary.drought.avg_pdsi|default(0) }}</div>
+                        <div class="vuln-detail">PDSI Index | {{ data.disaster_summary.drought.count|default(0) }}
+                            alerts</div>
+                    </div>
+                    <div class="vuln-card">
+                        <div class="vuln-label critical">⚠️ Critical</div>
+                        <div class="vuln-value">{{ data.disaster_summary.fire.high_count|default(0) +
+                            data.disaster_summary.flood.high_count|default(0) +
+                            data.disaster_summary.drought.high_count|default(0) }}</div>
+                        <div class="vuln-detail">Active high-risk dispatches</div>
+                    </div>
                 </div>
-            </div>
-            {% endfor %}
-            {% endif %}
-        </div>
-    </section>
+            </section>
 
-    <!-- Multi-Modal Telemetry -->
-    <section class="section">
-        <div class="section-header">
-            <div class="section-title-group">
-                <span class="section-title">Multi-Modal Telemetry</span>
-                <span class="section-subtitle">Real-time feed of composite environmental data across fire vectors</span>
-            </div>
-            <span class="section-badge">VIIRS SNPP</span>
-        </div>
-        <div class="telemetry-grid">
-            <div class="card">
-                <div class="card-header">
-                    <span>Thermal Brightness (K)</span>
-                    <span class="section-badge">LIVE FEED</span>
+            <!-- Disaster Type Chart -->
+            <section class="section">
+                <div class="section-header">
+                    <div class="section-title-group">
+                        <span class="section-title">Disaster Distribution</span>
+                        <span class="section-subtitle">Breakdown by type with severity indicators</span>
+                    </div>
+                    <span class="section-badge">ALL TYPES</span>
                 </div>
-                <div class="card-body" id="chart-brightness" style="height: 260px;"></div>
-            </div>
-            <div class="card">
-                <div class="card-header">
-                    <span>Fire Radiative Power (MW)</span>
-                    <span class="section-badge">LIVE FEED</span>
+                <div class="telemetry-grid">
+                    <div class="card">
+                        <div class="card-header">
+                            <span>Disaster Type Counts</span>
+                            <span class="section-badge">FIRE / FLOOD / DROUGHT</span>
+                        </div>
+                        <div class="card-body" id="chart-disaster-types" style="height: 260px;"></div>
+                    </div>
+                    <div class="card">
+                        <div class="card-header">
+                            <span>Severity by Disaster Type</span>
+                            <span class="section-badge">COMPARISON</span>
+                        </div>
+                        <div class="card-body" id="chart-disaster-severity" style="height: 260px;"></div>
+                    </div>
+                    <div class="card">
+                        <div class="card-header">
+                            <span>Environmental Indicators</span>
+                            <span class="section-badge">WEATHER DATA</span>
+                        </div>
+                        <div class="card-body" id="chart-env-indicators" style="height: 260px;"></div>
+                    </div>
                 </div>
-                <div class="card-body" id="chart-frp" style="height: 260px;"></div>
-            </div>
-            <div class="card">
-                <div class="card-header">
-                    <span>Detection Timeline</span>
-                    <span class="section-badge">24H ROLLING</span>
-                </div>
-                <div class="card-body" id="chart-timeline" style="height: 260px;"></div>
-            </div>
+            </section>
+
+            <footer class="footer">
+                <span>© 2026 Geo Caster — Autonomous Environmental Intelligence Platform</span>
+                <span>LIVE FEED | VIIRS SNPP | CLASSIFICATION MODEL | NASA FIRMS API</span>
+            </footer>
         </div>
-    </section>
-
-    <!-- Vulnerability Matrix -->
-    <section class="section">
-        <div class="section-header">
-            <div class="section-title-group">
-                <span class="section-title">Vulnerability Matrix</span>
-                <span class="section-subtitle">Synthetic risk scoring based on multi-variable hazard factors</span>
-            </div>
-            <span class="section-badge">UPDATED LIVE</span>
-        </div>
-        <div class="vuln-grid">
-            <div class="vuln-card">
-                <div class="vuln-label high">High Risk</div>
-                <div class="vuln-value">84%</div>
-                <div class="vuln-detail">▲ 3.2% | 18 alerts</div>
-            </div>
-            <div class="vuln-card">
-                <div class="vuln-label nominal">Nominal</div>
-                <div class="vuln-value">22%</div>
-                <div class="vuln-detail">▼ 1.5% | 6 alerts</div>
-            </div>
-            <div class="vuln-card">
-                <div class="vuln-label stable">Stable</div>
-                <div class="vuln-value">15%</div>
-                <div class="vuln-detail">= 0.0% | 12 alerts</div>
-            </div>
-            <div class="vuln-card">
-                <div class="vuln-label critical">Critical</div>
-                <div class="vuln-value">6</div>
-                <div class="vuln-detail">Active dispatches</div>
-            </div>
-        </div>
-    </section>
-
-    <footer class="footer">
-        <span>© 2026 Sentinel Core — Autonomous Environmental Intelligence Platform</span>
-        <span>LIVE FEED | VIIRS SNPP | CLASSIFICATION MODEL | NASA FIRMS API</span>
-    </footer>
-</div>
 
 
-<!-- ═══════════════════════════════════════════════════════════
+        <!-- ═══════════════════════════════════════════════════════════
      PAGE 2: MONITOR (MAP + FIRE LOCATIONS)
      ═══════════════════════════════════════════════════════════ -->
-<div class="page" id="page-monitor">
-    <div class="monitor-layout">
-        <div class="map-container">
-            <div id="fire-map"></div>
+        <div class="page" id="page-monitor">
+            <div class="monitor-layout">
+                <div class="map-container">
+                    <div id="fire-map"></div>
 
-            <!-- Map overlay chips -->
-            <div class="map-overlay-top">
-                <div class="map-chip">
-                    🛰️ <span>VIIRS SNPP</span>
-                </div>
-                <div class="map-chip">
-                    📡 Active: <span class="chip-value" id="map-count">0</span>
-                </div>
-                <div class="map-chip">
-                    🔥 High: <span class="chip-value" id="map-high-count">0</span>
-                </div>
-            </div>
+                    <!-- Map overlay chips -->
+                    <div class="map-overlay-top">
+                        <div class="map-chip">
+                            🛰️ <span>VIIRS SNPP</span>
+                        </div>
+                        <div class="map-chip">
+                            📡 Active: <span class="chip-value" id="map-count">0</span>
+                        </div>
+                        <div class="map-chip">
+                            🔥 High: <span class="chip-value" id="map-high-count">0</span>
+                        </div>
+                    </div>
 
-            <!-- Legend -->
-            <div class="map-legend">
-                <div class="legend-title">Fire Confidence</div>
-                <div class="legend-items">
-                    <div class="legend-item"><div class="legend-dot high"></div> High Confidence</div>
-                    <div class="legend-item"><div class="legend-dot nominal"></div> Nominal Confidence</div>
-                    <div class="legend-item"><div class="legend-dot low"></div> Low Confidence</div>
+                    <!-- Legend -->
+                    <div class="map-legend">
+                        <div class="legend-title">Fire Confidence</div>
+                        <div class="legend-items">
+                            <div class="legend-item">
+                                <div class="legend-dot high"></div> High Confidence
+                            </div>
+                            <div class="legend-item">
+                                <div class="legend-dot nominal"></div> Nominal Confidence
+                            </div>
+                            <div class="legend-item">
+                                <div class="legend-dot low"></div> Low Confidence
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Detail Panel -->
+                <div class="detail-panel" id="detail-panel">
+                    <div class="panel-header">
+                        <span id="panel-title">Fire Detections</span>
+                        <span class="section-badge" id="panel-badge">36 VECTORS</span>
+                    </div>
+                    <div class="panel-content" id="panel-content">
+                        <!-- Filled by JS -->
+                        <div class="fire-list" id="fire-list"></div>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <!-- Detail Panel -->
-        <div class="detail-panel" id="detail-panel">
-            <div class="panel-header">
-                <span id="panel-title">Fire Detections</span>
-                <span class="section-badge" id="panel-badge">36 VECTORS</span>
-            </div>
-            <div class="panel-content" id="panel-content">
-                <!-- Filled by JS -->
-                <div class="fire-list" id="fire-list"></div>
-            </div>
-        </div>
-    </div>
-</div>
 
-
-<!-- ═══════════════════════════════════════════════════════════
+        <!-- ═══════════════════════════════════════════════════════════
      PAGE 3: ANALYTICS
      ═══════════════════════════════════════════════════════════ -->
-<div class="page" id="page-analytics">
-    <section class="section">
-        <div class="section-header">
-            <div class="section-title-group">
-                <span class="section-title">Correlation Analysis</span>
-                <span class="section-subtitle">High-correlation pairs detected in telemetry data</span>
-            </div>
-        </div>
-        <div class="analytics-grid">
-            <div class="card">
-                <div class="card-header"><span>Correlation Matrix</span></div>
-                <div class="card-body">
-                    <img src="/charts/correlation_matrix.png" class="chart-img" alt="Correlation Matrix" onerror="this.parentElement.innerHTML='<div class=empty-state><div class=icon>📊</div><p>Run pipeline first</p></div>'">
+        <div class="page" id="page-analytics">
+            <section class="section">
+                <div class="section-header">
+                    <div class="section-title-group">
+                        <span class="section-title">Correlation Analysis</span>
+                        <span class="section-subtitle">High-correlation pairs detected in telemetry data</span>
+                    </div>
                 </div>
-            </div>
-            <div class="card">
-                <div class="card-header"><span>Feature Importance</span></div>
-                <div class="card-body">
-                    <div id="analytics-fi-chart" style="height: 380px;"></div>
+                <div class="analytics-grid">
+                    <div class="card">
+                        <div class="card-header"><span>Correlation Matrix</span></div>
+                        <div class="card-body">
+                            <img src="/charts/correlation_matrix.png" class="chart-img" alt="Correlation Matrix"
+                                onerror="this.parentElement.innerHTML='<div class=empty-state><div class=icon>📊</div><p>Run pipeline first</p></div>'">
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-header"><span>Feature Importance</span></div>
+                        <div class="card-body">
+                            <div id="analytics-fi-chart" style="height: 380px;"></div>
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </div>
-    </section>
+            </section>
 
-    <!-- Distribution Charts -->
-    <section class="section">
-        <div class="section-header">
-            <div class="section-title-group">
-                <span class="section-title">Distribution Analysis</span>
-                <span class="section-subtitle">Univariate distributions across all numeric features</span>
-            </div>
-        </div>
-        <div class="analytics-grid" id="distribution-grid">
-            <!-- Populated by JS -->
-        </div>
-    </section>
+            <!-- Distribution Charts -->
+            <section class="section">
+                <div class="section-header">
+                    <div class="section-title-group">
+                        <span class="section-title">Distribution Analysis</span>
+                        <span class="section-subtitle">Univariate distributions across all numeric features</span>
+                    </div>
+                </div>
+                <div class="analytics-grid" id="distribution-grid">
+                    <!-- Populated by JS -->
+                </div>
+            </section>
 
-    <!-- EDA Findings Table -->
-    <section class="section">
-        <div class="section-header">
-            <div class="section-title-group">
-                <span class="section-title">EDA Findings</span>
-                <span class="section-subtitle">{{ (data.eda_report.findings|default([]))|length }} automated findings</span>
-            </div>
+            <!-- EDA Findings Table -->
+            <section class="section">
+                <div class="section-header">
+                    <div class="section-title-group">
+                        <span class="section-title">EDA Findings</span>
+                        <span class="section-subtitle">{{ (data.eda_report.findings|default([]))|length }} automated
+                            findings</span>
+                    </div>
+                </div>
+                <div class="card">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Column</th>
+                                <th>Type</th>
+                                <th>Distribution</th>
+                                <th>Missing</th>
+                                <th>Unique</th>
+                                <th>Skewness</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for finding in data.eda_report.findings|default([]) %}
+                            {% if finding.column %}
+                            <tr>
+                                <td><strong>{{ finding.column }}</strong></td>
+                                <td>{{ finding.stats.dtype|default('—') }}</td>
+                                <td>
+                                    <span
+                                        class="tag {{ 'pass' if finding.distribution_type == 'approximately_normal' else 'warn' }}">
+                                        {{ finding.distribution_type|default('—') }}
+                                    </span>
+                                </td>
+                                <td>{{ finding.stats.missing|default(0) }}</td>
+                                <td>{{ finding.stats.unique|default(0) }}</td>
+                                <td style="font-family: 'JetBrains Mono', monospace; font-size: 0.72rem;">
+                                    {{ "%.3f"|format(finding.skewness) if finding.skewness is not none else '—' }}
+                                </td>
+                            </tr>
+                            {% endif %}
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <footer class="footer">
+                <span>© 2026 Geo Caster — Analytics Engine</span>
+                <span>DATA SOURCE: NASA FIRMS VIIRS_SNPP_NRT</span>
+            </footer>
         </div>
-        <div class="card">
-            <table class="data-table">
-                <thead>
-                    <tr>
-                        <th>Column</th>
-                        <th>Type</th>
-                        <th>Distribution</th>
-                        <th>Missing</th>
-                        <th>Unique</th>
-                        <th>Skewness</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for finding in data.eda_report.findings|default([]) %}
-                    {% if finding.column %}
-                    <tr>
-                        <td><strong>{{ finding.column }}</strong></td>
-                        <td>{{ finding.stats.dtype|default('—') }}</td>
-                        <td>
-                            <span class="tag {{ 'pass' if finding.distribution_type == 'approximately_normal' else 'warn' }}">
-                                {{ finding.distribution_type|default('—') }}
-                            </span>
-                        </td>
-                        <td>{{ finding.stats.missing|default(0) }}</td>
-                        <td>{{ finding.stats.unique|default(0) }}</td>
-                        <td style="font-family: 'JetBrains Mono', monospace; font-size: 0.72rem;">
-                            {{ "%.3f"|format(finding.skewness) if finding.skewness is not none else '—' }}
-                        </td>
-                    </tr>
-                    {% endif %}
-                    {% endfor %}
-                </tbody>
-            </table>
-        </div>
-    </section>
-
-    <footer class="footer">
-        <span>© 2026 Sentinel Core — Analytics Engine</span>
-        <span>DATA SOURCE: NASA FIRMS VIIRS_SNPP_NRT</span>
-    </footer>
-</div>
 
 
-<!-- ═══════════════════════════════════════════════════════════
+        <!-- ═══════════════════════════════════════════════════════════
      PAGE 4: PREDICTION (MODEL RESULTS)
      ═══════════════════════════════════════════════════════════ -->
-<div class="page" id="page-prediction">
-    <section class="section">
-        <div class="section-header">
-            <div class="section-title-group">
-                <span class="section-title">Model Performance</span>
-                <span class="section-subtitle">Autonomous model selection and evaluation</span>
-            </div>
+        <div class="page" id="page-prediction">
+            <section class="section">
+                <div class="section-header">
+                    <div class="section-title-group">
+                        <span class="section-title">Model Performance</span>
+                        <span class="section-subtitle">Autonomous model selection and evaluation</span>
+                    </div>
+                </div>
+
+                <!-- Model Card rendered from markdown -->
+                <div class="card" style="margin-bottom: 24px;">
+                    <div class="card-header"><span>Model Card</span><span class="section-badge">AUTO-GENERATED</span>
+                    </div>
+                    <div class="card-body">
+                        <div class="markdown-content" id="prediction-model-card"></div>
+                    </div>
+                </div>
+
+                <!-- Insight Report -->
+                <div class="card" style="margin-bottom: 24px;">
+                    <div class="card-header"><span>Insight Report</span><span class="section-badge">FULL ANALYSIS</span>
+                    </div>
+                    <div class="card-body">
+                        <div class="markdown-content" id="prediction-insight-report"></div>
+                    </div>
+                </div>
+
+                <!-- Recommendations -->
+                <div class="section-header">
+                    <div class="section-title-group">
+                        <span class="section-title">Recommendations</span>
+                        <span class="section-subtitle">AI-generated action items</span>
+                    </div>
+                </div>
+                <div class="reco-grid" id="prediction-reco-grid">
+                    <!-- Populated by JS -->
+                </div>
+            </section>
+
+            <footer class="footer">
+                <span>© 2026 Geo Caster — Prediction Engine</span>
+                <span>MODEL: Random Forest | TASK: Classification</span>
+            </footer>
         </div>
 
-        <!-- Model Card rendered from markdown -->
-        <div class="card" style="margin-bottom: 24px;">
-            <div class="card-header"><span>Model Card</span><span class="section-badge">AUTO-GENERATED</span></div>
-            <div class="card-body">
-                <div class="markdown-content" id="prediction-model-card"></div>
-            </div>
-        </div>
 
-        <!-- Insight Report -->
-        <div class="card" style="margin-bottom: 24px;">
-            <div class="card-header"><span>Insight Report</span><span class="section-badge">FULL ANALYSIS</span></div>
-            <div class="card-body">
-                <div class="markdown-content" id="prediction-insight-report"></div>
-            </div>
-        </div>
-
-        <!-- Recommendations -->
-        <div class="section-header">
-            <div class="section-title-group">
-                <span class="section-title">Recommendations</span>
-                <span class="section-subtitle">AI-generated action items</span>
-            </div>
-        </div>
-        <div class="reco-grid" id="prediction-reco-grid">
-            <!-- Populated by JS -->
-        </div>
-    </section>
-
-    <footer class="footer">
-        <span>© 2026 Sentinel Core — Prediction Engine</span>
-        <span>MODEL: Random Forest | TASK: Classification</span>
-    </footer>
-</div>
-
-
-<!-- ═══════════════════════════════════════════════════════════
+        <!-- ═══════════════════════════════════════════════════════════
      PAGE 5: LOGS (PIPELINE EXECUTION LOG)
      ═══════════════════════════════════════════════════════════ -->
-<div class="page" id="page-logs">
-    <section class="section">
-        <div class="section-header">
-            <div class="section-title-group">
-                <span class="section-title">Pipeline Execution Log</span>
-                <span class="section-subtitle">Detailed stage-by-stage execution trace</span>
-            </div>
-            <span class="section-badge">{{ pr.stages|length if pr.stages else 0 }} STAGES</span>
-        </div>
+        <div class="page" id="page-logs">
+            <section class="section">
+                <div class="section-header">
+                    <div class="section-title-group">
+                        <span class="section-title">Pipeline Execution Log</span>
+                        <span class="section-subtitle">Detailed stage-by-stage execution trace</span>
+                    </div>
+                    <span class="section-badge">{{ pr.stages|length if pr.stages else 0 }} STAGES</span>
+                </div>
 
-        <div class="card" style="margin-bottom: 24px;">
-            <table class="data-table" id="logs-pipeline-table">
-                <thead>
-                    <tr>
-                        <th>Stage</th>
-                        <th>Status</th>
-                        <th>Quality Gate</th>
-                        <th>Duration</th>
-                        <th>LLM Calls</th>
-                        <th>Reasoning Steps</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% if pr.stages %}
-                    {% for stage_name, stage_data in pr.stages.items() %}
-                    <tr>
-                        <td><strong>{{ stage_name.replace('_', ' ').title() }}</strong></td>
-                        <td>
-                            <span class="tag {{ 'pass' if stage_data.status == 'success' else 'fail' }}">
-                                {{ stage_data.status }}
-                            </span>
-                        </td>
-                        <td>
-                            {% if stage_data.quality_gate_passed is defined %}
-                            <span class="tag {{ 'pass' if stage_data.quality_gate_passed else 'warn' }}">
-                                {{ 'PASS' if stage_data.quality_gate_passed else 'WARN' }}
-                            </span>
+                <div class="card" style="margin-bottom: 24px;">
+                    <table class="data-table" id="logs-pipeline-table">
+                        <thead>
+                            <tr>
+                                <th>Stage</th>
+                                <th>Status</th>
+                                <th>Quality Gate</th>
+                                <th>Duration</th>
+                                <th>LLM Calls</th>
+                                <th>Reasoning Steps</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% if pr.stages %}
+                            {% for stage_name, stage_data in pr.stages.items() %}
+                            <tr>
+                                <td><strong>{{ stage_name.replace('_', ' ').title() }}</strong></td>
+                                <td>
+                                    <span class="tag {{ 'pass' if stage_data.status == 'success' else 'fail' }}">
+                                        {{ stage_data.status }}
+                                    </span>
+                                </td>
+                                <td>
+                                    {% if stage_data.quality_gate_passed is defined %}
+                                    <span class="tag {{ 'pass' if stage_data.quality_gate_passed else 'warn' }}">
+                                        {{ 'PASS' if stage_data.quality_gate_passed else 'WARN' }}
+                                    </span>
+                                    {% endif %}
+                                </td>
+                                <td style="font-family: 'JetBrains Mono', monospace;">
+                                    {{ "%.2f"|format(stage_data.trace.duration_seconds|default(0)) }}s
+                                </td>
+                                <td>{{ stage_data.trace.llm_calls|default(0) }}</td>
+                                <td>{{ stage_data.trace.reasoning_steps_count|default(0) }}</td>
+                            </tr>
+                            {% endfor %}
                             {% endif %}
-                        </td>
-                        <td style="font-family: 'JetBrains Mono', monospace;">
-                            {{ "%.2f"|format(stage_data.trace.duration_seconds|default(0)) }}s
-                        </td>
-                        <td>{{ stage_data.trace.llm_calls|default(0) }}</td>
-                        <td>{{ stage_data.trace.reasoning_steps_count|default(0) }}</td>
-                    </tr>
-                    {% endfor %}
-                    {% endif %}
-                </tbody>
-            </table>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Cleaning Operations Log -->
+                <div class="section-header">
+                    <div class="section-title-group">
+                        <span class="section-title">Data Cleaning Operations</span>
+                        <span class="section-subtitle">{{ data.cleaning_log|length }} operations applied</span>
+                    </div>
+                </div>
+                <div class="card">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Operation</th>
+                                <th>Rows Affected</th>
+                                <th>Reversible</th>
+                                <th>Reasoning</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for entry in data.cleaning_log %}
+                            <tr>
+                                <td><strong>{{ entry.operation }}</strong></td>
+                                <td style="font-family: 'JetBrains Mono', monospace;">{{ entry.rows_affected }}</td>
+                                <td><span class="tag pass">YES</span></td>
+                                <td style="color: var(--text-secondary); max-width: 400px;">
+                                    {{ entry.reasoning[:120] }}
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <footer class="footer">
+                <span>© 2026 Geo Caster — System Logs</span>
+                <span>LAST RUN: {{ pr.completed_at[:19] if pr.completed_at else 'N/A' }}</span>
+            </footer>
         </div>
 
-        <!-- Cleaning Operations Log -->
-        <div class="section-header">
-            <div class="section-title-group">
-                <span class="section-title">Data Cleaning Operations</span>
-                <span class="section-subtitle">{{ data.cleaning_log|length }} operations applied</span>
-            </div>
-        </div>
-        <div class="card">
-            <table class="data-table">
-                <thead>
-                    <tr>
-                        <th>Operation</th>
-                        <th>Rows Affected</th>
-                        <th>Reversible</th>
-                        <th>Reasoning</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for entry in data.cleaning_log %}
-                    <tr>
-                        <td><strong>{{ entry.operation }}</strong></td>
-                        <td style="font-family: 'JetBrains Mono', monospace;">{{ entry.rows_affected }}</td>
-                        <td><span class="tag pass">YES</span></td>
-                        <td style="color: var(--text-secondary); max-width: 400px;">
-                            {{ entry.reasoning[:120] }}
-                        </td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-        </div>
-    </section>
-
-    <footer class="footer">
-        <span>© 2026 Sentinel Core — System Logs</span>
-        <span>LAST RUN: {{ pr.completed_at[:19] if pr.completed_at else 'N/A' }}</span>
-    </footer>
-</div>
-
-</div><!-- /page-container -->
+    </div><!-- /page-container -->
 
 
-<!-- ═══════════════════════════════════════════════════════════
+    <!-- ═══════════════════════════════════════════════════════════
      SCRIPTS
      ═══════════════════════════════════════════════════════════ -->
-<script>
-// ─── State ───
-let fireLocations = [];
-let leafletMap = null;
-let markers = [];
-let selectedFireId = null;
+    <script>
+        // ─── State ───
+        let fireLocations = [];
+        let leafletMap = null;
+        let markers = [];
+        let selectedFireId = null;
 
-// ─── Page Navigation ───
-function switchPage(pageName) {
-    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-    document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+        // ─── Page Navigation ───
+        function switchPage(pageName) {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
 
-    const page = document.getElementById('page-' + pageName);
-    const tab = document.querySelector(`[data-page="${pageName}"]`);
-    if (page) page.classList.add('active');
-    if (tab) tab.classList.add('active');
+            const page = document.getElementById('page-' + pageName);
+            const tab = document.querySelector(`[data-page="${pageName}"]`);
+            if (page) page.classList.add('active');
+            if (tab) tab.classList.add('active');
 
-    // Initialize map when monitor page is opened
-    if (pageName === 'monitor' && !leafletMap) {
-        setTimeout(initMap, 100);
-    }
-    // Re-invalidate map size if already initialized
-    if (pageName === 'monitor' && leafletMap) {
-        setTimeout(() => leafletMap.invalidateSize(), 100);
-    }
-}
+            // Initialize map when monitor page is opened
+            if (pageName === 'monitor' && !leafletMap) {
+                setTimeout(initMap, 100);
+            }
+            // Re-invalidate map size if already initialized
+            if (pageName === 'monitor' && leafletMap) {
+                setTimeout(() => leafletMap.invalidateSize(), 100);
+            }
+        }
 
-document.querySelectorAll('.nav-tab').forEach(tab => {
-    tab.addEventListener('click', () => switchPage(tab.dataset.page));
-});
+        document.querySelectorAll('.nav-tab').forEach(tab => {
+            tab.addEventListener('click', () => switchPage(tab.dataset.page));
+        });
 
-// ─── Fire Locations API ───
-async function loadFireLocations() {
-    try {
-        const resp = await fetch('/api/fire-locations');
-        fireLocations = await resp.json();
-    } catch (e) {
-        console.error('Failed to load fire locations:', e);
-    }
-}
+        // ─── Fire Locations API ───
+        async function loadFireLocations() {
+            try {
+                const resp = await fetch('/api/fire-locations');
+                fireLocations = await resp.json();
+            } catch (e) {
+                console.error('Failed to load fire locations:', e);
+            }
+        }
 
-// ─── Map Initialization ───
-function initMap() {
-    if (leafletMap) return;
+        // ─── Map Initialization ───
+        function initMap() {
+            if (leafletMap) return;
 
-    leafletMap = L.map('fire-map', {
-        center: [0, 60],
-        zoom: 2,
-        zoomControl: true,
-        attributionControl: false,
-    });
+            leafletMap = L.map('fire-map', {
+                center: [0, 60],
+                zoom: 2,
+                zoomControl: true,
+                attributionControl: false,
+            });
 
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        maxZoom: 18,
-    }).addTo(leafletMap);
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                maxZoom: 18,
+            }).addTo(leafletMap);
 
-    // Add fire markers
-    addFireMarkers();
-}
+            // Add fire markers
+            addFireMarkers();
+        }
 
-function getMarkerColor(confidence, type) {
-    if (type === 'Flood') return '#1e90ff';
-    if (type === 'Drought') return '#cd853f';
-    switch(confidence) {
-        case 'high': return '#ff4444';
-        case 'nominal': return '#ffaa00';
-        case 'low': return '#44aaff';
-        default: return '#ffaa00';
-    }
-}
+        function getMarkerColor(confidence, type) {
+            if (type === 'Flood') return '#1e90ff';
+            if (type === 'Drought') return '#cd853f';
+            switch (confidence) {
+                case 'high': return '#ff4444';
+                case 'nominal': return '#ffaa00';
+                case 'low': return '#44aaff';
+                default: return '#ffaa00';
+            }
+        }
 
-function createFireIcon(confidence, type, size = 12) {
-    const color = getMarkerColor(confidence, type);
-    let iconContent = '';
-    if (type === 'Flood') iconContent = '🌊';
-    else if (type === 'Drought') iconContent = '🏜️';
-    else iconContent = '🔥';
+        function createFireIcon(confidence, type, size = 12) {
+            const color = getMarkerColor(confidence, type);
+            let iconContent = '';
+            if (type === 'Flood') iconContent = '🌊';
+            else if (type === 'Drought') iconContent = '🏜️';
+            else iconContent = '🔥';
 
-    return L.divIcon({
-        className: 'fire-marker',
-        html: `<div style="
+            return L.divIcon({
+                className: 'fire-marker',
+                html: `<div style="
             width: ${size}px; height: ${size}px;
             background: ${color};
             border-radius: 50%;
-            box-shadow: 0 0 ${size}px ${color}80, 0 0 ${size*2}px ${color}40;
+            box-shadow: 0 0 ${size}px ${color}80, 0 0 ${size * 2}px ${color}40;
             border: 2px solid ${color}cc;
             display: flex; align-items: center; justify-content: center;
             font-size: ${size * 0.7}px;
@@ -591,75 +688,75 @@ function createFireIcon(confidence, type, size = 12) {
                 50% { transform: scale(1.3); opacity: 0.7; }
             }
         </style>`,
-        iconSize: [size, size],
-        iconAnchor: [size/2, size/2],
-    });
-}
-
-function addFireMarkers() {
-    if (!leafletMap || !fireLocations.length) return;
-
-    // Clear old markers
-    markers.forEach(m => leafletMap.removeLayer(m));
-    markers = [];
-
-    // Group by unique lat/lon (deduplicate nearby)
-    const seen = new Set();
-    const unique = [];
-    fireLocations.forEach(loc => {
-        const key = `${loc.latitude.toFixed(1)}_${loc.longitude.toFixed(1)}`;
-        if (!seen.has(key)) {
-            seen.add(key);
-            unique.push(loc);
-        } else {
-            unique.push(loc); // keep all but cluster nearby
+                iconSize: [size, size],
+                iconAnchor: [size / 2, size / 2],
+            });
         }
-    });
 
-    fireLocations.forEach(loc => {
-        let displaySize = 16;
-        if (loc.disaster_type === 'Fire') displaySize = Math.max(12, Math.min(24, loc.frp / 2));
-        
-        const marker = L.marker([loc.latitude, loc.longitude], {
-            icon: createFireIcon(loc.confidence, loc.disaster_type, displaySize)
-        });
+        function addFireMarkers() {
+            if (!leafletMap || !fireLocations.length) return;
 
-        marker.on('click', () => selectFire(loc.id));
+            // Clear old markers
+            markers.forEach(m => leafletMap.removeLayer(m));
+            markers = [];
 
-        marker.addTo(leafletMap);
-        markers.push(marker);
-    });
+            // Group by unique lat/lon (deduplicate nearby)
+            const seen = new Set();
+            const unique = [];
+            fireLocations.forEach(loc => {
+                const key = `${loc.latitude.toFixed(1)}_${loc.longitude.toFixed(1)}`;
+                if (!seen.has(key)) {
+                    seen.add(key);
+                    unique.push(loc);
+                } else {
+                    unique.push(loc); // keep all but cluster nearby
+                }
+            });
 
-    // Update counts
-    document.getElementById('map-count').textContent = fireLocations.length;
-    document.getElementById('map-high-count').textContent =
-        fireLocations.filter(l => l.confidence === 'high').length;
+            fireLocations.forEach(loc => {
+                let displaySize = 16;
+                if (loc.disaster_type === 'Fire') displaySize = Math.max(12, Math.min(24, loc.frp / 2));
 
-    // Build fire list in panel
-    buildFireList();
-}
+                const marker = L.marker([loc.latitude, loc.longitude], {
+                    icon: createFireIcon(loc.confidence, loc.disaster_type, displaySize)
+                });
 
-function buildFireList() {
-    const list = document.getElementById('fire-list');
-    if (!list) return;
-    list.innerHTML = '';
+                marker.on('click', () => selectFire(loc.id));
 
-    // Show unique regions grouped
-    const grouped = {};
-    fireLocations.forEach(loc => {
-        const key = loc.region || 'Unknown';
-        if (!grouped[key]) grouped[key] = [];
-        grouped[key].push(loc);
-    });
+                marker.addTo(leafletMap);
+                markers.push(marker);
+            });
 
-    Object.entries(grouped).forEach(([region, locs]) => {
-        locs.forEach(loc => {
-            const item = document.createElement('div');
-            item.className = 'fire-list-item';
-            item.dataset.id = loc.id;
+            // Update counts
+            document.getElementById('map-count').textContent = fireLocations.length;
+            document.getElementById('map-high-count').textContent =
+                fireLocations.filter(l => l.confidence === 'high').length;
 
-            const dotColor = getMarkerColor(loc.confidence, loc.disaster_type);
-            item.innerHTML = `
+            // Build fire list in panel
+            buildFireList();
+        }
+
+        function buildFireList() {
+            const list = document.getElementById('fire-list');
+            if (!list) return;
+            list.innerHTML = '';
+
+            // Show unique regions grouped
+            const grouped = {};
+            fireLocations.forEach(loc => {
+                const key = loc.region || 'Unknown';
+                if (!grouped[key]) grouped[key] = [];
+                grouped[key].push(loc);
+            });
+
+            Object.entries(grouped).forEach(([region, locs]) => {
+                locs.forEach(loc => {
+                    const item = document.createElement('div');
+                    item.className = 'fire-list-item';
+                    item.dataset.id = loc.id;
+
+                    const dotColor = getMarkerColor(loc.confidence, loc.disaster_type);
+                    item.innerHTML = `
                 <div class="fire-list-dot" style="background: ${dotColor}; box-shadow: 0 0 6px ${dotColor}80;"></div>
                 <div class="fire-list-info">
                     <div class="fire-list-region">${loc.region} <span style="opacity:0.6;font-size:0.6rem;">(${loc.disaster_type.toUpperCase()})</span></div>
@@ -668,42 +765,42 @@ function buildFireList() {
                 <div class="fire-list-frp" style="color: ${dotColor};">${loc.severity_value} ${loc.severity_unit}</div>
             `;
 
-            item.addEventListener('click', () => selectFire(loc.id));
-            list.appendChild(item);
-        });
-    });
-}
+                    item.addEventListener('click', () => selectFire(loc.id));
+                    list.appendChild(item);
+                });
+            });
+        }
 
-function selectFire(fireId) {
-    selectedFireId = fireId;
-    const loc = fireLocations.find(l => l.id === fireId);
-    if (!loc) return;
+        function selectFire(fireId) {
+            selectedFireId = fireId;
+            const loc = fireLocations.find(l => l.id === fireId);
+            if (!loc) return;
 
-    // Highlight in list
-    document.querySelectorAll('.fire-list-item').forEach(item => {
-        item.classList.toggle('active', parseInt(item.dataset.id) === fireId);
-    });
+            // Highlight in list
+            document.querySelectorAll('.fire-list-item').forEach(item => {
+                item.classList.toggle('active', parseInt(item.dataset.id) === fireId);
+            });
 
-    // Pan map to location
-    if (leafletMap) {
-        leafletMap.flyTo([loc.latitude, loc.longitude], 8, { duration: 1 });
-    }
+            // Pan map to location
+            if (leafletMap) {
+                leafletMap.flyTo([loc.latitude, loc.longitude], 8, { duration: 1 });
+            }
 
-    // Show detail view
-    showFireDetail(loc);
-}
+            // Show detail view
+            showFireDetail(loc);
+        }
 
-function showFireDetail(loc) {
-    const content = document.getElementById('panel-content');
-    const panelTitle = document.getElementById('panel-title');
-    const panelBadge = document.getElementById('panel-badge');
+        function showFireDetail(loc) {
+            const content = document.getElementById('panel-content');
+            const panelTitle = document.getElementById('panel-title');
+            const panelBadge = document.getElementById('panel-badge');
 
-    panelTitle.textContent = loc.region;
-    panelBadge.textContent = loc.confidence.toUpperCase();
+            panelTitle.textContent = loc.region;
+            panelBadge.textContent = loc.confidence.toUpperCase();
 
-    const dotColor = getMarkerColor(loc.confidence, loc.disaster_type);
+            const dotColor = getMarkerColor(loc.confidence, loc.disaster_type);
 
-    content.innerHTML = `
+            content.innerHTML = `
         <div class="fire-detail fade-in">
             <div class="fire-detail-header">
                 <div>
@@ -757,23 +854,23 @@ function showFireDetail(loc) {
             </div>
         </div>
     `;
-}
+        }
 
-window.showLocalSuggestions = function(confidence, type, severity, crop_impact) {
-    const panel = document.getElementById('local-suggestions-panel');
-    const content = document.getElementById('local-suggestions-content');
+        window.showLocalSuggestions = function (confidence, type, severity, crop_impact) {
+            const panel = document.getElementById('local-suggestions-panel');
+            const content = document.getElementById('local-suggestions-content');
 
-    if (panel.style.display === 'block') {
-        panel.style.display = 'none';
-        return;
-    }
+            if (panel.style.display === 'block') {
+                panel.style.display = 'none';
+                return;
+            }
 
-    let riskLevel = "Stable";
-    let suggestions = "";
+            let riskLevel = "Stable";
+            let suggestions = "";
 
-    if (type === 'Flood') {
-        riskLevel = confidence === 'high' ? "CRITICAL FLOOD ZONE" : "NOMINAL FLOOD RISK";
-        suggestions = `
+            if (type === 'Flood') {
+                riskLevel = confidence === 'high' ? "CRITICAL FLOOD ZONE" : "NOMINAL FLOOD RISK";
+                suggestions = `
             <strong style="color: var(--accent-blue);">${riskLevel}</strong><br>
             <strong>Risk:</strong> Swelling water levels predicted to exceed historical thresholds. Local infrastructure at risk.<br>
             <strong>Crop Impact:</strong> <span style="text-decoration: underline;">${crop_impact}</span>. Extended saturation will destroy root networks.<br><br>
@@ -784,9 +881,9 @@ window.showLocalSuggestions = function(confidence, type, severity, crop_impact) 
                 <li><strong>[MEDIUM]</strong> Activate contingency water-diversion trenches.</li>
             </ul>
         `;
-    } else if (type === 'Drought') {
-        riskLevel = confidence === 'high' ? "SEVERE DROUGHT ADVISORY" : "ELEVATED ARIDITY ZONE";
-        suggestions = `
+            } else if (type === 'Drought') {
+                riskLevel = confidence === 'high' ? "SEVERE DROUGHT ADVISORY" : "ELEVATED ARIDITY ZONE";
+                suggestions = `
             <strong style="color: var(--accent-gold);">${riskLevel}</strong><br>
             <strong>Risk:</strong> Extreme water scarcity resulting in severe soil degradation. High likelihood of secondary wildfire ignition.<br>
             <strong>Crop Impact:</strong> <span style="text-decoration: underline;">${crop_impact}</span>. Prolonged lack of moisture causing systemic failure.<br><br>
@@ -797,11 +894,11 @@ window.showLocalSuggestions = function(confidence, type, severity, crop_impact) 
                 <li><strong>[MEDIUM]</strong> Deploy soil moisture-retention bio-materials and cover crops.</li>
             </ul>
         `;
-    } else {
-        // Fire
-        if (confidence === 'high' || severity > 50) {
-            riskLevel = "CRITICAL HIGH-RISK ZONE";
-            suggestions = `
+            } else {
+                // Fire
+                if (confidence === 'high' || severity > 50) {
+                    riskLevel = "CRITICAL HIGH-RISK ZONE";
+                    suggestions = `
                 <strong style="color: var(--accent-red);">${riskLevel}</strong><br>
                 <strong>Risk:</strong> Immediate fire vector expansion highly probable. High thermal anomaly thresholds breached.<br>
                 <strong>Crop Impact:</strong> <span style="text-decoration: underline;">${crop_impact}</span>. Incineration hazard.<br><br>
@@ -812,9 +909,9 @@ window.showLocalSuggestions = function(confidence, type, severity, crop_impact) 
                     <li><strong>[MEDIUM]</strong> Dispatch ground containment lines and mobilize local disaster response units.</li>
                 </ul>
             `;
-        } else if (confidence === 'nominal') {
-            riskLevel = "ELEVATED NOMINAL RISK";
-            suggestions = `
+                } else if (confidence === 'nominal') {
+                    riskLevel = "ELEVATED NOMINAL RISK";
+                    suggestions = `
                 <strong style="color: var(--accent-gold);">${riskLevel}</strong><br>
                 <strong>Risk:</strong> Developing thermal anomaly. Potential ignition source but currently contained.<br>
                 <strong>Crop Impact:</strong> <span style="text-decoration: underline;">${crop_impact}</span>. Ash and smoke damage possible.<br><br>
@@ -825,9 +922,9 @@ window.showLocalSuggestions = function(confidence, type, severity, crop_impact) 
                     <li><strong>[LOW]</strong> Notify local forestry services to audit nearby combustible fuel loads.</li>
                 </ul>
             `;
-        } else {
-            riskLevel = "LOW RISK ZONE";
-            suggestions = `
+                } else {
+                    riskLevel = "LOW RISK ZONE";
+                    suggestions = `
                 <strong style="color: var(--accent-cyan);">${riskLevel}</strong><br>
                 <strong>Risk:</strong> Sporadic heat signatures, likely non-threatening or controlled burns.<br>
                 <strong>Crop Impact:</strong> <span style="text-decoration: underline;">${crop_impact}</span>.<br><br>
@@ -837,239 +934,339 @@ window.showLocalSuggestions = function(confidence, type, severity, crop_impact) 
                     <li><strong>[LOW]</strong> Log incident for periodic review to rule out sensor false positives.</li>
                 </ul>
             `;
+                }
+            }
+
+            content.innerHTML = suggestions;
+            panel.style.display = 'block';
+            panel.classList.add('fade-in');
         }
-    }
 
-    content.innerHTML = suggestions;
-    panel.style.display = 'block';
-    panel.classList.add('fade-in');
-}
+        function backToList() {
+            const panelTitle = document.getElementById('panel-title');
+            const panelBadge = document.getElementById('panel-badge');
+            const content = document.getElementById('panel-content');
 
-function backToList() {
-    const panelTitle = document.getElementById('panel-title');
-    const panelBadge = document.getElementById('panel-badge');
-    const content = document.getElementById('panel-content');
+            panelTitle.textContent = 'Disaster Detections';
+            panelBadge.textContent = fireLocations.length + ' VECTORS';
 
-    panelTitle.textContent = 'Fire Detections';
-    panelBadge.textContent = fireLocations.length + ' VECTORS';
+            content.innerHTML = '<div class="fire-list" id="fire-list"></div>';
+            buildFireList();
 
-    content.innerHTML = '<div class="fire-list" id="fire-list"></div>';
-    buildFireList();
-
-    if (leafletMap) {
-        leafletMap.flyTo([0, 60], 2, { duration: 1 });
-    }
-}
-
-
-// ─── Charts ───
-const chartColors = {
-    green: '#5fa870',
-    gold: '#c9a94e',
-    coral: '#d4826d',
-    olive: '#8ba67a',
-    cyan: '#5aa8a0',
-    blue: '#4a7a9a',
-};
-
-const chartLayout = {
-    paper_bgcolor: 'rgba(0,0,0,0)',
-    plot_bgcolor: 'rgba(0,0,0,0)',
-    font: { color: '#7a9484', family: 'Inter, sans-serif', size: 11 },
-    margin: { l: 45, r: 20, t: 10, b: 35 },
-    xaxis: { gridcolor: 'rgba(35,49,39,0.4)', linecolor: 'rgba(35,49,39,0.6)' },
-    yaxis: { gridcolor: 'rgba(35,49,39,0.4)', linecolor: 'rgba(35,49,39,0.6)' },
-};
-
-function renderHeroConfidenceChart() {
-    const el = document.getElementById('hero-confidence-chart');
-    if (!el) return;
-
-    Plotly.newPlot(el, [{
-        x: ['High', 'Nominal', 'Low'],
-        y: [18, 12, 6],
-        type: 'bar',
-        marker: {
-            color: ['#ff4444', '#ffaa00', '#44aaff'],
-            opacity: 0.85,
+            if (leafletMap) {
+                leafletMap.flyTo([0, 60], 2, { duration: 1 });
+            }
         }
-    }], {
-        ...chartLayout,
-        margin: { l: 35, r: 15, t: 5, b: 30 },
-        height: 155,
-        bargap: 0.3,
-    }, { responsive: true, displayModeBar: false });
-}
 
-function renderTelemetryCharts() {
-    if (!fireLocations.length) return;
 
-    // Brightness histogram
-    const brightnessEl = document.getElementById('chart-brightness');
-    if (brightnessEl) {
-        Plotly.newPlot(brightnessEl, [{
-            x: fireLocations.map(l => l.brightness),
-            type: 'histogram',
-            nbinsx: 15,
-            marker: { color: chartColors.gold, opacity: 0.8 },
-        }], {
-            ...chartLayout,
-            xaxis: { ...chartLayout.xaxis, title: { text: 'Kelvin', font: { size: 10 } } },
-            yaxis: { ...chartLayout.yaxis, title: { text: 'Count', font: { size: 10 } } },
-        }, { responsive: true, displayModeBar: false });
-    }
+        // ─── Charts ───
+        const chartColors = {
+            green: '#66bb6a',
+            gold: '#f9a825',
+            coral: '#ef5350',
+            olive: '#aed581',
+            cyan: '#26c6da',
+            blue: '#42a5f5',
+            purple: '#ab47bc',
+            orange: '#ff7043',
+            fire: '#ef5350',
+            flood: '#29b6f6',
+            drought: '#ffa726',
+        };
 
-    // FRP histogram
-    const frpEl = document.getElementById('chart-frp');
-    if (frpEl) {
-        Plotly.newPlot(frpEl, [{
-            x: fireLocations.map(l => l.frp),
-            type: 'histogram',
-            nbinsx: 12,
-            marker: { color: chartColors.coral, opacity: 0.8 },
-        }], {
-            ...chartLayout,
-            xaxis: { ...chartLayout.xaxis, title: { text: 'MW', font: { size: 10 } } },
-            yaxis: { ...chartLayout.yaxis, title: { text: 'Count', font: { size: 10 } } },
-        }, { responsive: true, displayModeBar: false });
-    }
+        const chartLayout = {
+            paper_bgcolor: '#111a14',
+            plot_bgcolor: '#131e16',
+            font: { color: '#c8d8cc', family: 'Inter, sans-serif', size: 11 },
+            margin: { l: 45, r: 20, t: 10, b: 35 },
+            xaxis: { gridcolor: 'rgba(100,140,110,0.25)', linecolor: 'rgba(100,140,110,0.4)', tickfont: { color: '#a0b8a8' } },
+            yaxis: { gridcolor: 'rgba(100,140,110,0.25)', linecolor: 'rgba(100,140,110,0.4)', tickfont: { color: '#a0b8a8' } },
+        };
 
-    // Timeline (by acq_time)
-    const timelineEl = document.getElementById('chart-timeline');
-    if (timelineEl) {
-        const sorted = [...fireLocations].sort((a, b) => {
-            const ta = typeof a.acq_time === 'string' ? parseInt(a.acq_time.replace(':','')) : a.acq_time;
-            const tb = typeof b.acq_time === 'string' ? parseInt(b.acq_time.replace(':','')) : b.acq_time;
-            return ta - tb;
-        });
-        // Group by time and count
-        const timeCounts = {};
-        sorted.forEach(l => {
-            const t = l.acq_time;
-            timeCounts[t] = (timeCounts[t] || 0) + 1;
-        });
-        const cumulative = [];
-        let sum = 0;
-        Object.entries(timeCounts).forEach(([t, c]) => {
-            sum += c;
-            cumulative.push({ time: t, count: sum });
-        });
+        function renderHeroConfidenceChart() {
+            const el = document.getElementById('hero-confidence-chart');
+            if (!el) return;
 
-        Plotly.newPlot(timelineEl, [{
-            x: cumulative.map(c => c.time),
-            y: cumulative.map(c => c.count),
-            type: 'scatter',
-            mode: 'lines+markers',
-            line: { color: chartColors.olive, width: 2 },
-            marker: { color: chartColors.olive, size: 5 },
-            fill: 'tozeroy',
-            fillcolor: 'rgba(139,166,122,0.1)',
-        }], {
-            ...chartLayout,
-            xaxis: { ...chartLayout.xaxis, title: { text: 'Acq Time', font: { size: 10 } } },
-            yaxis: { ...chartLayout.yaxis, title: { text: 'Cumulative', font: { size: 10 } } },
-        }, { responsive: true, displayModeBar: false });
-    }
-}
+            Plotly.newPlot(el, [{
+                x: ['High', 'Nominal', 'Low'],
+                y: [18, 12, 6],
+                type: 'bar',
+                text: [18, 12, 6],
+                textposition: 'outside',
+                textfont: { color: '#e0e8e4', size: 12 },
+                marker: {
+                    color: ['#ef5350', '#f9a825', '#29b6f6'],
+                    opacity: 0.9,
+                    line: { color: '#ffffff20', width: 1 },
+                }
+            }], {
+                ...chartLayout,
+                margin: { l: 35, r: 15, t: 5, b: 30 },
+                height: 155,
+                bargap: 0.3,
+            }, { responsive: true, displayModeBar: false });
+        }
 
-function renderAnalyticsCharts() {
-    // Feature importance bar chart
-    fetch('/api/feature-importance').then(r => r.json()).then(data => {
-        if (!data || Object.keys(data).length === 0) return;
+        function renderTelemetryCharts() {
+            if (!fireLocations.length) return;
 
-        const sorted = Object.entries(data).sort((a, b) => b[1] - a[1]);
-        const el = document.getElementById('analytics-fi-chart');
-        if (!el) return;
+            // Brightness histogram
+            const brightnessEl = document.getElementById('chart-brightness');
+            if (brightnessEl) {
+                Plotly.newPlot(brightnessEl, [{
+                    x: fireLocations.map(l => l.brightness),
+                    type: 'histogram',
+                    nbinsx: 15,
+                    marker: { color: chartColors.gold, opacity: 0.9, line: { color: '#ffffff20', width: 1 } },
+                }], {
+                    ...chartLayout,
+                    xaxis: { ...chartLayout.xaxis, title: { text: 'Kelvin', font: { size: 10, color: '#c8d8cc' } } },
+                    yaxis: { ...chartLayout.yaxis, title: { text: 'Count', font: { size: 10, color: '#c8d8cc' } } },
+                }, { responsive: true, displayModeBar: false });
+            }
 
-        Plotly.newPlot(el, [{
-            x: sorted.map(d => d[1]),
-            y: sorted.map(d => d[0]),
-            type: 'bar',
-            orientation: 'h',
-            marker: {
-                color: sorted.map((_, i) => {
-                    const colors = [chartColors.gold, chartColors.olive, chartColors.cyan, chartColors.blue];
-                    return colors[i % colors.length];
-                }),
-            },
-        }], {
-            ...chartLayout,
-            margin: { l: 160, r: 20, t: 10, b: 40 },
-            height: 380,
-            xaxis: { ...chartLayout.xaxis, title: { text: 'Importance Score' } },
-            yaxis: { ...chartLayout.yaxis, autorange: 'reversed' },
-        }, { responsive: true, displayModeBar: false });
-    }).catch(() => {});
+            // FRP histogram
+            const frpEl = document.getElementById('chart-frp');
+            if (frpEl) {
+                Plotly.newPlot(frpEl, [{
+                    x: fireLocations.map(l => l.frp),
+                    type: 'histogram',
+                    nbinsx: 12,
+                    marker: { color: chartColors.coral, opacity: 0.9, line: { color: '#ffffff20', width: 1 } },
+                }], {
+                    ...chartLayout,
+                    xaxis: { ...chartLayout.xaxis, title: { text: 'MW', font: { size: 10, color: '#c8d8cc' } } },
+                    yaxis: { ...chartLayout.yaxis, title: { text: 'Count', font: { size: 10, color: '#c8d8cc' } } },
+                }, { responsive: true, displayModeBar: false });
+            }
 
-    // Distribution charts from chart images
-    const distGrid = document.getElementById('distribution-grid');
-    if (distGrid) {
-        const distCharts = [
-            'dist_brightness', 'dist_frp', 'dist_latitude', 'dist_longitude',
-            'dist_bright_t31', 'dist_scan', 'dist_track', 'dist_acq_time'
-        ];
-        distGrid.innerHTML = '';
-        distCharts.forEach(name => {
-            const card = document.createElement('div');
-            card.className = 'card';
-            card.innerHTML = `
+            // Timeline (by acq_time)
+            const timelineEl = document.getElementById('chart-timeline');
+            if (timelineEl) {
+                const sorted = [...fireLocations].sort((a, b) => {
+                    const ta = typeof a.acq_time === 'string' ? parseInt(a.acq_time.replace(':', '')) : a.acq_time;
+                    const tb = typeof b.acq_time === 'string' ? parseInt(b.acq_time.replace(':', '')) : b.acq_time;
+                    return ta - tb;
+                });
+                const timeCounts = {};
+                sorted.forEach(l => {
+                    const t = l.acq_time;
+                    timeCounts[t] = (timeCounts[t] || 0) + 1;
+                });
+                const cumulative = [];
+                let sum = 0;
+                Object.entries(timeCounts).forEach(([t, c]) => {
+                    sum += c;
+                    cumulative.push({ time: t, count: sum });
+                });
+
+                Plotly.newPlot(timelineEl, [{
+                    x: cumulative.map(c => c.time),
+                    y: cumulative.map(c => c.count),
+                    type: 'scatter',
+                    mode: 'lines+markers',
+                    line: { color: chartColors.cyan, width: 2.5 },
+                    marker: { color: chartColors.cyan, size: 6 },
+                    fill: 'tozeroy',
+                    fillcolor: 'rgba(38,198,218,0.1)',
+                }], {
+                    ...chartLayout,
+                    xaxis: { ...chartLayout.xaxis, title: { text: 'Acq Time', font: { size: 10, color: '#c8d8cc' } } },
+                    yaxis: { ...chartLayout.yaxis, title: { text: 'Cumulative', font: { size: 10, color: '#c8d8cc' } } },
+                }, { responsive: true, displayModeBar: false });
+            }
+        }
+
+        function renderDisasterCharts() {
+            if (!fireLocations.length) return;
+
+            // Count by disaster type
+            const typeCounts = { Fire: 0, Flood: 0, Drought: 0 };
+            const typeSeverities = { Fire: [], Flood: [], Drought: [] };
+            fireLocations.forEach(l => {
+                const dt = l.disaster_type || 'Fire';
+                typeCounts[dt] = (typeCounts[dt] || 0) + 1;
+                typeSeverities[dt] = typeSeverities[dt] || [];
+                typeSeverities[dt].push(Math.abs(l.severity_value || 0));
+            });
+
+            // Disaster Type Counts Bar Chart
+            const typesEl = document.getElementById('chart-disaster-types');
+            if (typesEl) {
+                Plotly.newPlot(typesEl, [{
+                    x: ['🔥 Fire', '🌊 Flood', '🏜️ Drought'],
+                    y: [typeCounts.Fire, typeCounts.Flood, typeCounts.Drought],
+                    type: 'bar',
+                    text: [typeCounts.Fire, typeCounts.Flood, typeCounts.Drought],
+                    textposition: 'outside',
+                    textfont: { color: '#e0e8e4', size: 13, family: 'Inter' },
+                    marker: {
+                        color: [chartColors.fire, chartColors.flood, chartColors.drought],
+                        opacity: 0.9,
+                        line: { color: '#ffffff30', width: 1 },
+                    }
+                }], {
+                    ...chartLayout,
+                    bargap: 0.35,
+                }, { responsive: true, displayModeBar: false });
+            }
+
+            // Severity Comparison
+            const sevEl = document.getElementById('chart-disaster-severity');
+            if (sevEl) {
+                const avgSev = {};
+                Object.entries(typeSeverities).forEach(([k, v]) => {
+                    avgSev[k] = v.length ? v.reduce((a, b) => a + b, 0) / v.length : 0;
+                });
+
+                Plotly.newPlot(sevEl, [{
+                    x: ['🔥 Fire', '🌊 Flood', '🏜️ Drought'],
+                    y: [avgSev.Fire.toFixed(2), avgSev.Flood.toFixed(2), avgSev.Drought.toFixed(2)],
+                    type: 'bar',
+                    text: [avgSev.Fire.toFixed(2) + ' MW', avgSev.Flood.toFixed(2) + ' m', avgSev.Drought.toFixed(2) + ' PDSI'],
+                    textposition: 'outside',
+                    textfont: { color: '#e0e8e4', size: 11 },
+                    marker: {
+                        color: [chartColors.fire, chartColors.flood, chartColors.drought],
+                        opacity: 0.85,
+                        line: { color: '#ffffff30', width: 1 },
+                    }
+                }], {
+                    ...chartLayout,
+                    yaxis: { ...chartLayout.yaxis, title: { text: 'Avg Severity', font: { size: 10, color: '#c8d8cc' } } },
+                    bargap: 0.35,
+                }, { responsive: true, displayModeBar: false });
+            }
+
+            // Environmental Indicators
+            const envEl = document.getElementById('chart-env-indicators');
+            if (envEl) {
+                const indicators = {};
+                ['temperature_2m', 'precipitation', 'soil_moisture', 'flood_risk_score'].forEach(key => {
+                    const vals = fireLocations.map(l => l[key]).filter(v => v != null && !isNaN(v));
+                    indicators[key] = vals.length ? vals.reduce((a, b) => a + b, 0) / vals.length : 0;
+                });
+
+                Plotly.newPlot(envEl, [{
+                    x: ['Temp (°C)', 'Precip (mm)', 'Soil Moist.', 'Flood Risk'],
+                    y: [indicators.temperature_2m.toFixed(1), indicators.precipitation.toFixed(1),
+                    (indicators.soil_moisture * 100).toFixed(1), indicators.flood_risk_score.toFixed(1)],
+                    type: 'bar',
+                    text: [indicators.temperature_2m.toFixed(1) + '°C', indicators.precipitation.toFixed(1) + 'mm',
+                    (indicators.soil_moisture * 100).toFixed(1) + '%', indicators.flood_risk_score.toFixed(1) + '/10'],
+                    textposition: 'outside',
+                    textfont: { color: '#e0e8e4', size: 11 },
+                    marker: {
+                        color: [chartColors.coral, chartColors.blue, chartColors.green, chartColors.flood],
+                        opacity: 0.85,
+                        line: { color: '#ffffff20', width: 1 },
+                    }
+                }], {
+                    ...chartLayout,
+                    bargap: 0.3,
+                }, { responsive: true, displayModeBar: false });
+            }
+        }
+
+        function renderAnalyticsCharts() {
+            // Feature importance bar chart
+            fetch('/api/feature-importance').then(r => r.json()).then(data => {
+                if (!data || Object.keys(data).length === 0) return;
+
+                const sorted = Object.entries(data).sort((a, b) => b[1] - a[1]);
+                const el = document.getElementById('analytics-fi-chart');
+                if (!el) return;
+
+                Plotly.newPlot(el, [{
+                    x: sorted.map(d => d[1]),
+                    y: sorted.map(d => d[0]),
+                    type: 'bar',
+                    orientation: 'h',
+                    marker: {
+                        color: sorted.map((_, i) => {
+                            const colors = ['#f9a825', '#66bb6a', '#26c6da', '#42a5f5', '#ab47bc', '#ff7043', '#ef5350'];
+                            return colors[i % colors.length];
+                        }),
+                        line: { color: '#ffffff20', width: 1 },
+                    },
+                }], {
+                    ...chartLayout,
+                    margin: { l: 160, r: 20, t: 10, b: 40 },
+                    height: 380,
+                    xaxis: { ...chartLayout.xaxis, title: { text: 'Importance Score' } },
+                    yaxis: { ...chartLayout.yaxis, autorange: 'reversed' },
+                }, { responsive: true, displayModeBar: false });
+            }).catch(() => { });
+
+            // Distribution charts from chart images
+            const distGrid = document.getElementById('distribution-grid');
+            if (distGrid) {
+                const distCharts = [
+                    'dist_brightness', 'dist_frp', 'dist_latitude', 'dist_longitude',
+                    'dist_bright_t31', 'dist_scan', 'dist_track', 'dist_acq_time'
+                ];
+                distGrid.innerHTML = '';
+                distCharts.forEach(name => {
+                    const card = document.createElement('div');
+                    card.className = 'card';
+                    card.innerHTML = `
                 <div class="card-header"><span>${name.replace('dist_', '').replace(/_/g, ' ').toUpperCase()}</span></div>
                 <div class="card-body" style="text-align: center;">
                     <img src="/charts/${name}.png" class="chart-img" alt="${name}"
                          onerror="this.parentElement.innerHTML='<div class=empty-state><p style=color:var(--text-muted)>Chart not available</p></div>'">
                 </div>
             `;
-            distGrid.appendChild(card);
-        });
-    }
-}
-
-function renderPredictionPage() {
-    // Model card
-    fetch('/api/model-card').then(r => r.json()).then(data => {
-        const el = document.getElementById('prediction-model-card');
-        if (el && data.content && typeof marked !== 'undefined') {
-            el.innerHTML = marked.parse(data.content);
-        }
-    }).catch(() => {});
-
-    // Insight report
-    fetch('/api/insight-report').then(r => r.json()).then(data => {
-        const el = document.getElementById('prediction-insight-report');
-        if (el && data.content && typeof marked !== 'undefined') {
-            el.innerHTML = marked.parse(data.content);
+                    distGrid.appendChild(card);
+                });
+            }
         }
 
-        // Parse recommendations
-        if (data.content) {
-            const recoGrid = document.getElementById('prediction-reco-grid');
-            if (!recoGrid) return;
-            const recoSection = data.content.split('## Recommendations');
-            if (recoSection.length > 1) {
-                const recoHtml = recoSection[1].split('## Next Steps')[0];
-                const recoEntries = recoHtml.split('### ').filter(s => s.trim());
-                recoEntries.forEach(entry => {
-                    const lines = entry.trim().split('\n');
-                    const titleLine = lines[0] || '';
-                    const description = lines.slice(1).join('\n').trim();
+        function renderPredictionPage() {
+            // Model card
+            fetch('/api/model-card').then(r => r.json()).then(data => {
+                const el = document.getElementById('prediction-model-card');
+                if (el && data.content && typeof marked !== 'undefined') {
+                    el.innerHTML = marked.parse(data.content);
+                }
+            }).catch(() => { });
 
-                    let priority = 'medium';
-                    if (titleLine.includes('[HIGH]')) priority = 'high';
-                    else if (titleLine.includes('[LOW]')) priority = 'low';
-                    const title = titleLine.replace(/\[.*?\]\s*/g, '').trim();
+            // Insight report
+            fetch('/api/insight-report').then(r => r.json()).then(data => {
+                const el = document.getElementById('prediction-insight-report');
+                if (el && data.content && typeof marked !== 'undefined') {
+                    el.innerHTML = marked.parse(data.content);
+                }
 
-                    // Extract action items
-                    const actionItems = [];
-                    const actionRegex = /^- (.+)$/gm;
-                    let match;
-                    while ((match = actionRegex.exec(description)) !== null) {
-                        actionItems.push(match[1]);
-                    }
+                // Parse recommendations
+                if (data.content) {
+                    const recoGrid = document.getElementById('prediction-reco-grid');
+                    if (!recoGrid) return;
+                    const recoSection = data.content.split('## Recommendations');
+                    if (recoSection.length > 1) {
+                        const recoHtml = recoSection[1].split('## Next Steps')[0];
+                        const recoEntries = recoHtml.split('### ').filter(s => s.trim());
+                        recoEntries.forEach(entry => {
+                            const lines = entry.trim().split('\n');
+                            const titleLine = lines[0] || '';
+                            const description = lines.slice(1).join('\n').trim();
 
-                    if (title) {
-                        const card = document.createElement('div');
-                        card.className = `reco-card prio-${priority}`;
-                        card.innerHTML = `
+                            let priority = 'medium';
+                            if (titleLine.includes('[HIGH]')) priority = 'high';
+                            else if (titleLine.includes('[LOW]')) priority = 'low';
+                            const title = titleLine.replace(/\[.*?\]\s*/g, '').trim();
+
+                            // Extract action items
+                            const actionItems = [];
+                            const actionRegex = /^- (.+)$/gm;
+                            let match;
+                            while ((match = actionRegex.exec(description)) !== null) {
+                                actionItems.push(match[1]);
+                            }
+
+                            if (title) {
+                                const card = document.createElement('div');
+                                card.className = `reco-card prio-${priority}`;
+                                card.innerHTML = `
                             <div class="reco-title">${title}</div>
                             <div class="reco-description">${description.replace(/\n/g, '<br>').substring(0, 300)}</div>
                             <div class="reco-actions">
@@ -1079,41 +1276,43 @@ function renderPredictionPage() {
                                 ).join('')}
                             </div>
                         `;
-                        recoGrid.appendChild(card);
+                                recoGrid.appendChild(card);
+                            }
+                        });
                     }
-                });
-            }
+                }
+            }).catch(() => { });
         }
-    }).catch(() => {});
-}
 
 
-// ─── Initialization ───
-document.addEventListener('DOMContentLoaded', async function() {
-    await loadFireLocations();
+        // ─── Initialization ───
+        document.addEventListener('DOMContentLoaded', async function () {
+            await loadFireLocations();
 
-    // Dashboard page charts
-    renderHeroConfidenceChart();
-    renderTelemetryCharts();
+            // Dashboard page charts
+            renderHeroConfidenceChart();
+            renderTelemetryCharts();
+            renderDisasterCharts();
 
-    // Analytics page
-    renderAnalyticsCharts();
+            // Analytics page
+            renderAnalyticsCharts();
 
-    // Prediction page
-    renderPredictionPage();
+            // Prediction page
+            renderPredictionPage();
 
-    // Stagger animation for pipeline cards
-    document.querySelectorAll('.pipeline-card').forEach((card, i) => {
-        card.style.opacity = '0';
-        card.style.transform = 'translateY(20px)';
-        setTimeout(() => {
-            card.style.transition = 'all 0.5s ease';
-            card.style.opacity = '1';
-            card.style.transform = 'translateY(0)';
-        }, 200 + i * 100);
-    });
-});
-</script>
+            // Stagger animation for pipeline cards
+            document.querySelectorAll('.pipeline-card').forEach((card, i) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                setTimeout(() => {
+                    card.style.transition = 'all 0.5s ease';
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }, 200 + i * 100);
+            });
+        });
+    </script>
 
 </body>
+
 </html>
