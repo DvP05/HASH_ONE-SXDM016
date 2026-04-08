@@ -164,8 +164,8 @@ def seaborn_plot(df: pd.DataFrame, plot_type: str = "histogram",
         elif plot_type == "countplot":
             if column and column in df.columns:
                 order = df[column].value_counts().head(15).index
-                sns.countplot(data=df, x=column, ax=ax, order=order,
-                              palette="viridis")
+                sns.countplot(data=df, x=column, hue=column, ax=ax, order=order,
+                              palette="viridis", legend=False)
                 plt.xticks(rotation=45, ha="right")
 
         elif plot_type == "pairplot":

@@ -270,7 +270,9 @@ class InsightAgent(BaseAgent):
 
             result = self.llm_json(
                 system=(
-                    "You are a business intelligence analyst. Generate 3-5 actionable recommendations. "
+                    "You are a disaster management expert and risk analyst. Generate 3-5 highly actionable recommendations. "
+                    "For high-risk zones, suggest concrete solutions to mitigate the disaster or help prevent it. "
+                    "Ensure recommendations are ranked according to priority and provide accurate, effective solutions. "
                     "Return JSON with 'recommendations' array, each with: title, description, "
                     "estimated_impact, confidence (0-1), supporting_evidence (array), "
                     "action_items (array), priority (high/medium/low)."
@@ -309,18 +311,18 @@ class InsightAgent(BaseAgent):
             top = model_result.evaluation.top_features[:3]
             feature_names = [f.get("feature", "") for f in top]
             recs.append(Recommendation(
-                title="Focus on Top Predictive Features",
+                title="Deploy Interventions for Top Risk Indicators",
                 description=(
-                    f"The model identifies {', '.join(feature_names)} as the strongest predictors. "
-                    f"Design targeted interventions around these variables to maximize impact."
+                    f"The model identifies {', '.join(feature_names)} as the strongest risk predictors. "
+                    f"Prioritize immediate preventative measures and allocate disaster mitigation resources to these variables."
                 ),
-                impact="High — directly addresses the strongest model signals",
+                impact="High — directly mitigates the strongest model signals for high-risk zones",
                 confidence=0.85,
                 evidence=[f"{f.get('feature')}: importance={f.get('importance', 0):.4f}" for f in top],
                 action_items=[
-                    f"Investigate why '{feature_names[0]}' has the highest impact",
-                    "Design interventions targeting top features",
-                    "Create monitoring dashboards for these key variables",
+                    f"Deploy rapid-response resources addressing '{feature_names[0]}'",
+                    "Design targeted mitigation strategies for these key risk factors",
+                    "Establish continuous monitoring for high-risk threshold breaches",
                 ],
                 priority="high",
             ))
@@ -330,22 +332,22 @@ class InsightAgent(BaseAgent):
             ev = model_result.evaluation
             if ev.roc_auc and ev.roc_auc < 0.85:
                 recs.append(Recommendation(
-                    title="Improve Model Performance with More Data",
+                    title="Enhance Predictive Accuracy with Additional Sensor Data",
                     description=(
-                        f"Current ROC-AUC is {ev.roc_auc:.3f}. Consider collecting additional "
-                        f"features (behavioral signals, interaction data) and more recent data "
-                        f"to push performance above 0.85."
+                        f"Current ROC-AUC is {ev.roc_auc:.3f}. Consider incorporating additional "
+                        f"meteorological features and real-time sensor data "
+                        f"to improve risk prediction and prevent false alarms."
                     ),
-                    impact="Medium — potential 5-10% improvement in prediction accuracy",
+                    impact="Medium — improves reliability of early warning prevention systems",
                     confidence=0.7,
                     evidence=[
                         f"Current ROC-AUC: {ev.roc_auc:.4f}",
                         f"CV Score: {ev.cv_mean:.4f} +/- {ev.cv_std:.4f}",
                     ],
                     action_items=[
-                        "Collect additional behavioral features",
-                        "Try ensemble methods (stacking, blending)",
-                        "Experiment with deep learning on larger datasets",
+                        "Integrate local terrain and climate sensor feeds",
+                        "Optimize the model to reduce false negative risk assessments",
+                        "Investigate additional historical disaster data points",
                     ],
                     priority="medium",
                 ))
@@ -359,22 +361,21 @@ class InsightAgent(BaseAgent):
             )
             if total_affected > 0:
                 recs.append(Recommendation(
-                    title="Improve Data Collection Quality",
+                    title="Strengthen Sensor and Telemetry Data Integrity",
                     description=(
                         f"{len(cleaning_log)} data quality issues were fixed, affecting "
-                        f"{total_affected} records. Addressing root causes at the source "
-                        f"will improve future model reliability."
+                        f"{total_affected} records. Reliable telemetry is crucial for early disaster prevention."
                     ),
-                    impact="Medium — reduces data cleaning overhead and improves model inputs",
+                    impact="Medium — ensures automated risk detection operates on accurate inputs",
                     confidence=0.75,
                     evidence=[
                         f"{e.get('operation', 'unknown')}: {e.get('rows_affected', 0)} rows"
                         for e in cleaning_log if isinstance(e, dict)
                     ],
                     action_items=[
-                        "Add input validation at data collection points",
-                        "Set up data quality monitoring alerts",
-                        "Document data standards for upstream providers",
+                        "Audit field sensor calibration status regularly",
+                        "Set up automated anomaly alerts for dropped incoming signals",
+                        "Implement failover logic for critical risk indicators",
                     ],
                     priority="medium",
                 ))

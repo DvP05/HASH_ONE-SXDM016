@@ -66,7 +66,7 @@ def _register_models():
             "class": XGBClassifier,
             "default_params": {
                 "n_estimators": 100, "max_depth": 6, "learning_rate": 0.1,
-                "random_state": 42, "use_label_encoder": False,
+                "random_state": 42,
                 "eval_metric": "logloss"
             },
             "task": "classification",
@@ -196,18 +196,27 @@ def train_model(X: pd.DataFrame, y: pd.Series, model_name: str = "random_forest_
             "recall": round(float(recall_score(y_clean, y_pred, average="weighted", zero_division=0)), 4),
             "confusion_matrix": confusion_matrix(y_clean, y_pred).tolist(),
         })
-        # ROC-AUC for binary
-        if len(np.unique(y_clean)) == 2:
+        # ROC-AUC
+        n_classes = int(pd.Series(y_clean).nunique())
+        if n_classes == 2:
             try:
                 y_proba = model.predict_proba(X_clean)[:, 1]
                 result["roc_auc"] = round(float(roc_auc_score(y_clean, y_proba)), 4)
             except Exception:
                 result["roc_auc"] = result["cv_mean"]
+        elif n_classes > 2:
+            try:
+                y_proba = model.predict_proba(X_clean)
+                result["roc_auc"] = round(float(
+                    roc_auc_score(y_clean, y_proba, multi_class="ovr", average="weighted")
+                ), 4)
+            except Exception:
+                result["roc_auc"] = result["cv_mean"]
     else:
         result.update({
-            "r2": round(float(r2_score(y, y_pred)), 4),
-            "rmse": round(float(np.sqrt(mean_squared_error(y, y_pred))), 4),
-            "mae": round(float(mean_absolute_error(y, y_pred)), 4),
+            "r2": round(float(r2_score(y_clean, y_pred)), 4),
+            "rmse": round(float(np.sqrt(mean_squared_error(y_clean, y_pred))), 4),
+            "mae": round(float(mean_absolute_error(y_clean, y_pred)), 4),
         })
 
     # Feature importance
@@ -276,7 +285,6 @@ def optimize_hyperparams(X: pd.DataFrame, y: pd.Series,
                 }
                 if task_type == "classification":
                     params["eval_metric"] = "logloss"
-                    params["use_label_encoder"] = False
                     model = XGBClassifier(**params)
                 else:
                     model = XGBRegressor(**params)

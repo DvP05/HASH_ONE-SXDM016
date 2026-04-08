@@ -209,6 +209,11 @@ class OllamaProvider(BaseLLMProvider):
         self.base_url = base_url or os.environ.get(
             "OLLAMA_BASE_URL", "http://localhost:11434"
         )
+        # Strip /v1 suffix if present — this provider uses the native
+        # Ollama API (/api/chat, /api/tags), not the OpenAI-compat endpoint.
+        self.base_url = self.base_url.rstrip("/")
+        if self.base_url.endswith("/v1"):
+            self.base_url = self.base_url[:-3]
         if not model:
             model = self._detect_best_model()
         super().__init__(model, **kwargs)

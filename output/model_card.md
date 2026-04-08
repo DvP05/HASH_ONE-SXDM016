@@ -12,6 +12,7 @@ Focus on identifying high-confidence active fire vectors for emergency dispatch.
 ## Performance
 
 - CV Score: 1.0000 ± 0.0000
+- ROC-AUC: 1.0000
 - Accuracy: 100.0%
 
 ## Limitations

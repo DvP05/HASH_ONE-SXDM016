@@ -1,19 +1,25 @@
 [
   {
     "operation": "drop_duplicates",
-    "reasoning": "Remove exact duplicate rows.",
-    "rows_affected": 25,
+    "reasoning": "Remove exact duplicate rows to ensure data integrity.",
+    "rows_affected": 0,
     "reversible": true
   },
   {
     "operation": "fill_numeric_missing",
-    "reasoning": "Fill missing numeric values with column median.",
+    "reasoning": "Fill missing numeric values with column median (robust to outliers).",
+    "rows_affected": 0,
+    "reversible": true
+  },
+  {
+    "operation": "fill_categorical_missing",
+    "reasoning": "Fill missing categorical values with the most frequent value.",
     "rows_affected": 0,
     "reversible": true
   },
   {
     "operation": "cap_outliers_iqr",
-    "reasoning": "Cap extreme outliers using IQR method.",
+    "reasoning": "Cap extreme outliers using IQR method (3x multiplier).",
     "rows_affected": 0,
     "reversible": true
   }

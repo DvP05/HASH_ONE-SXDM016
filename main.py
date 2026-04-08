@@ -38,15 +38,21 @@ import tools.api_tools    # noqa: F401
 # ─── Logging Setup ───
 def setup_logging(verbose: bool = False):
     level = logging.DEBUG if verbose else logging.INFO
-    fmt = "%(asctime)s │ %(levelname)-5s │ %(message)s"
+    fmt = "%(asctime)s | %(levelname)-5s | %(message)s"
     datefmt = "%H:%M:%S"
 
-    logging.basicConfig(level=level, format=fmt, datefmt=datefmt,
-                        handlers=[logging.StreamHandler(sys.stdout)])
+    # Force UTF-8 on the stream handler so emojis / box-drawing chars
+    # don't crash on Windows cp1252 consoles.
+    import io
+    stream = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8", errors="replace")
+    handler = logging.StreamHandler(stream)
+    handler.setFormatter(logging.Formatter(fmt, datefmt=datefmt))
+
+    logging.basicConfig(level=level, handlers=[handler])
 
     # Quiet noisy libraries
     for lib in ("urllib3", "matplotlib", "PIL", "optuna", "lightgbm"):
-        logging.setdefault = logging.getLogger(lib).setLevel(logging.WARNING)
+        logging.getLogger(lib).setLevel(logging.WARNING)
 
 
 def load_config(config_path: str, data_override: str = "",
@@ -146,11 +152,16 @@ def main():
     data_path = ""
     is_api_source = False
     if config.sources:
-        data_path = config.sources[0].path
+        data_path = config.sources[0].path or ""
         is_api_source = config.sources[0].source_type != "file"
-        
-    if not is_api_source and (not data_path or not os.path.exists(data_path)):
-        logger.info("📦 No dataset found. Generating sample data...")
+
+    if is_api_source:
+        # For API sources, data_path is irrelevant — agents fetch at runtime.
+        # Store a placeholder so downstream code doesn't see an empty path.
+        if not data_path:
+            data_path = "<api_source>"
+    elif not data_path or not os.path.exists(data_path):
+        logger.info("No dataset found. Generating sample data...")
         from data.generate_sample_data import generate_churn_data
         generate_churn_data(output_path="data/sample_churn_data.csv")
         data_path = "data/sample_churn_data.csv"

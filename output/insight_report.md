@@ -1,6 +1,6 @@
 # Autonomous Analysis — Insight Report
 
-*Generated at: 2026-04-08T13:30:10.511168+00:00*
+*Generated at: 2026-04-08T14:08:14.349670+00:00*
 
 ---
 
@@ -8,7 +8,7 @@
 
 Analysis of Predict the confidence of active fires based on NASA FIRMS telemetry data.
 Focus on identifying high-confidence active fire vectors for emergency dispatch.
- is complete. Accuracy: 100.0%. Cross-validation score: 1.0000 ± 0.0000.
+ is complete. The random_forest model achieves ROC-AUC = 1.000. Accuracy: 100.0%. Cross-validation score: 1.0000 ± 0.0000.
 
 ---
 
@@ -33,7 +33,7 @@ Dataset contains 36 rows and 15 columns. Average missing rate is 0.0%.
 
 **Cross-validation**: 1.0000 ± 0.0000
 
-**Metrics**: Accuracy: 100.0% | F1-Score: 1.0000 | Precision: 1.0000 | Recall: 1.0000
+**Metrics**: Accuracy: 100.0% | ROC-AUC: 1.0000 | F1-Score: 1.0000 | Precision: 1.0000 | Recall: 1.0000
 
 ### Top Predictive Features
 
@@ -48,8 +48,6 @@ Dataset contains 36 rows and 15 columns. Average missing rate is 0.0%.
 |-------|---------|
 | random_forest | 1.0000 ± 0.0000 |
 | logistic_regression | 1.0000 ± 0.0000 |
-| xgboost | 1.0000 ± 0.0000 |
-| lightgbm | 0.5000 ± 0.0000 |
 
 ---
 

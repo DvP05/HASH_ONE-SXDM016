@@ -26,7 +26,7 @@ ALLOWED_MODULES = {
 # Built-in functions allowed in the sandbox
 ALLOWED_BUILTINS = {
     "abs", "all", "any", "bool", "dict", "enumerate", "filter",
-    "float", "frozenset", "getattr", "hasattr", "int", "isinstance",
+    "float", "frozenset", "hasattr", "int", "isinstance",
     "issubclass", "iter", "len", "list", "map", "max", "min",
     "next", "print", "range", "repr", "reversed", "round", "set",
     "slice", "sorted", "str", "sum", "tuple", "type", "zip",
