@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>SYSTEM_AEGIS | Global Risk Command Center</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-variant": "#293832",
+                        "on-tertiary-fixed-variant": "#910034",
+                        "tertiary-fixed": "#ffd9dd",
+                        "on-primary": "#3a3000",
+                        "on-secondary-container": "#a4bab1",
+                        "secondary-fixed": "#d0e8de",
+                        "tertiary": "#fff4f4",
+                        "primary": "#fff6e1",
+                        "surface-container-highest": "#293832",
+                        "on-primary-container": "#705e00",
+                        "surface-container-high": "#1e2d27",
+                        "inverse-on-surface": "#24342e",
+                        "on-secondary": "#20342e",
+                        "secondary-container": "#364b44",
+                        "on-secondary-fixed-variant": "#364b44",
+                        "tertiary-container": "#ffced3",
+                        "background": "#071611",
+                        "inverse-primary": "#6f5d00",
+                        "inverse-surface": "#d5e7de",
+                        "surface": "#071611",
+                        "surface-container-low": "#0f1e19",
+                        "outline": "#98907a",
+                        "on-error-container": "#ffdad6",
+                        "error-container": "#93000a",
+                        "on-error": "#690005",
+                        "surface-container-lowest": "#03110c",
+                        "on-secondary-fixed": "#0b1f19",
+                        "on-tertiary-fixed": "#400013",
+                        "tertiary-fixed-dim": "#ffb2bc",
+                        "secondary": "#b5ccc2",
+                        "surface-bright": "#2d3c36",
+                        "error": "#ffb4ab",
+                        "on-primary-fixed-variant": "#544600",
+                        "secondary-fixed-dim": "#b5ccc2",
+                        "outline-variant": "#4c4734",
+                        "on-primary-fixed": "#221b00",
+                        "surface-container": "#14221d",
+                        "surface-tint": "#e4c536",
+                        "on-surface": "#d5e7de",
+                        "on-tertiary-container": "#b81a4a",
+                        "primary-fixed-dim": "#e4c536",
+                        "primary-fixed": "#ffe264",
+                        "on-background": "#d5e7de",
+                        "surface-dim": "#071611",
+                        "primary-container": "#f9d949",
+                        "on-tertiary": "#670023",
+                        "on-surface-variant": "#cfc6ae"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0px",
+                        "lg": "0px",
+                        "xl": "0px",
+                        "full": "9999px"
+                    },
+                    "fontFamily": {
+                        "headline": ["Space Grotesk"],
+                        "body": ["Inter"],
+                        "label": ["Space Grotesk"]
+                    }
+                },
+            }
+        }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; background-color: #071611; color: #d5e7de; overflow: hidden; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .font-headline { font-family: 'Space Grotesk', sans-serif; }
+        .tactical-grid { background-image: radial-gradient(circle, #293832 1px, transparent 1px); background-size: 24px 24px; }
+        .scanline { background: linear-gradient(to bottom, rgba(249, 217, 73, 0.05) 50%, rgba(0, 0, 0, 0) 50%); background-size: 100% 4px; pointer-events: none; }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="h-screen w-screen selection:bg-primary-container selection:text-on-primary-container">
+<!-- TOP APP BAR -->
+<header class="fixed top-0 w-full z-50 flex items-center justify-between px-4 h-14 bg-[#071611] shadow-[0_0_20px_rgba(249,217,73,0.05)] border-b border-[#14221d]">
+<div class="flex items-center gap-6">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 bg-surface-variant flex items-center justify-center border border-primary/20">
+<span class="material-symbols-outlined text-primary-container text-sm">authenticator</span>
+</div>
+<h1 class="font-['Space_Grotesk'] tracking-[0.05em] uppercase text-lg font-bold text-[#F9D949]">SYSTEM_AEGIS</h1>
+</div>
+<div class="hidden md:flex items-center gap-4 border-l border-surface-variant pl-6">
+<div class="flex flex-col">
+<span class="font-headline text-[10px] text-emerald-700 tracking-widest leading-none">NODE STATUS</span>
+<span class="font-headline text-xs text-primary leading-tight flex items-center gap-1">
+<span class="w-1.5 h-1.5 bg-primary-container inline-block"></span> ENCRYPTED_STABLE
+                    </span>
+</div>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<div class="relative group hidden sm:block">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-emerald-900 text-sm">search</span>
+<input class="bg-surface-container-low border-none focus:ring-1 focus:ring-primary-container text-[10px] font-headline tracking-widest pl-10 pr-4 py-2 w-48 transition-all duration-300 focus:w-64" placeholder="QUERY INTERFACE..." type="text"/>
+</div>
+<button class="p-2 hover:bg-[#293832] transition-colors cursor-crosshair text-[#F9D949]">
+<span class="material-symbols-outlined">settings_input_component</span>
+</button>
+</div>
+</header>
+<!-- NAVIGATION DRAWER (SIDEBAR) -->
+<aside class="fixed left-0 top-0 h-full w-20 z-[60] flex flex-col py-6 bg-[#071611]/90 backdrop-blur-md border-r border-[#14221d]">
+<div class="flex-1 flex flex-col items-center gap-8 mt-16">
+<nav class="flex flex-col gap-6 w-full">
+<!-- GLOBAL VIEW (ACTIVE) -->
+<div class="relative group cursor-crosshair flex flex-col items-center gap-1 w-full py-2 bg-[#293832] text-[#F9D949] border-l-2 border-[#F9D949]">
+<span class="material-symbols-outlined">public</span>
+<span class="font-['Space_Grotesk'] text-[8px] tracking-widest font-bold">GLOBAL VIEW</span>
+</div>
+<!-- TELEMETRY -->
+<div class="relative group cursor-crosshair flex flex-col items-center gap-1 w-full py-2 text-emerald-700 opacity-60 hover:bg-[#14221d] hover:text-[#F9D949] transition-all duration-75">
+<span class="material-symbols-outlined">query_stats</span>
+<span class="font-['Space_Grotesk'] text-[8px] tracking-widest font-bold">TELEMETRY</span>
+</div>
+<!-- MIN NET -->
+<div class="relative group cursor-crosshair flex flex-col items-center gap-1 w-full py-2 text-emerald-700 opacity-60 hover:bg-[#14221d] hover:text-[#F9D949] transition-all duration-75">
+<span class="material-symbols-outlined">hub</span>
+<span class="font-['Space_Grotesk'] text-[8px] tracking-widest font-bold">MIN NET</span>
+</div>
+<!-- ARCHIVE -->
+<div class="relative group cursor-crosshair flex flex-col items-center gap-1 w-full py-2 text-emerald-700 opacity-60 hover:bg-[#14221d] hover:text-[#F9D949] transition-all duration-75">
+<span class="material-symbols-outlined">inventory_2</span>
+<span class="font-['Space_Grotesk'] text-[8px] tracking-widest font-bold">ARCHIVE</span>
+</div>
+</nav>
+</div>
+<div class="pb-4 flex justify-center">
+<span class="font-headline text-[8px] text-emerald-950 font-bold vertical-text rotate-180">v4.0.2-OMEGA</span>
+</div>
+</aside>
+<!-- MAIN CONTENT AREA -->
+<main class="ml-20 mt-14 h-[calc(100vh-3.5rem)] relative overflow-hidden bg-background">
+<!-- LARGE TACTICAL MAP AREA -->
+<div class="absolute inset-0 tactical-grid opacity-20"></div>
+<div class="absolute inset-0 flex items-center justify-center p-8 overflow-hidden">
+<!-- Simulated Map Canvas -->
+<div class="w-full h-full relative border border-surface-container-high bg-surface-container-lowest">
+<img class="w-full h-full object-cover opacity-40 mix-blend-luminosity filter contrast-125 brightness-50" data-alt="Dark stylized satellite imagery of rugged mountain terrain and river basin with glowing tactical overlays and data points" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDllh9fXfsBoGeBdjET0HBx-RLr-rhvBJha-pXtFiYIiZVK7-GBkDBjfUHYWAjDzqtt0ktdlSIgFoH3K2sgiu4__L9P3bSSw85foeplvs13-wz-_zyelqD0bBMznqCq6aeln_ENpRFD7Rh3VKJnwhnlgI83LAAizEvCcc3UBFSLQ5FvuKJB6lXgcwzaojCtwz5gsp8AnnsB3TgMTM8WjHDvIXyQ8lP6Mgb0qVKlf1ZU4OvjSYjJETLgaybMhg32DpQi6rPx6BXjAOAe"/>
+<!-- Watermark -->
+<div class="absolute bottom-12 left-1/2 -translate-x-1/2 flex gap-12 select-none opacity-10 pointer-events-none">
+<span class="font-headline font-black text-7xl tracking-tighter text-primary whitespace-nowrap">SAFE WORK SAFE WORK</span>
+</div>
+<!-- Map Coordinates HUD -->
+<div class="absolute top-8 left-8 p-4 bg-surface-container/60 backdrop-blur-md border-l-2 border-primary-container">
+<p class="font-headline text-[10px] text-primary-container tracking-[0.2em] mb-1">SCAN_VECTORS</p>
+<div class="flex gap-4 font-mono text-[10px] text-secondary">
+<span>LAT: 33°10'33" N</span>
+<span>LONG: 76°08'41" E</span>
+</div>
+</div>
+<!-- Scanning Animation Visualizer -->
+<div class="absolute inset-0 scanline opacity-30"></div>
+</div>
+</div>
+<!-- RIGHT OVERLAY PANEL (Focal Point & Gauges) -->
+<div class="absolute top-20 right-8 w-80 space-y-4">
+<!-- CURRENT FOCAL POINT CARD -->
+<div class="bg-surface-container/80 backdrop-blur-xl p-6 border-t border-primary-container/30 shadow-2xl">
+<div class="flex items-center justify-between mb-4">
+<span class="text-[10px] font-headline text-emerald-700 tracking-widest">TARGET_PROFILE</span>
+<span class="material-symbols-outlined text-primary-container text-sm">target</span>
+</div>
+<h2 class="font-headline font-bold text-lg text-primary mb-1">CHENAB BASIN</h2>
+<p class="font-headline text-[10px] text-secondary-container tracking-widest uppercase mb-6 leading-tight">GEO-COORDINATE: 33.1758, 76.1447</p>
+<!-- THREAT GAUGE -->
+<div class="relative py-4 flex flex-col items-center">
+<div class="w-40 h-20 overflow-hidden relative">
+<!-- Half Circle Gauge -->
+<div class="w-40 h-40 border-[12px] border-surface-container-highest rounded-full"></div>
+<div class="absolute top-0 w-40 h-40 border-[12px] border-transparent border-t-tertiary-fixed-dim rounded-full rotate-[120deg]"></div>
+</div>
+<div class="absolute bottom-2 flex flex-col items-center">
+<span class="font-headline font-black text-4xl text-tertiary-fixed-dim leading-none">0.88</span>
+<span class="font-headline text-[10px] text-tertiary-container tracking-widest mt-1">THREAT LEVEL</span>
+</div>
+</div>
+<div class="mt-6 flex flex-col gap-2">
+<div class="flex justify-between items-center bg-surface-container-high px-3 py-2">
+<span class="text-[9px] font-headline text-emerald-800 tracking-widest uppercase">RISK_VULNERABILITY</span>
+<span class="text-[9px] font-headline text-primary font-bold">CRITICAL</span>
+</div>
+<div class="flex justify-between items-center bg-surface-container-high px-3 py-2">
+<span class="text-[9px] font-headline text-emerald-800 tracking-widest uppercase">RESPONSE_ETA</span>
+<span class="text-[9px] font-headline text-primary font-bold">04:12:00s</span>
+</div>
+</div>
+</div>
+<!-- STATUS BARS PANEL -->
+<div class="bg-surface-container/80 backdrop-blur-xl p-6 border-t border-secondary-container/30 shadow-2xl">
+<h3 class="text-[10px] font-headline text-emerald-700 tracking-widest mb-4">SYSTEM_HEALTH</h3>
+<div class="space-y-4">
+<div class="space-y-1">
+<div class="flex justify-between text-[8px] font-headline tracking-widest">
+<span>SENS_NET</span>
+<span>92%</span>
+</div>
+<div class="h-1 bg-surface-container-lowest">
+<div class="h-full bg-primary-container" style="width: 92%;"></div>
+</div>
+</div>
+<div class="space-y-1">
+<div class="flex justify-between text-[8px] font-headline tracking-widest">
+<span>OPT_COMM</span>
+<span>64%</span>
+</div>
+<div class="h-1 bg-surface-container-lowest">
+<div class="h-full bg-primary-container" style="width: 64%;"></div>
+</div>
+</div>
+<div class="space-y-1">
+<div class="flex justify-between text-[8px] font-headline tracking-widest">
+<span>CYB_DEF</span>
+<span>100%</span>
+</div>
+<div class="h-1 bg-surface-container-lowest">
+<div class="h-full bg-primary-container" style="width: 100%;"></div>
+</div>
+</div>
+</div>
+</div>
+<!-- VULNERABILITY TIERS CHART -->
+<div class="bg-surface-container/80 backdrop-blur-xl p-6 border-t border-tertiary-container/30 shadow-2xl">
+<h3 class="text-[10px] font-headline text-emerald-700 tracking-widest mb-6">VULNERABILITY TIERS</h3>
+<div class="flex items-end justify-between h-32 gap-3 pb-2 border-b border-surface-container-highest">
+<!-- Vertical Bar 1 -->
+<div class="flex flex-col items-center flex-1">
+<div class="w-full bg-primary-container/20 h-16 relative">
+<div class="absolute bottom-0 w-full bg-primary-container h-8"></div>
+</div>
+<span class="text-[7px] font-headline mt-2 text-emerald-800">LOW</span>
+</div>
+<!-- Vertical Bar 2 -->
+<div class="flex flex-col items-center flex-1">
+<div class="w-full bg-primary-container/20 h-24 relative">
+<div class="absolute bottom-0 w-full bg-primary-container h-16"></div>
+</div>
+<span class="text-[7px] font-headline mt-2 text-emerald-800">MED</span>
+</div>
+<!-- Vertical Bar 3 -->
+<div class="flex flex-col items-center flex-1">
+<div class="w-full bg-tertiary-container/20 h-32 relative">
+<div class="absolute bottom-0 w-full bg-tertiary-fixed-dim h-28"></div>
+</div>
+<span class="text-[7px] font-headline mt-2 text-tertiary-fixed-dim">HIGH</span>
+</div>
+<!-- Vertical Bar 4 -->
+<div class="flex flex-col items-center flex-1">
+<div class="w-full bg-primary-container/20 h-20 relative">
+<div class="absolute bottom-0 w-full bg-primary-container h-12"></div>
+</div>
+<span class="text-[7px] font-headline mt-2 text-emerald-800">CRIT</span>
+</div>
+</div>
+<div class="mt-2 flex justify-between">
+<span class="text-[7px] font-headline text-emerald-950 uppercase">SEVERITY -&gt;</span>
+<span class="text-[7px] font-headline text-emerald-950 uppercase">FREQUENCY -&gt;</span>
+</div>
+</div>
+</div>
+<!-- BOTTOM STATUS STRIP -->
+<div class="absolute bottom-0 w-full h-8 bg-surface-container-low/90 border-t border-surface-container px-6 flex items-center justify-between backdrop-blur-md">
+<div class="flex gap-6 items-center">
+<div class="flex gap-2 items-center">
+<span class="w-2 h-2 rounded-full bg-primary-container shadow-[0_0_8px_#f9d949]"></span>
+<span class="text-[8px] font-headline tracking-[0.2em] text-primary">UPLINK_ESTABLISHED</span>
+</div>
+<span class="text-[8px] font-headline text-emerald-900">LATENCY: 12ms</span>
+<span class="text-[8px] font-headline text-emerald-900">USER: OPERATOR_99</span>
+</div>
+<div class="flex gap-4">
+<span class="text-[8px] font-headline text-primary-container tracking-widest">AEGIS_OS v4.11</span>
+<span class="text-[8px] font-headline text-emerald-900">TIMESTAMP: 2024-10-24 14:22:09</span>
+</div>
+</div>
+</main>
+<!-- MOBILE NAVIGATION (HIDDEN ON DESKTOP) -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full z-50 flex justify-around items-center h-16 px-6 bg-[#071611] border-t border-[#14221d] shadow-[0_-4px_12px_rgba(0,0,0,0.5)]">
+<button class="text-[#F9D949] scale-110 flex flex-col items-center transition-transform active:scale-95">
+<span class="material-symbols-outlined">map</span>
+<span class="font-['Inter'] text-[8px] uppercase tracking-tighter">NAV</span>
+</button>
+<button class="text-emerald-950 flex flex-col items-center hover:text-[#F9D949]/80 transition-transform active:scale-95">
+<span class="material-symbols-outlined">notifications_active</span>
+<span class="font-['Inter'] text-[8px] uppercase tracking-tighter">ALERTS</span>
+</button>
+<button class="text-emerald-950 flex flex-col items-center hover:text-[#F9D949]/80 transition-transform active:scale-95">
+<span class="material-symbols-outlined">security</span>
+<span class="font-['Inter'] text-[8px] uppercase tracking-tighter">RISK</span>
+</button>
+<button class="text-emerald-950 flex flex-col items-center hover:text-[#F9D949]/80 transition-transform active:scale-95">
+<span class="material-symbols-outlined">terminal</span>
+<span class="font-['Inter'] text-[8px] uppercase tracking-tighter">CONS</span>
+</button>
+</nav>
+</body></html>

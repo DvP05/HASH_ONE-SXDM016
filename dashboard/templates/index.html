@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Autonomous Analysis System — Dashboard</title>
+    <meta name="description" content="AI-powered autonomous data analysis dashboard with real-time insights, model performance, and actionable recommendations.">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+</head>
+<body>
+
+<!-- ═══ Header ═══ -->
+<header class="header">
+    <div class="header-content">
+        <div class="logo">
+            <div class="logo-icon">🧠</div>
+            <span class="logo-text">Autonomous Analysis System</span>
+        </div>
+        <div class="header-meta">
+            {% if data.pipeline_result.completed_at %}
+            <div class="header-badge">
+                <span class="dot green"></span>
+                Pipeline Complete
+            </div>
+            <div class="header-badge">
+                ⏱️ {{ "%.1f"|format(data.pipeline_result.total_duration_seconds|default(0)) }}s
+            </div>
+            <div class="header-badge">
+                🤖 {{ data.pipeline_result.total_llm_calls|default(0) }} LLM calls
+            </div>
+            {% else %}
+            <div class="header-badge">
+                <span class="dot blue"></span>
+                Awaiting Pipeline Run
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</header>
+
+<div class="container">
+
+    {% if not data.pipeline_result.stages %}
+    <!-- ═══ Empty State ═══ -->
+    <div class="card">
+        <div class="empty-state">
+            <div class="icon">🚀</div>
+            <h2>No Pipeline Results Yet</h2>
+            <p style="color: var(--text-secondary); margin-top: 1rem;">
+                Run the pipeline first:<br>
+                <code style="font-size: 1rem;">python main.py</code>
+            </p>
+        </div>
+    </div>
+    {% else %}
+
+    <!-- ═══ Pipeline Stages ═══ -->
+    <div class="stages-timeline" id="stages-timeline">
+        {% for stage_name, stage_data in data.pipeline_result.stages.items() %}
+        {% if not loop.first %}
+        <div class="stage-connector">→</div>
+        {% endif %}
+        <div class="stage-badge {{ stage_data.status }}">
+            {% if stage_data.status == 'success' %}✅{% else %}❌{% endif %}
+            {{ stage_name.replace('_', ' ').title() }}
+            {% if stage_data.quality_gate_passed is defined %}
+                <span class="tag {{ 'pass' if stage_data.quality_gate_passed else 'warn' }}">
+                    {{ 'PASS' if stage_data.quality_gate_passed else 'WARN' }}
+                </span>
+            {% endif %}
+        </div>
+        {% endfor %}
+    </div>
+
+    <!-- ═══ Metrics Overview ═══ -->
+    <div class="section-header">
+        <span class="section-icon">📊</span>
+        <h2 class="section-title">Performance Overview</h2>
+    </div>
+
+    <div class="metrics-grid" id="metrics-grid">
+        {% set eda = data.eda_report %}
+        {% set fi = data.feature_importance %}
+
+        <div class="metric-card">
+            <div class="metric-label">Dataset</div>
+            <div class="metric-value">
+                {{ "{:,}".format(eda.data_traits.n_rows|default(0)) }}
+            </div>
+            <div class="metric-detail">rows × {{ eda.data_traits.n_columns|default(0) }} columns</div>
+        </div>
+
+        <div class="metric-card">
+            <div class="metric-label">Features Selected</div>
+            <div class="metric-value">{{ fi|length if fi else 0 }}</div>
+            <div class="metric-detail">after engineering & selection</div>
+        </div>
+
+        <div class="metric-card">
+            <div class="metric-label">LLM Provider</div>
+            <div class="metric-value" style="font-size: 1.4rem;">
+                {{ data.pipeline_result.total_tokens|default(0)|int }} tok
+            </div>
+            <div class="metric-detail">{{ data.pipeline_result.total_llm_calls|default(0) }} API calls</div>
+        </div>
+
+        <div class="metric-card">
+            <div class="metric-label">Quality Gates</div>
+            <div class="metric-value">
+                {% set passed = [] %}
+                {% for s in data.pipeline_result.stages.values() %}
+                    {% if s.quality_gate_passed is defined and s.quality_gate_passed %}
+                        {% if passed.append(1) %}{% endif %}
+                    {% endif %}
+                {% endfor %}
+                {{ passed|length }}/{{ data.pipeline_result.stages|length }}
+            </div>
+            <div class="metric-detail">stages passed</div>
+        </div>
+    </div>
+
+    <!-- ═══ Executive Summary ═══ -->
+    {% if data.insight_report %}
+    <div class="section-header">
+        <span class="section-icon">📝</span>
+        <h2 class="section-title">Executive Summary</h2>
+    </div>
+    <div class="card" id="executive-summary">
+        <div class="markdown-content" id="insight-content"></div>
+    </div>
+    {% endif %}
+
+    <!-- ═══ Two Column: Cleaning + EDA ═══ -->
+    <div class="two-col">
+        <!-- Data Quality -->
+        <div>
+            <div class="section-header">
+                <span class="section-icon">🧹</span>
+                <h2 class="section-title">Data Quality</h2>
+                <span class="section-subtitle">{{ data.cleaning_log|length }} operations</span>
+            </div>
+            <div class="card" id="cleaning-card">
+                {% if data.cleaning_log %}
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Operation</th>
+                            <th>Rows</th>
+                            <th>Reasoning</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for entry in data.cleaning_log %}
+                        <tr>
+                            <td><strong>{{ entry.operation }}</strong></td>
+                            <td>{{ entry.rows_affected }}</td>
+                            <td style="color: var(--text-secondary); max-width: 300px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                                {{ entry.reasoning[:80] }}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                {% else %}
+                <div class="empty-state">
+                    <div class="icon">🧹</div>
+                    <p>No cleaning operations recorded</p>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- EDA Findings -->
+        <div>
+            <div class="section-header">
+                <span class="section-icon">🔍</span>
+                <h2 class="section-title">EDA Highlights</h2>
+                <span class="section-subtitle">{{ (eda.findings|default([]))|length }} findings</span>
+            </div>
+            <div class="card" id="eda-card">
+                {% if eda and eda.hypotheses %}
+                <div class="card-title">Generated Hypotheses</div>
+                {% for h in eda.hypotheses %}
+                <div style="margin-bottom: 1rem; padding: 0.75rem; background: rgba(102,126,234,0.05); border-radius: 8px; border-left: 3px solid var(--accent-blue);">
+                    <strong style="color: var(--accent-cyan);">{{ h.id }}</strong>
+                    <p style="margin-top: 0.25rem; color: var(--text-secondary); font-size: 0.85rem;">
+                        {{ h.statement }}
+                    </p>
+                </div>
+                {% endfor %}
+                {% elif eda and eda.narrative %}
+                <div class="markdown-content">{{ eda.narrative[:500] }}</div>
+                {% else %}
+                <div class="empty-state">
+                    <div class="icon">📊</div>
+                    <p>No EDA results</p>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <!-- ═══ Feature Importance Chart ═══ -->
+    {% if data.feature_importance %}
+    <div class="section-header">
+        <span class="section-icon">🎯</span>
+        <h2 class="section-title">Feature Importance</h2>
+        <span class="section-subtitle">Top predictive features</span>
+    </div>
+    <div class="card">
+        <div id="feature-importance-chart" style="width: 100%; height: 450px;"></div>
+    </div>
+    {% endif %}
+
+    <!-- ═══ Interactive Charts ═══ -->
+    {% if data.charts %}
+    <div class="section-header">
+        <span class="section-icon">📈</span>
+        <h2 class="section-title">Visualizations</h2>
+        <span class="section-subtitle">{{ data.charts|length }} charts</span>
+    </div>
+    <div class="two-col">
+        {% for chart_name in data.charts %}
+        <div class="card">
+            <div class="card-title">{{ chart_name.replace('.html', '').replace('_', ' ').title() }}</div>
+            <div class="chart-container">
+                <iframe src="/charts/{{ chart_name }}" loading="lazy"></iframe>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <!-- ═══ Model Performance ═══ -->
+    {% if data.pipeline_result.stages.get('modeling', {}).status == 'success' %}
+    <div class="section-header">
+        <span class="section-icon">🤖</span>
+        <h2 class="section-title">Model Performance</h2>
+    </div>
+    <div class="card" id="model-card-content">
+        <div class="markdown-content" id="model-card-rendered"></div>
+    </div>
+    {% endif %}
+
+    <!-- ═══ Recommendations ═══ -->
+    <div class="section-header">
+        <span class="section-icon">💡</span>
+        <h2 class="section-title">Recommendations</h2>
+    </div>
+    <div id="recommendations-container">
+        <!-- Populated by JS -->
+    </div>
+
+    <!-- ═══ Pipeline Stages Detail ═══ -->
+    <div class="section-header">
+        <span class="section-icon">⚙️</span>
+        <h2 class="section-title">Pipeline Details</h2>
+    </div>
+    <div class="card">
+        <table class="data-table" id="pipeline-details-table">
+            <thead>
+                <tr>
+                    <th>Stage</th>
+                    <th>Status</th>
+                    <th>Quality Gate</th>
+                    <th>Duration</th>
+                    <th>LLM Calls</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for stage_name, stage_data in data.pipeline_result.stages.items() %}
+                <tr>
+                    <td><strong>{{ stage_name.replace('_', ' ').title() }}</strong></td>
+                    <td>
+                        <span class="tag {{ 'pass' if stage_data.status == 'success' else 'high' }}">
+                            {{ stage_data.status }}
+                        </span>
+                    </td>
+                    <td>
+                        {% if stage_data.quality_gate_passed is defined %}
+                        <span class="tag {{ 'pass' if stage_data.quality_gate_passed else 'warn' }}">
+                            {{ 'PASS' if stage_data.quality_gate_passed else 'WARN' }}
+                        </span>
+                        {% endif %}
+                    </td>
+                    <td>{{ "%.1f"|format(stage_data.trace.duration_seconds|default(0)) }}s</td>
+                    <td>{{ stage_data.trace.llm_calls|default(0) }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    {% endif %}
+</div>
+
+<!-- ═══ Footer ═══ -->
+<footer class="footer">
+    <p>Autonomous Analysis System — Powered by Agentic AI Pipeline</p>
+    <p style="margin-top: 0.5rem;">
+        {% if data.pipeline_result.completed_at %}
+        Last run: {{ data.pipeline_result.completed_at[:19] }}
+        {% endif %}
+    </p>
+</footer>
+
+<!-- ═══ Scripts ═══ -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+
+    // ── Render Insight Report (Markdown) ──
+    const insightContent = document.getElementById('insight-content');
+    if (insightContent) {
+        fetch('/api/insight-report')
+            .then(r => r.json())
+            .then(data => {
+                if (data.content && typeof marked !== 'undefined') {
+                    insightContent.innerHTML = marked.parse(data.content);
+                } else if (data.content) {
+                    insightContent.innerText = data.content;
+                }
+            })
+            .catch(() => {});
+    }
+
+    // ── Render Model Card ──
+    const modelCardEl = document.getElementById('model-card-rendered');
+    if (modelCardEl) {
+        fetch('/api/model-card')
+            .then(r => r.json())
+            .then(data => {
+                if (data.content && typeof marked !== 'undefined') {
+                    modelCardEl.innerHTML = marked.parse(data.content);
+                } else if (data.content) {
+                    modelCardEl.innerText = data.content;
+                }
+            })
+            .catch(() => {});
+    }
+
+    // ── Render Feature Importance Chart ──
+    const fiChartEl = document.getElementById('feature-importance-chart');
+    if (fiChartEl) {
+        fetch('/api/feature-importance')
+            .then(r => r.json())
+            .then(data => {
+                if (!data || Object.keys(data).length === 0) return;
+
+                const sorted = Object.entries(data)
+                    .sort((a, b) => b[1] - a[1])
+                    .slice(0, 20);
+
+                const trace = {
+                    x: sorted.map(d => d[1]),
+                    y: sorted.map(d => d[0]),
+                    type: 'bar',
+                    orientation: 'h',
+                    marker: {
+                        color: sorted.map((_, i) => {
+                            const t = i / sorted.length;
+                            return `rgb(${Math.round(102 + t * 20)}, ${Math.round(126 - t * 50)}, ${Math.round(234 - t * 70)})`;
+                        }),
+                    }
+                };
+
+                const layout = {
+                    title: { text: 'Top Predictive Features', font: { color: '#e8e8f0', size: 16 } },
+                    paper_bgcolor: 'rgba(0,0,0,0)',
+                    plot_bgcolor: 'rgba(0,0,0,0)',
+                    font: { color: '#8888aa', family: 'Inter, sans-serif' },
+                    xaxis: { title: 'Importance Score', gridcolor: 'rgba(255,255,255,0.05)' },
+                    yaxis: { autorange: 'reversed', gridcolor: 'rgba(255,255,255,0.05)' },
+                    margin: { l: 180, r: 40, t: 50, b: 50 },
+                    height: 450,
+                };
+
+                Plotly.newPlot(fiChartEl, [trace], layout, { responsive: true });
+            })
+            .catch(() => {});
+    }
+
+    // ── Render Recommendations ──
+    const recoContainer = document.getElementById('recommendations-container');
+    if (recoContainer) {
+        fetch('/api/insight-report')
+            .then(r => r.json())
+            .then(data => {
+                // Try to parse recommendations from the markdown
+                if (!data.content) {
+                    recoContainer.innerHTML = '<div class="card"><div class="empty-state"><div class="icon">💡</div><p>Run the pipeline to generate recommendations</p></div></div>';
+                    return;
+                }
+
+                // Extract recommendation sections
+                const recoSection = data.content.split('## Recommendations');
+                if (recoSection.length > 1) {
+                    const recoHtml = recoSection[1].split('## Next Steps')[0];
+                    const recoEntries = recoHtml.split('### ').filter(s => s.trim());
+
+                    recoEntries.forEach(entry => {
+                        const lines = entry.trim().split('\n');
+                        const titleLine = lines[0] || '';
+                        const description = lines.slice(1).join('\n').trim();
+
+                        let priority = 'medium';
+                        if (titleLine.includes('[HIGH]')) priority = 'high';
+                        else if (titleLine.includes('[LOW]')) priority = 'low';
+
+                        const title = titleLine.replace(/\[.*?\]\s*/g, '').trim();
+
+                        if (title) {
+                            const card = document.createElement('div');
+                            card.className = `reco-card prio-${priority}`;
+                            card.innerHTML = `
+                                <div class="reco-title">${title}</div>
+                                <div class="reco-description">${description.replace(/\n/g, '<br>').substring(0, 300)}</div>
+                                <div class="reco-meta">
+                                    <span class="tag ${priority}">${priority}</span>
+                                </div>
+                            `;
+                            recoContainer.appendChild(card);
+                        }
+                    });
+
+                    if (recoContainer.children.length === 0) {
+                        recoContainer.innerHTML = '<div class="card"><div class="empty-state"><div class="icon">💡</div><p>No recommendations generated</p></div></div>';
+                    }
+                }
+            })
+            .catch(() => {});
+    }
+
+});
+</script>
+
+</body>
+</html>

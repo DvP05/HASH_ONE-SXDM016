@@ -1,0 +1,28 @@
+# Pipeline Configuration
+problem_statement: |
+  Predict the confidence of active fires based on NASA FIRMS telemetry data.
+  Focus on identifying high-confidence active fire vectors for emergency dispatch.
+
+domain_context: |
+  Global Environmental Resilience Command Center.
+  Data comes from the NASA FIRMS VIIRS_SNPP_NRT satellite payload.
+  The target column is "confidence" (nominal string: 'l', 'n', 'h', meaning low, normal, high).
+
+target_column: "confidence"
+task_type: "classification"
+
+sources:
+  - source_type: "nasa_api"
+    map_key: "VIIRS_SNPP_NRT"
+    area_coords: "world"
+
+llm:
+  provider: "auto"
+  model: ""
+  temperature: 0.1
+  max_tokens: 4096
+
+human_checkpoints: []
+
+quality_gates_path: "config/quality_gates.yaml"
+output_dir: "output"

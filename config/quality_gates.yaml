@@ -1,0 +1,26 @@
+# Quality Gate Thresholds
+# Each stage has minimum quality requirements that must be met
+
+data_collection:
+  min_rows: 10
+  min_columns: 2
+
+data_cleaning:
+  max_missing_pct_after: 0.05      # Max 5% missing values after cleaning
+  min_rows_retained_pct: 0.80      # Keep at least 80% of rows
+
+eda:
+  min_findings: 1
+
+feature_engineering:
+  min_features: 3
+  max_features: 200
+  min_mutual_info_score: 0.001     # Minimum MI score to keep a feature
+
+modeling:
+  classification:
+    min_roc_auc: 0.55              # Minimum ROC-AUC for classification
+    max_train_test_gap: 0.20       # Overfitting detection threshold
+  regression:
+    min_r2: 0.10                   # Minimum R² for regression
+    max_mape: 0.50                 # Maximum MAPE

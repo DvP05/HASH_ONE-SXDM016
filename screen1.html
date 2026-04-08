@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>SENTINEL_CORE | Global Environmental Resilience</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Inter:wght@300;400;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .micro-grid {
+            background-image: radial-gradient(circle, rgba(152, 144, 122, 0.05) 1px, transparent 1px);
+            background-size: 24px 24px;
+        }
+        .terminal-cursor {
+            display: inline-block;
+            width: 8px;
+            height: 16px;
+            background: #f9d949;
+            margin-left: 4px;
+            vertical-align: middle;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "primary-fixed": "#ffe264",
+                      "outline": "#98907a",
+                      "on-secondary-fixed": "#400013",
+                      "on-tertiary-fixed": "#00210c",
+                      "tertiary": "#deffe1",
+                      "surface-container-highest": "#293832",
+                      "inverse-surface": "#d5e7de",
+                      "surface-container-lowest": "#03110c",
+                      "inverse-on-surface": "#24342e",
+                      "surface-tint": "#e4c536",
+                      "surface-container-low": "#0f1e19",
+                      "on-primary-fixed-variant": "#544600",
+                      "background": "#071611",
+                      "error": "#ffb4ab",
+                      "on-secondary-container": "#ffb1bc",
+                      "on-surface": "#d5e7de",
+                      "on-secondary": "#670023",
+                      "on-error-container": "#ffdad6",
+                      "error-container": "#93000a",
+                      "primary": "#fff6e1",
+                      "tertiary-fixed-dim": "#4ae183",
+                      "on-tertiary": "#003919",
+                      "surface": "#071611",
+                      "secondary": "#ffb2bc",
+                      "on-background": "#d5e7de",
+                      "on-tertiary-container": "#006e37",
+                      "on-primary": "#3a3000",
+                      "on-secondary-fixed-variant": "#910034",
+                      "primary-fixed-dim": "#e4c536",
+                      "surface-container": "#14221d",
+                      "secondary-container": "#a6023e",
+                      "on-primary-fixed": "#221b00",
+                      "on-tertiary-fixed-variant": "#005228",
+                      "surface-variant": "#293832",
+                      "outline-variant": "#4c4734",
+                      "tertiary-fixed": "#6bfe9c",
+                      "surface-bright": "#2d3c36",
+                      "secondary-fixed-dim": "#ffb2bc",
+                      "on-primary-container": "#705e00",
+                      "on-error": "#690005",
+                      "inverse-primary": "#6f5d00",
+                      "surface-container-high": "#1e2d27",
+                      "on-surface-variant": "#cfc6ae",
+                      "surface-dim": "#071611",
+                      "tertiary-container": "#61f595",
+                      "primary-container": "#f9d949",
+                      "secondary-fixed": "#ffd9dd"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0rem",
+                      "lg": "0rem",
+                      "xl": "0rem",
+                      "full": "0rem"
+              },
+              "fontFamily": {
+                      "headline": ["Space Grotesk"],
+                      "body": ["Inter"],
+                      "label": ["Space Grotesk"]
+              }
+            },
+          }
+        }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-surface font-body selection:bg-primary-container selection:text-on-primary-container micro-grid">
+<!-- Top Navigation Shell -->
+<header class="flex justify-between items-center w-full px-6 py-4 border-b border-outline/20 bg-[#071611] sticky top-0 z-50">
+<div class="flex items-center gap-8">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary-container" style="font-variation-settings: 'FILL' 1;">security</span>
+<span class="text-2xl font-bold tracking-tighter text-primary-container font-headline">SENTINEL_CORE</span>
+</div>
+<div class="hidden md:flex items-center bg-surface-container px-4 py-2 border-b-2 border-outline-variant group focus-within:border-primary-fixed">
+<span class="material-symbols-outlined text-outline text-sm">search</span>
+<input class="bg-transparent border-none focus:ring-0 text-xs font-label uppercase tracking-widest w-64 text-on-surface-variant placeholder:text-outline/50" placeholder="QUERY_SYSTEM..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-6">
+<div class="hidden lg:flex items-center gap-4">
+<div class="text-right">
+<p class="text-[0.6875rem] font-bold font-headline uppercase tracking-tighter text-primary">OPERATOR_01</p>
+<p class="text-[0.6rem] font-label text-outline uppercase tracking-widest">Sector 7G // ACTIVE</p>
+</div>
+<div class="w-10 h-10 bg-surface-container-highest flex items-center justify-center border border-outline/20">
+<img alt="Operator Avatar" class="w-full h-full object-cover" data-alt="Cyberpunk style profile avatar icon with neon green accents and digital scanning lines overlay" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAgIO__M5n5dDu2YxerU5VWpK4Ql1RFSW1bSVcbDQVl3szOQmBBIYO5fGc8PyzmVmWIxCkr-ajuWDWgD3Ixnqis9NWV8oK5NhB7sp2CGEi6jbo0TzBLqmMXi_KYwYapXAKKm1gH6AXXmW30_DFkH3AbD7nBWWCVjQljtaGkiwODIVvHppLSdJAtXwuU5BPCGhWTak2uQGxPVyxfqIoWFqVb5sJp4M8NfY7l6nk7eX2CI95SfYLJLf6h8nbMK3-EOFZncbbN_2vbl5xq"/>
+</div>
+</div>
+<button class="bg-primary-container text-on-primary-container px-4 py-2 text-[0.6875rem] font-black font-headline uppercase tracking-tighter hover:bg-primary-fixed-dim transition-all active:scale-95">
+                DEPLOY NODE
+            </button>
+</div>
+</header>
+<div class="flex min-h-screen">
+<!-- Sidebar Shell -->
+<aside class="hidden md:flex flex-col h-auto w-64 border-r border-outline/20 bg-surface">
+<nav class="flex-1 py-8">
+<div class="px-6 mb-8">
+<span class="text-[0.6rem] font-label uppercase tracking-[0.2em] text-outline">System Clusters</span>
+</div>
+<a class="flex items-center gap-4 text-on-primary-container bg-primary-container font-bold p-3 px-6 transition-all duration-100 group" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">public</span>
+<span class="font-headline uppercase tracking-widest text-[0.6875rem]">Global Monitor</span>
+</a>
+<a class="flex items-center gap-4 text-outline p-3 px-6 hover:bg-surface-container-high transition-all group" href="#">
+<span class="material-symbols-outlined group-hover:text-primary">analytics</span>
+<span class="font-headline uppercase tracking-widest text-[0.6875rem]">Agentic Pipeline</span>
+</a>
+<a class="flex items-center gap-4 text-outline p-3 px-6 hover:bg-surface-container-high transition-all group" href="#">
+<span class="material-symbols-outlined group-hover:text-primary">security</span>
+<span class="font-headline uppercase tracking-widest text-[0.6875rem]">Vulnerability Matrix</span>
+</a>
+<a class="flex items-center gap-4 text-outline p-3 px-6 hover:bg-surface-container-high transition-all group" href="#">
+<span class="material-symbols-outlined group-hover:text-primary">terminal</span>
+<span class="font-headline uppercase tracking-widest text-[0.6875rem]">System Logs</span>
+</a>
+</nav>
+<div class="p-6 border-t border-outline/10 bg-surface-container-low">
+<div class="flex items-center justify-between mb-2">
+<span class="text-[0.6rem] font-label text-outline uppercase">Core Temp</span>
+<span class="text-[0.6rem] font-label text-tertiary-fixed-dim uppercase">Optimal</span>
+</div>
+<div class="h-1 bg-surface-container-highest w-full">
+<div class="h-full bg-tertiary-fixed-dim w-[42%]"></div>
+</div>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="flex-1 p-6 md:p-10 overflow-x-hidden">
+<!-- Hero Section -->
+<section class="grid grid-cols-1 lg:grid-cols-12 gap-8 mb-12">
+<div class="lg:col-span-7 flex flex-col justify-center">
+<div class="flex items-center gap-3 mb-6">
+<span class="bg-primary-container/10 text-primary-container px-2 py-1 text-[0.6rem] font-black tracking-widest border border-primary-container/20">V.4.2.0_STABLE</span>
+<span class="text-outline text-[0.6rem] tracking-widest uppercase">Global Environmental Resilience</span>
+</div>
+<h1 class="text-4xl md:text-6xl font-headline font-bold text-white tracking-tight leading-none mb-6 max-w-2xl">
+                        Autonomous Intelligence <span class="text-surface-tint">Resilience</span> Framework
+                    </h1>
+<p class="text-on-surface-variant text-lg font-light leading-relaxed mb-8 max-w-xl">
+                        Real-time planetary oversight leveraging agentic pipelines for climate adaptation and high-fidelity threat mitigation.
+                    </p>
+<div class="flex flex-wrap gap-4">
+<button class="bg-primary-container text-on-primary-container px-8 py-4 font-black font-headline uppercase tracking-widest hover:brightness-110 active:invert">INITIALIZE SCAN</button>
+<button class="border border-outline/30 text-primary px-8 py-4 font-black font-headline uppercase tracking-widest hover:bg-white/5 active:bg-white/10">VIEW DATASETS</button>
+</div>
+</div>
+<div class="lg:col-span-5">
+<div class="bg-surface-container p-4 border border-outline/10 relative overflow-hidden group">
+<div class="flex justify-between items-center mb-4">
+<div class="flex items-center gap-2">
+<div class="w-2 h-2 bg-primary-container animate-pulse"></div>
+<span class="text-[0.6rem] font-label text-primary uppercase tracking-[0.2em]">Live Stream: CHENAB_BASIN</span>
+</div>
+<span class="text-[0.6rem] font-mono text-outline uppercase tracking-widest">32.31° N, 75.11° E</span>
+</div>
+<div class="aspect-video bg-surface-container-highest relative overflow-hidden">
+<img alt="Chenab Basin Map" class="w-full h-full object-cover opacity-60 grayscale hover:grayscale-0 transition-all duration-700" data-alt="High-contrast satellite topographic radar map of a river basin with digital data overlays, heat maps, and glowing vector grid lines" data-location="Chenab Basin" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB87E81vUG_fjJqXgK1fWLXs_4Fk1cynnyJB3psIVeRLsjIMkyJt9-U9Psi6wWsdiO2yJ2Iu1EUCjJdoQz8exXVyQfmybqoOCICKwy-jepf5KOhVoyuKKGHoLUiptG1UsMsi8m_zw5VdFpmdVeOUZDjngrMwVDugK8YxVLEo_MflbtuUehzBX8cYBzrwtdjsyN3rknFzikzTGQdqSv02UxbIdZPE9K_kL7ZkhHYP00qSXaChihQZojEPk03dGoquIFOCRGqJhXsgkJ-"/>
+<div class="absolute inset-0 pointer-events-none border-[1px] border-primary-container/20"></div>
+<div class="absolute top-4 right-4 bg-background/80 backdrop-blur-md p-2 border border-outline/20">
+<p class="text-[0.5rem] font-mono text-secondary uppercase mb-1">Risk Level</p>
+<p class="text-xl font-headline font-bold text-secondary">CRITICAL</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Agentic Pipeline -->
+<section class="mb-12">
+<div class="flex items-center gap-4 mb-6">
+<h2 class="text-xl font-headline font-bold text-surface-tint uppercase tracking-tighter">Agentic Pipeline Status</h2>
+<div class="h-[1px] flex-1 bg-outline/10"></div>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-px bg-outline/10 border border-outline/10">
+<!-- Step 1 -->
+<div class="bg-surface-container p-6 group hover:bg-surface-container-high transition-colors">
+<span class="text-[0.6rem] font-mono text-outline block mb-2">P-01</span>
+<h3 class="text-xs font-bold text-primary uppercase tracking-widest mb-4">Data Collection</h3>
+<div class="flex items-end gap-1 h-8">
+<div class="w-full bg-tertiary-fixed-dim/20 h-1/2"></div>
+<div class="w-full bg-tertiary-fixed-dim/20 h-2/3"></div>
+<div class="w-full bg-tertiary-fixed-dim h-full"></div>
+</div>
+<p class="text-[0.6rem] text-tertiary-fixed-dim mt-4 uppercase font-bold tracking-widest">Active_Stream</p>
+</div>
+<!-- Step 2 -->
+<div class="bg-surface-container p-6 group hover:bg-surface-container-high transition-colors">
+<span class="text-[0.6rem] font-mono text-outline block mb-2">P-02</span>
+<h3 class="text-xs font-bold text-primary uppercase tracking-widest mb-4">Cleaning</h3>
+<div class="flex items-end gap-1 h-8">
+<div class="w-full bg-tertiary-fixed-dim h-3/4"></div>
+<div class="w-full bg-tertiary-fixed-dim h-5/6"></div>
+<div class="w-full bg-tertiary-fixed-dim h-4/6"></div>
+</div>
+<p class="text-[0.6rem] text-tertiary-fixed-dim mt-4 uppercase font-bold tracking-widest">99.2% Accuracy</p>
+</div>
+<!-- Step 3 -->
+<div class="bg-surface-container p-6 group hover:bg-surface-container-high transition-colors">
+<span class="text-[0.6rem] font-mono text-outline block mb-2">P-03</span>
+<h3 class="text-xs font-bold text-primary uppercase tracking-widest mb-4">EDA</h3>
+<div class="flex items-end gap-1 h-8">
+<div class="w-full bg-tertiary-fixed-dim h-1/2"></div>
+<div class="w-full bg-tertiary-fixed-dim h-1/2"></div>
+<div class="w-full bg-tertiary-fixed-dim h-1/2"></div>
+</div>
+<p class="text-[0.6rem] text-tertiary-fixed-dim mt-4 uppercase font-bold tracking-widest">Processing</p>
+</div>
+<!-- Step 4 -->
+<div class="bg-surface-container p-6 group hover:bg-surface-container-high transition-colors">
+<span class="text-[0.6rem] font-mono text-outline block mb-2">P-04</span>
+<h3 class="text-xs font-bold text-primary uppercase tracking-widest mb-4">Feature Eng</h3>
+<div class="flex items-end gap-1 h-8 opacity-40">
+<div class="w-full bg-outline h-1/6"></div>
+<div class="w-full bg-outline h-1/6"></div>
+<div class="w-full bg-outline h-1/6"></div>
+</div>
+<p class="text-[0.6rem] text-outline mt-4 uppercase font-bold tracking-widest">Queued</p>
+</div>
+<!-- Step 5 -->
+<div class="bg-surface-container p-6 group hover:bg-surface-container-high transition-colors">
+<span class="text-[0.6rem] font-mono text-outline block mb-2">P-05</span>
+<h3 class="text-xs font-bold text-primary uppercase tracking-widest mb-4">Risk Fusion</h3>
+<div class="flex items-end gap-1 h-8 opacity-40">
+<div class="w-full bg-outline h-1/6"></div>
+<div class="w-full bg-outline h-1/6"></div>
+<div class="w-full bg-outline h-1/6"></div>
+</div>
+<p class="text-[0.6rem] text-outline mt-4 uppercase font-bold tracking-widest">Standby</p>
+</div>
+</div>
+</section>
+<!-- Multi-Modal Telemetry & Vulnerability Matrix -->
+<div class="grid grid-cols-1 xl:grid-cols-3 gap-8 mb-12">
+<!-- Telemetry -->
+<div class="xl:col-span-2 space-y-8">
+<div class="bg-surface-container p-6 border border-outline/10">
+<div class="flex justify-between items-start mb-8">
+<div>
+<h3 class="text-xs font-bold text-primary uppercase tracking-widest">Rainfall Prediction</h3>
+<p class="text-[0.6rem] text-outline uppercase tracking-tighter">7-Day Multi-Modal Forecast</p>
+</div>
+<span class="text-[0.6rem] font-mono text-primary-container px-2 py-1 border border-primary-container/20">AUTO_SCALE: ON</span>
+</div>
+<!-- Bar Chart Placeholder -->
+<div class="flex items-end gap-3 h-48 px-2">
+<div class="flex-1 bg-primary-container/80 h-[40%] group relative">
+<div class="absolute -top-6 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 text-[10px] font-mono text-primary-container">42mm</div>
+</div>
+<div class="flex-1 bg-primary-container h-[75%]"></div>
+<div class="flex-1 bg-secondary h-[95%]"></div>
+<div class="flex-1 bg-primary-container h-[60%]"></div>
+<div class="flex-1 bg-primary-container h-[45%]"></div>
+<div class="flex-1 bg-primary-container/50 h-[30%]"></div>
+<div class="flex-1 bg-primary-container/30 h-[15%]"></div>
+</div>
+<div class="flex justify-between mt-4 text-[0.6rem] font-mono text-outline uppercase">
+<span>MON</span><span>TUE</span><span>WED</span><span>THU</span><span>FRI</span><span>SAT</span><span>SUN</span>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+<div class="bg-surface-container p-6 border border-outline/10">
+<h3 class="text-xs font-bold text-primary uppercase tracking-widest mb-6">Thermal Matrix</h3>
+<div class="grid grid-cols-8 gap-1">
+<script>
+                                    for(let i=0; i<32; i++) {
+                                        const opacity = Math.random();
+                                        const color = opacity > 0.7 ? 'bg-secondary' : 'bg-primary-container';
+                                        document.write(`<div class="${color} h-4" style="opacity: ${opacity}"></div>`);
+                                    }
+                                </script>
+</div>
+</div>
+<div class="bg-surface-container p-6 border border-outline/10 flex flex-col justify-between">
+<h3 class="text-xs font-bold text-primary uppercase tracking-widest mb-4">Signal Persistence</h3>
+<div class="flex-1 flex items-center justify-center">
+<div class="w-full h-[2px] bg-outline/20 relative overflow-hidden">
+<div class="absolute inset-0 bg-gradient-to-r from-transparent via-primary-container to-transparent w-1/3 animate-[shimmer_2s_infinite]"></div>
+</div>
+</div>
+<div class="flex justify-between mt-4">
+<span class="text-xl font-headline font-bold text-white tracking-tighter">8.4<span class="text-[0.6rem] text-outline ml-1">GHz</span></span>
+<span class="text-xl font-headline font-bold text-white tracking-tighter">94%<span class="text-[0.6rem] text-outline ml-1">STR</span></span>
+</div>
+</div>
+</div>
+</div>
+<!-- Vulnerability Matrix -->
+<div class="bg-surface-container p-6 border border-outline/10">
+<h3 class="text-xs font-bold text-surface-tint uppercase tracking-widest mb-8 border-b border-outline/10 pb-4">Vulnerability Matrix</h3>
+<div class="space-y-10">
+<div>
+<div class="flex justify-between items-end mb-2">
+<p class="text-xs font-bold text-white uppercase tracking-widest">FLOOD_RISK</p>
+<p class="text-sm font-black text-secondary uppercase">84% HIGH</p>
+</div>
+<div class="h-1.5 bg-surface-container-highest w-full overflow-hidden">
+<div class="h-full bg-secondary w-[84%]"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between items-end mb-2">
+<p class="text-xs font-bold text-white uppercase tracking-widest">WILDFIRE_PROB</p>
+<p class="text-sm font-black text-tertiary-fixed-dim uppercase">22% STABLE</p>
+</div>
+<div class="h-1.5 bg-surface-container-highest w-full overflow-hidden">
+<div class="h-full bg-tertiary-fixed-dim w-[22%]"></div>
+</div>
+</div>
+<div>
+<div class="flex justify-between items-end mb-2">
+<p class="text-xs font-bold text-white uppercase tracking-widest">DROUGHT_INDEX</p>
+<p class="text-sm font-black text-primary-container uppercase">56% MODERATE</p>
+</div>
+<div class="h-1.5 bg-surface-container-highest w-full overflow-hidden">
+<div class="h-full bg-primary-container w-[56%]"></div>
+</div>
+</div>
+<div class="pt-6 border-t border-outline/10">
+<h4 class="text-[0.6rem] font-bold text-outline uppercase tracking-widest mb-4">Historical Anomalies</h4>
+<div class="space-y-3">
+<div class="flex items-center gap-3">
+<div class="w-1 h-1 bg-secondary"></div>
+<span class="text-[0.6rem] font-mono text-on-surface-variant">2024.08.12 - FLASH_FLOOD_INIT</span>
+</div>
+<div class="flex items-center gap-3">
+<div class="w-1 h-1 bg-primary-container"></div>
+<span class="text-[0.6rem] font-mono text-on-surface-variant">2024.07.29 - HEAT_DOME_L4</span>
+</div>
+<div class="flex items-center gap-3">
+<div class="w-1 h-1 bg-tertiary-fixed-dim"></div>
+<span class="text-[0.6rem] font-mono text-on-surface-variant">2024.07.15 - REFORESTATION_P1</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Operator Command Interface -->
+<section class="bg-[#03110c] border border-primary-container/20 p-4 font-mono">
+<div class="flex items-center justify-between mb-4 border-b border-primary-container/10 pb-2">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary-container text-sm">terminal</span>
+<span class="text-[0.6rem] text-primary-container font-bold uppercase tracking-widest">Operator Command Interface // SESSION_ID: 8821-X</span>
+</div>
+<div class="flex gap-1">
+<div class="w-2 h-2 rounded-full bg-outline/20"></div>
+<div class="w-2 h-2 rounded-full bg-outline/20"></div>
+<div class="w-2 h-2 rounded-full bg-primary-container/40"></div>
+</div>
+</div>
+<div class="space-y-1 text-[0.6875rem] text-primary-container/80 leading-relaxed max-h-48 overflow-y-auto">
+<p><span class="text-outline">[14:22:01]</span> INITIALIZING_SENTINEL_PROTOCOL...</p>
+<p><span class="text-outline">[14:22:03]</span> SYNCING_WITH_GLOBAL_SENSORS: OK</p>
+<p><span class="text-outline">[14:22:05]</span> PIPELINE_AGENT_01 (INGEST): FETCHING_NEW_TELEMETRY</p>
+<p><span class="text-outline">[14:22:09]</span> PIPELINE_AGENT_02 (CLEAN): REMOVING_NOISE_FROM_DATA_SET_B4</p>
+<p><span class="text-secondary">[14:22:15] ALERT: ANOMALOUS_PRECIPITATION_DETECTED_IN_SECTOR_7G</span></p>
+<p><span class="text-outline">[14:22:18]</span> RUNNING_VULNERABILITY_MATRIX_CALCULATION...</p>
+<p><span class="text-tertiary-fixed-dim">[14:22:22] MITIGATION_PLAN_GENERATED: ALPHA_9</span></p>
+<p class="flex items-center">root@sentinel:~$ <span class="terminal-cursor"></span></p>
+</div>
+</section>
+</main>
+</div>
+<!-- Mobile Bottom Nav Shell -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full flex justify-around items-center bg-[#071611] border-t border-outline/15 z-50">
+<a class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container py-3 px-4 flex-1" href="#">
+<span class="material-symbols-outlined text-lg" style="font-variation-settings: 'FILL' 1;">radar</span>
+<span class="font-headline font-bold text-[10px] uppercase tracking-widest mt-1">TELEMETRY</span>
+</a>
+<a class="flex flex-col items-center justify-center text-outline py-3 px-4 flex-1 hover:bg-surface-container-high transition-colors" href="#">
+<span class="material-symbols-outlined text-lg">warning</span>
+<span class="font-headline font-bold text-[10px] uppercase tracking-widest mt-1">THREATS</span>
+</a>
+<a class="flex flex-col items-center justify-center text-outline py-3 px-4 flex-1 hover:bg-surface-container-high transition-colors" href="#">
+<span class="material-symbols-outlined text-lg">keyboard</span>
+<span class="font-headline font-bold text-[10px] uppercase tracking-widest mt-1">COMMAND</span>
+</a>
+<a class="flex flex-col items-center justify-center text-outline py-3 px-4 flex-1 hover:bg-surface-container-high transition-colors" href="#">
+<span class="material-symbols-outlined text-lg">settings</span>
+<span class="font-headline font-bold text-[10px] uppercase tracking-widest mt-1">SETTINGS</span>
+</a>
+</nav>
+</body></html>
