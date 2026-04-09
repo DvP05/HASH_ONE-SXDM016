@@ -51,8 +51,13 @@ def setup_logging(verbose: bool = False):
     logging.basicConfig(level=level, handlers=[handler])
 
     # Quiet noisy libraries
-    for lib in ("urllib3", "matplotlib", "PIL", "optuna", "lightgbm"):
+    for lib in ("urllib3", "matplotlib", "PIL", "optuna", "lightgbm", "sklearn", "xgboost"):
         logging.getLogger(lib).setLevel(logging.WARNING)
+
+    # Suppress sklearn convergence warnings
+    import warnings
+    warnings.filterwarnings("ignore", category=FutureWarning)
+    warnings.filterwarnings("ignore", message=".*ConvergenceWarning.*")
 
 
 def load_config(config_path: str, data_override: str = "",
@@ -232,3 +237,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+    sys.exit(0)

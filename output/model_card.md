@@ -1,6 +1,6 @@
-# Model Card: logistic_regression
+# Model Card: random_forest
 
-**Type**: logistic
+**Type**: random
 **Task**: classification
 
 ## Intended Use
@@ -13,9 +13,9 @@ Focus on identifying high-risk zones for emergency dispatch and agricultural pro
 
 ## Performance
 
-- CV Score: 0.9401 ± 0.0077
-- ROC-AUC: 0.9430
-- Accuracy: 90.0%
+- CV Score: 0.9380 ± 0.0084
+- ROC-AUC: 0.9725
+- Accuracy: 91.3%
 
 ## Limitations
 
@@ -25,7 +25,11 @@ Model trained on historical data; may not generalize to distribution shifts.
 
 ```json
 {
-  "max_iter": 1000,
-  "random_state": 42
+  "n_estimators": 178,
+  "random_state": 42,
+  "n_jobs": -1,
+  "max_depth": 9,
+  "min_samples_split": 8,
+  "min_samples_leaf": 5
 }
 ```

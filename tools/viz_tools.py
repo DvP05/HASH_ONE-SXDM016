@@ -77,7 +77,7 @@ def plotly_chart(data: dict, chart_type: str = "bar",
                 marker=dict(
                     color=data.get("color", "#66d9ef"),
                     size=data.get("size", 8),
-                    line=dict(width=1, color="#ffffff40"),
+                    line=dict(width=1, color="rgba(255,255,255,0.25)"),
                 ),
             )
         ])
@@ -86,7 +86,7 @@ def plotly_chart(data: dict, chart_type: str = "bar",
             go.Histogram(
                 x=data.get("x", []),
                 marker_color=data.get("color", "#66d9ef"),
-                marker_line=dict(color="#ffffff30", width=1),
+                marker_line=dict(color="rgba(255,255,255,0.19)", width=1),
                 nbinsx=data.get("bins", 30),
                 opacity=0.9,
             )
@@ -203,7 +203,7 @@ def seaborn_plot(df: pd.DataFrame, plot_type: str = "histogram",
             if column and column in df.columns:
                 sns.histplot(
                     df[column].dropna(), bins=30, ax=ax,
-                    color="#66d9ef", kde=True, edgecolor="#ffffff30",
+                    color="#66d9ef", kde=True, edgecolor="rgba(255,255,255,0.19)",
                     alpha=0.8, linewidth=0.5,
                 )
                 ax.axvline(df[column].median(), color="#f9a825", linestyle="--",
@@ -246,7 +246,7 @@ def seaborn_plot(df: pd.DataFrame, plot_type: str = "histogram",
                 numeric_cols = df.select_dtypes(include="number").columns[:10]
                 if len(numeric_cols) > 0:
                     df[numeric_cols].boxplot(ax=ax, patch_artist=True,
-                                             boxprops=dict(facecolor='#66d9ef40', edgecolor='#66d9ef'),
+                                             boxprops=dict(facecolor='rgba(102,217,239,0.25)', edgecolor='#66d9ef'),
                                              whiskerprops=dict(color='#a0b8a8'),
                                              capprops=dict(color='#a0b8a8'),
                                              medianprops=dict(color='#f9a825', linewidth=2))
@@ -256,7 +256,7 @@ def seaborn_plot(df: pd.DataFrame, plot_type: str = "histogram",
                 order = df[column].value_counts().head(15).index
                 palette = CHART_PALETTE[:len(order)]
                 sns.countplot(data=df, x=column, hue=column, ax=ax, order=order,
-                              palette=palette, legend=False, edgecolor="#ffffff20")
+                              palette=palette, legend=False, edgecolor="rgba(255,255,255,0.13)")
                 # Add value labels on top of bars
                 for container in ax.containers:
                     ax.bar_label(container, fontsize=9, color='#e0e8e4',
@@ -347,7 +347,7 @@ def generate_feature_importance_chart(importance: dict[str, float],
                 orientation="h",
                 marker=dict(
                     color=colors,
-                    line=dict(color="#ffffff20", width=1),
+                    line=dict(color="rgba(255,255,255,0.13)", width=1),
                 ),
                 text=[f"{v:.4f}" for v in sorted_imp.values()],
                 textposition="outside",

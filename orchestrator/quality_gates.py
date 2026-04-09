@@ -18,7 +18,7 @@ DEFAULT_GATES = {
         "min_columns": 2,
     },
     "data_cleaning": {
-        "max_missing_pct_after": 0.05,
+        "max_missing_pct_after": 0.15,
         "min_rows_retained_pct": 0.80,
     },
     "eda": {

@@ -26,6 +26,11 @@ from tools.registry import tool
 
 logger = logging.getLogger(__name__)
 
+# Suppress sklearn ConvergenceWarning (fires from Optuna trials)
+import warnings
+from sklearn.exceptions import ConvergenceWarning
+warnings.filterwarnings("ignore", category=ConvergenceWarning)
+
 
 # ─────────────────────────────────────────────
 # Model Factories
@@ -40,7 +45,7 @@ def _register_models():
 
     MODEL_REGISTRY["logistic_regression"] = {
         "class": LogisticRegression,
-        "default_params": {"max_iter": 1000, "random_state": 42},
+        "default_params": {"max_iter": 10000, "solver": "saga", "multi_class": "ovr", "random_state": 42},
         "task": "classification",
     }
     MODEL_REGISTRY["random_forest_clf"] = {
@@ -294,7 +299,9 @@ def optimize_hyperparams(X: pd.DataFrame, y: pd.Series,
             if task_type == "classification":
                 params = {
                     "C": trial.suggest_float("C", 0.001, 100, log=True),
-                    "max_iter": 1000,
+                    "max_iter": 10000,
+                    "solver": "saga",
+                    "multi_class": "ovr",
                     "random_state": 42,
                 }
                 model = LogisticRegression(**params)

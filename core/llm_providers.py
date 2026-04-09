@@ -484,7 +484,11 @@ def detect_provider(config_provider: str = "auto",
     3. Check for Ollama at localhost:11434
     4. Fall back to rule-based heuristics
     """
-    provider_str = os.environ.get("LLM_PROVIDER", config_provider).lower()
+    # CLI --provider flag takes priority over env var LLM_PROVIDER
+    if config_provider and config_provider.lower() != "auto":
+        provider_str = config_provider.lower()
+    else:
+        provider_str = os.environ.get("LLM_PROVIDER", "auto").lower()
     model_override = os.environ.get("LLM_MODEL", config_model)
 
     # Explicit provider selection

@@ -1,6 +1,6 @@
 {
-  "completed_at": "2026-04-08T21:09:57.917270+00:00",
-  "total_duration_seconds": 237.2,
+  "completed_at": "2026-04-09T05:16:24.193225+00:00",
+  "total_duration_seconds": 439.76,
   "total_llm_calls": 0,
   "total_tokens": 0,
   "stages": {
@@ -9,7 +9,7 @@
       "quality_gate_passed": true,
       "output_summary": "{'rows': 9048, 'columns': 38, 'column_names': ['latitude', 'longitude', 'brightness', 'scan', 'track', 'acq_date', 'acq_time', 'satellite', 'confidence', 'version', 'bright_t31', 'frp', 'daynight', 't",
       "trace": {
-        "duration_seconds": 48.63,
+        "duration_seconds": 106.15,
         "llm_calls": 1,
         "reasoning_steps_count": 16
       }
@@ -19,7 +19,7 @@
       "quality_gate_passed": false,
       "output_summary": "log=[CleaningLogEntry(operation='fill_numeric_missing', reasoning='Fill missing numeric values with column median.', rows_affected=0, reversible=True), CleaningLogEntry(operation='cap_outliers_iqr', r",
       "trace": {
-        "duration_seconds": 9.27,
+        "duration_seconds": 9.98,
         "llm_calls": 1,
         "reasoning_steps_count": 11
       }
@@ -29,7 +29,7 @@
       "quality_gate_passed": true,
       "output_summary": "findings=[Finding(column='latitude', analysis_type='univariate', stats={'count': 9048, 'missing': 0, 'missing_pct': 0.0, 'unique': 8967, 'dtype': 'float64', 'mean': 12.7645, 'std': 21.1574, 'min': -38",
       "trace": {
-        "duration_seconds": 18.26,
+        "duration_seconds": 18.62,
         "llm_calls": 2,
         "reasoning_steps_count": 38
       }
@@ -39,7 +39,7 @@
       "quality_gate_passed": true,
       "output_summary": "feature_names=['frp_x_severity', 'frp', 'brightness', 'crop_yield_loss_pct', 'acq_date', 'month', 'precipitation', 'soil_moisture', 'humidity', 'temperature', 'wind_speed', 'track', 'drought_severity_",
       "trace": {
-        "duration_seconds": 0.86,
+        "duration_seconds": 4.24,
         "llm_calls": 0,
         "reasoning_steps_count": 24
       }
@@ -47,11 +47,11 @@
     "modeling": {
       "status": "success",
       "quality_gate_passed": true,
-      "output_summary": "model_name='logistic_regression' evaluation=ModelEvaluation(task_type='classification', accuracy=0.9, roc_auc=0.943, f1_score=0.8974, precision=0.897, recall=0.9, confusion_matrix=[[745, 0, 142], [0, ",
+      "output_summary": "model_name='random_forest' evaluation=ModelEvaluation(task_type='classification', accuracy=0.9129, roc_auc=0.9725, f1_score=0.9111, precision=0.9109, recall=0.9129, confusion_matrix=[[775, 0, 112], [0",
       "trace": {
-        "duration_seconds": 123.66,
+        "duration_seconds": 263.5,
         "llm_calls": 1,
-        "reasoning_steps_count": 21
+        "reasoning_steps_count": 22
       }
     },
     "insight_generation": {
@@ -59,7 +59,7 @@
       "quality_gate_passed": true,
       "output_summary": "executive_summary='Analysis of Predict and classify natural disasters (wildfires, floods, droughts) and their\\nimpact on crops using global satellite telemetry data from NASA FIRMS, EONET,\\nand POWER ",
       "trace": {
-        "duration_seconds": 27.25,
+        "duration_seconds": 27.3,
         "llm_calls": 3,
         "reasoning_steps_count": 12
       }
